@@ -1,0 +1,32 @@
+extends base.jade
+
+- load i18n static
+- load bootstrap
+
+block title
+  | Reportes de Asistencia
+
+block content
+  h1 Reportes de Asistencia
+  
+  form#filter-reports-form(
+    method="post"
+    enctype="multipart/form-data"
+    role="form"
+  )
+    {% csrf_token %}
+    .container.bg-color-gray-7
+      .row
+        .col-sm-6
+          | {{ form.region|bootstrap }}
+        .col-sm-6
+          | {{ form.activity|bootstrap }}
+        .col-sm-4
+          | {{ form.start_date|bootstrap }}
+        .col-sm-4
+          | {{ form.end_date|bootstrap }}
+        .col-sm-4
+          | {{ form.inscription_state|bootstrap }}
+      .row
+        button.btn.btn-primary(type="submit")
+          | Descargar listado

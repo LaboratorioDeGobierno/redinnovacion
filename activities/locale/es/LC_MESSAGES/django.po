@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-07 15:40-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: forms.py:78
+msgid "End date should be greater than start date."
+msgstr ""
+
+#: models.py:16
+msgid "event"
+msgstr "evento"
+
+#: models.py:23
+msgid "region"
+msgstr "región"
+
+#: models.py:31
+msgid "manager"
+msgstr "administrador"
+
+#: models.py:34
+msgid "name"
+msgstr "nombre"
+
+#: models.py:38
+msgid "description"
+msgstr "descripción"
+
+#: models.py:42
+msgid "start date"
+msgstr "fecha de inicio"
+
+#: models.py:47
+msgid "final date"
+msgstr "fecha de fin"
+
+#: models.py:52
+msgid "address"
+msgstr "dirección"
+
+#: models.py:58
+msgid "city"
+msgstr "ciudad"
+
+#: models.py:64
+msgid "quota"
+msgstr "cupo"
+
+#: models.py:70
+msgid "is active"
+msgstr "está activo"
+
+#: models.py:169
+msgid "user"
+msgstr "usuario"
+
+#: models.py:173
+msgid "activity"
+msgstr "actividad"
+
+#: models.py:180
+msgid "stage"
+msgstr "etapa"
+
+#: models.py:183
+msgid "attendance date"
+msgstr "fecha de asistencia"
+
+#: templates/activities/participants.jade:52
+msgid "attended"
+msgstr "acreditado"
+
+#: templates/activities/participants.jade:56
+msgid "attend"
+msgstr "acreditar"
+
+#: templates/activities/participants.jade:58
+msgid "not attended"
+msgstr "inscrito"

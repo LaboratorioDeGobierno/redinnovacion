@@ -1,0 +1,11 @@
+extends form.jade
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'newsletter_list' %}")
+      | {% trans 'newsletter list'|capfirst %}
+  li
+    a(href="{% url 'newsletter_detail' object.pk %}")
+      | {{object}}

@@ -1,0 +1,95 @@
+extends base.jade
+
+- load thumbnail
+- load static
+
+block stylesheets
+  link(
+    href="{% static 'bower_components/dropzone/dist/dropzone.css' %}",
+    rel="stylesheet"
+  )
+
+block javascripts
+  script(type='text/javascript', src="{% static 'bower_components/dropzone/dist/dropzone.js' %}")
+  script(src="{% static 'js/comments.js' %}")
+
+block javascript_data
+  script.
+    window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));
+
+block content
+  .nav-tabs-inverse-container.hidden-xs.hidden
+    .container
+      ul.nav.nav-tabs.nav-tabs-inverse
+        li(class="{% if active_tab = 'messages' %}active{% endif %}")
+          a(href="")
+            | Mensajes
+        li(class="{% if active_tab = 'notifications' %}active{% endif %}")
+          a(href="")
+            | Notificaciones
+
+  .container-fluid.bg-color-gray-7
+    br
+    .container.section
+      .row
+        .col-sm-3
+          h4 Actividades en las que he participado
+          each useractivity in attended_useractivity_list
+            .box-event
+              .box-event-content
+                a(href="{% url 'activity_detail' useractivity.activity.pk %}")
+                  | {{ useractivity.activity }}
+          h4 Mis próximas actividades
+          each activity in incomming_activities
+            .box-event
+              .box-event-header
+                span.text-uppercase
+                  | {{ activity.event.activity_type|default:'&nbsp;' }}
+              .box-event-content
+                p.title
+                  a(href="{% url 'activity_detail' activity.pk %}")
+                    | {{ activity }}
+                p {{ activity.start_date.date|date:'DATE_FORMAT'|default:'Fecha por definir' }}
+                p.participants
+                  | {{ activity.useractivity_set.count }} integrantes
+        .col-sm-9
+          div#disqus_thread
+          script.
+            var disqus_config = function () {
+            this.page.url = '#';  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = 'home'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://red-de-innovadores-profesionales.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+          noscript
+            | Please enable JavaScript to view the
+            | #[a(href="https://disqus.com/?ref_noscript")]
+            | comments powered by Disqus.
+  .container.section
+    .row
+      .col-sm-9.col-sm-offset-3
+        .row
+          .col-sm-6
+            a.twitter-timeline(href="https://twitter.com/labgobcl") Tweets by labgobcl
+          .col-sm-6(style="border-left: 1px solid #E7EFF6")
+            h4 Qué se está hablando sobre la
+            a.twitter-timeline(href="" data-widget-id="Número de tu Widget de Twitter")

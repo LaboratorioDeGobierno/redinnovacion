@@ -1,0 +1,35 @@
+- load bootstrap
+
+form(method="POST", action="")
+  {% csrf_token %}
+  if form.errors
+    .alert.alert-danger
+      for field in form
+        for error in field.errors
+            {{ field.label }}: {{ error|escape }}
+            br
+  .row
+    .col-md-6
+      h6 Información personal
+      {{ form.first_name|bootstrap }}
+      {{ form.last_name|bootstrap }}
+      {{ form.mother_family_name|bootstrap }}
+      {{ form.institution|bootstrap }}
+      {{ form.other_institution_name|bootstrap }}
+      {{ form.charge|bootstrap }}
+      {{ form.region|bootstrap }}
+      {{ form.city|bootstrap }}
+      {{ form.county|bootstrap }}
+      {{ form.address|bootstrap }}
+    .col-md-6
+      h6 Información de contacto
+      {{ form.email|bootstrap }}
+      {{ form.phone|bootstrap }}
+      {{ form.interests|bootstrap }}
+      {{ form.description|bootstrap }}
+  hr.hr-action
+  .text-right.action-btn
+    a.btn.btn-link(href="{{ participant.get_absolute_url }}")
+      | Cancelar Cambios
+    button.btn.btn-primary(type="submit")
+      | Guardar cambios

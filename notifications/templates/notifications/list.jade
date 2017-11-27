@@ -1,0 +1,49 @@
+extends base.jade
+
+- load staticfiles
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; Notificaciones
+      - include 'includes/search_title.jade' with page_title='Notificaciones' subtitle='Aquí encontrarás todas tus notificaciones: de comentarios a tus publicaciones, menciones que te han hecho otros miembros de la Red, recordatorios de tus próximas actividades y nuevas actividades en calendario de la Red.'
+  - include 'includes/messages_tabs.jade' with active_tab='notifications' search_form=False
+  .notifications-table
+    .container.pad-top.pad-bottom
+      h1.text-left Tienes {{unread_notifications}} Nuevas Notificaciones
+        a(href="#")
+          .fa-stack
+            i.fa.fa-circle-o.fa-stack-2x
+            i.fa.fa-exclamation.fa-stack-1x
+            
+      table
+        for notification in object_list
+          tr
+            td
+              {{notification.created_at.date}}
+            td
+              .notification-status(class="{% if notification.read %}old{% else %}new{% endif %}")
+            td
+              .notification-card
+                div(class="{% if notification.is_user_based_notification %}avatar{% else %}event-image{% endif%}")
+                  if notification.from_user.avatar
+                    img(src="{{notification.from_user.avatar.url}}")
+                  else
+                    if notification.is_user_based_notification
+                      i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+                    else
+                      .day {{notification.event.start_date.day}}
+                      .month {{notification.event.start_date|date:"b"}} 
+                {% include 'notifications/includes/text.jade' %}
+                span.when {{notification.created_at.time}}
+
+      .row
+        .col-sm-6
+        .col-sm-6.text-right
+          if is_paginated
+            {% include 'includes/pagination.jade' with objects=page_obj paginator=paginator %}

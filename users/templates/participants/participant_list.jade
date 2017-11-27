@@ -1,0 +1,131 @@
+extends participants/admin_people_list.jade
+
+- load i18n static
+
+block tabs
+  ul#nav-tabs.nav.nav-tabs.nav-default.nav-justified.hidden-xs
+    li
+      a(href="{% url 'pending_participant_list' %}")
+        | Espera
+    li.active
+      a(href="{% url 'participant_list' %}")
+        | Aceptados
+    li
+      a(href="{% url 'extern_participant_list' %}")
+        | Externos
+    li
+      a(href="{% url 'rejected_participant_list' %}")
+        | Rechazados
+  .hidden-sm.hidden-md.hidden-lg
+    .dropdown
+      button.btn.btn-block.btn-default.dropdown-toggle(
+        type='button', data-toggle='dropdown'
+      )
+        | Aceptados #[span.caret]
+      ul.dropdown-menu
+        li
+          a(href="{% url 'pending_participant_list' %}") Espera
+        li
+          a(href="{% url 'participant_list' %}") Aceptados
+        li
+          a(href="{% url 'extern_participant_list' %}") Externos
+        li
+          a(href="{% url 'rejected_participant_list' %}") Rechazados
+
+
+block table
+  table.table.table-outlined.table-hover-alt.hidden-xs
+    thead
+      tr
+        th Nombre
+        th Institución
+        th Email
+        th Editar
+    tbody
+      each iter_user in user_list
+        tr
+          td
+            a(href="{{ iter_user.get_absolute_url }}")
+              | {{ iter_user.get_full_name }}
+          td
+            if iter_user.institution
+              a(href="{% url 'institution_detail' iter_user.institution.slug %}")
+                | {{ iter_user.institution }}
+            else
+              | Sin institución
+          td {{ iter_user.email }}
+          td
+            a.a-blue(
+              href="{% url 'participant_user_update' iter_user.pk %}"
+            )
+              i.fa.fa-pencil
+        - empty
+          tr.text-center
+            td(colspan="7") Lista vacía
+  .hidden-lg.hidden-md.hidden-sm
+    each iter_user in user_list
+      h4
+        a(href="{{ iter_user.get_absolute_url }}")
+          | {{ iter_user.get_full_name }}
+        a(
+          href="{% url 'participant_user_update' iter_user.pk %}"
+          title="Editar"
+        )
+          i.fa.fa-right.fa-pencil
+      p
+        if iter_user.charge
+          strong {{ iter_user.charge }}
+        else
+          {% trans 'no charge'|capfirst %}
+      p
+        if iter_user.institution
+          strong {% trans 'institution'|capfirst %}:&nbsp;
+          a(href="{{ iter_user.institution.get_absolute_url }}")
+            | {{ iter_user.institution }}
+        else
+          {% trans 'no institution'|capfirst %}
+      p
+        strong
+          {% trans 'region'|capfirst %}:
+        |  {{ user.region|default:"Sin región" }}
+      hr
+  .row
+    .col-sm-6
+    .col-sm-6.text-right
+      a.btn.btn-success(
+        href="{% url 'export_users' %}?status={{user.STATUS_ACCEPTED}}"
+      )
+        | Exportar datos
+        i.fa.fa-table.fa-right
+      | &nbsp;
+      span.dropdown
+        button.btn.btn-inverse.btn-primary.dropdown-toggle(
+          type='button', data-toggle='dropdown'
+        )
+          | Mostrar {{by}} #[span.caret]
+        ul.dropdown-menu
+          li
+            a(href='?by=10{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 10
+          li
+            a(href='?by=20{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 20
+          li
+            a(href='?by=25{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 25
+          li
+            a(href='?by=50{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 50
+      if is_paginated
+        strong.text-muted
+          | &nbsp;
+          | {{ page_obj.start_index }}-{{ page_obj.end_index }}
+          | de {{ paginator.count }}
+          | &nbsp;
+        if page_obj.has_previous
+          a.btn.btn-inverse.btn-primary(
+            href="{% url 'participant_list' %}?p={{page_obj.previous_page_number}}&by={{by}}"
+          )
+            i.fa.fa-chevron-left
+          | &nbsp;
+        if page_obj.has_next
+          a.btn.btn-inverse.btn-primary(
+            href="{% url 'participant_list' %}?p={{page_obj.next_page_number}}&by={{by}}"
+          )
+            i.fa.fa-chevron-right

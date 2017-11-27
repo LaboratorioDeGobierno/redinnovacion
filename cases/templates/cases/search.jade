@@ -1,0 +1,121 @@
+extends base.jade
+
+- load i18n static
+- load thumbnail
+- load staticfiles
+- load utils
+
+block stylesheets
+  link(type="text/less", rel="stylesheet", href="{% static 'css/components/documentation-commons.less' %}")
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'case_list' %}") CASOS
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; RESULTADO DE BÚSQUEDA
+          
+      - include 'includes/search_title.jade' with page_title=title subtitle=subtitle
+  - include 'cases/includes/cases_tabs.jade' with search_form=True
+
+  .bg-color-white
+    .container.documentation-search
+      .col-xs-hidden.col-sm-4.col-md-3
+        aside
+          h6 Tu búsqueda:
+          form(action="{{request.path}}", method="GET")
+            .input-group
+              input.form-control(
+                type="text", name="q", value="{{ q|default:'' }}",
+                placeholder="Buscar"
+              )
+              .input-group-addon.input-group-button
+                button.btn.btn-sm.btn-link(type="submit")
+                  i.fa.fa-2x.fa-search
+
+          if case_count > 0    
+            .separator
+            h6 Búsquedas relacionadas:
+            ul.dashed-list
+              for search in searches
+                li
+                  a(href="{{request.path}}?q={{search}}") #{search}
+            
+            if search_users
+              .separator
+              h6 También buscaron "#{q}"
+              ul.no-bullets.users-list
+                for search_user in search_users
+                  li
+                    if search_user.avatar
+                      .user-avatar.pull-left(
+                        style="background-image: url('{{ search_user.avatar.url }}');"
+                      )
+                    else
+                      i.fa.fa-user-circle.user-avatar.text-primary.pull-left(aria-hidden="true")
+                    
+                    a.user-name #{search_user.get_full_name}
+
+      .col-xs-12.col-sm-8.col-md-9
+        if case_count > 0
+          .row
+            .col-xs-hidden.col-md-9
+            .col-xs-12.col-md-3
+              select.apply-filter-select(placeholder="Ordenar por..." value="{{o_}}")
+                option(value="") Sin filtros
+                option(value="created_at") Fecha creación &darr;
+                option(value="-created_at") Fecha creación &uarr;
+                option(value="title") Orden alfabético &darr;
+                option(value="-title") Orden alfabético &uarr;
+
+          .row
+            ul.no-bullets.search-results
+              for obj in object_list
+                li.card
+                  if obj.logo
+                    img(src="{{obj.logo|thumbnail_url:'small'}}")
+                  else
+                    .img
+
+                  .content
+                    .type #{obj.get_type_name}
+                    a(href="{{obj.get_absolute_url}}").title #{obj.title}
+                    .text #{obj.about}
+            
+          .row
+            .col-sm-8
+            .col-sm-4.text-right
+              if is_paginated
+                {% include 'includes/pagination.jade' with objects=page_obj paginator=paginator %}
+        else
+          .sorry-message 
+            h4 Lo sentimos, no hemos encontrado ningún resultado para la búqueda de 
+              strong “#{q}”.
+            .proposition.bg-color-gray-6
+              h5 Intenta los siguientes consejos para mejorar tu búqueda:
+            
+              p - Comprueba la ortografía.
+              p - Busca otros términos de búsqueda.
+              p - Haz una búqueda más general y con menos términos.
+          
+            h5 Términos más buscados:
+            {% for search in searches %}
+            a(href="{{request.path}}?q={{search}}") #{search} 
+            {% if not forloop.last %}
+            span , 
+            {% endif %}
+            {% endfor %}
+
+    
+    input(type="hidden", name="request_path", value="{{request.path}}")
+    input(type="hidden", name="q", value="{{q}}")
+    input(type="hidden", name="o", value="{{o_}}")
+            
+if not user.is_accepted
+  block active_users

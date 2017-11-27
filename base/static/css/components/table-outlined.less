@@ -1,0 +1,52 @@
+.table-outlined {
+  border-color: @table-border-color;
+
+  thead > tr,
+  tbody > tr,
+  tfoot > tr {
+    & > th:first-child,
+    & > td:first-child {
+      border-top-left-radius: @table-outlined-radius;
+      border-bottom-left-radius: @table-outlined-radius;
+      border-left-style: solid;
+    }
+
+    & > th:last-child,
+    & > td:last-child {
+      border-top-right-radius: @table-outlined-radius;
+      border-bottom-right-radius: @table-outlined-radius;
+      border-right-style: solid;
+    }
+
+    & > th:first-child,
+    & > td:first-child,
+    & > th:last-child,
+    & > td:last-child {
+      border-color: @table-border-color;
+    }
+  }
+
+  thead:first-child > tr:first-child,
+  tbody:first-child > tr:first-child,
+  tfoot:first-child > tr:first-child {
+    & > th,
+    & > td {
+      border-top: @table-border-width solid @table-border-color;
+    }
+  }
+
+  thead:last-child > tr:last-child,
+  tbody:last-child > tr:last-child,
+  tfoot:last-child > tr:last-child {
+    & > th,
+    & > td {
+      border-bottom: @table-border-width solid @table-border-color;
+    }
+  }
+
+  thead > tr > th,
+  tbody > tr > td {
+    padding: (1.33 * @table-padding) (2 * @table-padding);
+    padding-top: 1.33 * @table-padding + 4px;
+  }
+}

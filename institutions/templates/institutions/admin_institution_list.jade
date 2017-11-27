@@ -1,0 +1,73 @@
+extends base.jade
+
+- load compress
+- load staticfiles
+- load i18n static
+
+block title
+  | Instituciones
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'people_list' %}") INTEGRANTES
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; Instituciones
+      - include 'includes/search_title.jade' with page_title='Instituciones que componen la Red' subtitle='Aquí puedes conocer todas las instituciones que están en la Red, y saber quienes participan de cada una de ellas.'
+  - include 'includes/tabs.jade' with active_tab='institutions' search_form=True
+  .container.mar-top
+    table.table.table-outlined.hidden-xs
+      thead
+        tr
+          th Nombre de institución
+          th Integrantes
+          th
+      tbody
+        for institution in institution_list
+          tr
+            td
+              a(href="{{ institution.get_absolute_url }}")
+                | {{ institution.name }}
+            td.participants {{ institution.users_count }} integrantes
+            td
+              a(href="{% url 'institution_update' slug=institution.slug %}")
+                i.fa.fa-pencil
+    .hidden-sm.hidden-md.hidden-lg
+      for institution in institution_list
+        hr
+        h3
+          a(href="{{ institution.get_absolute_url }}")
+            = institution.name
+          a(href="{% url 'institution_update' slug=institution.slug %}")
+            i.fa.fa-right.fa-pencil
+        p.participants
+          | #{institution.users_count} integrantes
+      hr
+    .row
+      .col-sm-8
+        a.btn.btn-success(href="{% url 'institution_create' %}")
+          i.fa.fa-left.fa-plus
+          | Agregar institución
+      if is_paginated
+        .col-sm-4.text-right
+          strong.text-muted
+            | {{ page_obj.start_index }}-{{ page_obj.end_index }}
+            | de {{ paginator.count }}
+            | &nbsp;
+          if page_obj.has_previous
+            a.btn.btn-inverse.btn-primary(
+              href="{% url 'institution_list' %}?p={{page_obj.previous_page_number}}"
+            )
+              i.fa.fa-chevron-left
+            | &nbsp;
+          if page_obj.has_next
+            a.btn.btn-inverse.btn-primary(
+              href="{% url 'institution_list' %}?p={{page_obj.next_page_number}}"
+            )
+              i.fa.fa-chevron-right

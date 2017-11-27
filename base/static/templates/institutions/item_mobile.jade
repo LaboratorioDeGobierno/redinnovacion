@@ -1,0 +1,8 @@
+hr
+for institution in institutions
+  h3 
+    a(href="#{institution['url_detail']}") #{institution['name'].substring(0,50)}
+  p 
+    span 
+      b #{institution['users_count']} INTEGRANTES
+  hr

@@ -1,0 +1,18 @@
+- load i18n static
+
+
+.comments
+  .comments-heading
+    span.comments-count {{ el.get_base_comments.count }}
+    |  Comentarios
+  .comments-actions
+    .btn-group
+  form#comment-form(method="POST", action="{% url 'comment_create' %}")
+    {% csrf_token %}
+    input(type="hidden", name="{{type}}", value="{{ el.id }}")
+    .form-group
+      textarea.form-control(name="text", rows=4)
+    .text-right
+      button.btn.btn-sm.btn-primary(type="submit") Publicar
+  .comment-list
+    - include 'comments/includes/list.jade' with comments=el.get_base_comments no_list=True

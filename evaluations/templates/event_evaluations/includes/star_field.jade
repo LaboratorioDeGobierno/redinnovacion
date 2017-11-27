@@ -1,0 +1,17 @@
+.form-group(class="{% if field.errors %}has-error{% endif %}")
+  label {{ field.label }}
+  .row.rating-stars
+    for i in '12345'
+      .col-sm-1.rating(data-value="#{i}", class="star-#{i}")
+        .rating-star
+          i.fa.fa-star.fa-2x
+        div {{i}}
+    .col-sm-1.rating-quantity
+      label ({{field.value|default:0}})
+      .value.hidden
+        {{field}}
+  if field.errors
+    span.help-block(for="id_{{ field.name }}")
+      {% for error in field.errors %}
+      | {{ error }}
+      {% endfor %}

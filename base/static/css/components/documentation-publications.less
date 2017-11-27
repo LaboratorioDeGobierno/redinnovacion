@@ -1,0 +1,56 @@
+.documentation-publications {
+
+  span.dropdown {
+    display: inline-block;
+    margin: 40px 0;
+  }
+
+  .publications-list {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+
+    @media(max-width: @screen-md-max) {
+      grid-template-columns: repeat(2, auto);
+      justify-content: space-evenly;
+    }
+
+    @media(max-width: @screen-xs-max) {
+      grid-template-columns: repeat(1, auto);
+    }
+
+    li {
+      width: 350px;
+      height:230px;
+      padding:15px;
+      color: @white;
+      display: inline-block;
+      margin-bottom: 30px;
+      box-shadow: 0 0 6px 0 rgba(0,0,0,0.20);
+
+      @media(max-width: @screen-xs-max) {
+        width:90%;
+        margin: 0 auto 30px;
+      }
+
+      .img {
+        width: 140px;
+        height: 200px;
+      }
+
+      img {
+        max-width: 140px;
+        max-height: 200px;
+      }
+
+      & > *:not(.img):not(img) {
+        padding: 10px 0 5px 160px;
+      }
+
+      a {
+        display: block;
+      }
+
+    }
+  }
+}

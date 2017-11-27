@@ -1,0 +1,11 @@
+¡Hola {{user.get_full_name}},
+
+Junto con saludar, te escribimos porque hemos recibido tu solicitud de inscripción a la Red.
+
+En este sentido, te informamos que la Red es un espacio para servidores públicos que se desempeñan dentro del Estado, por lo que considerando la información que nos enviaste, pudimos constatar que tu solicitud no responde a este perfil.
+
+De todas formas, te invitamos a conocer las otras iniciativas del Laboratorio
+de Gobierno, a través del siguiente link: https://www.lab.gob.cl/
+
+Que estés muy bien.
+Saludos!

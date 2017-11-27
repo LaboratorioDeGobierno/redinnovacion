@@ -1,0 +1,3 @@
+{{sender.get_full_name|capfirst}} te ha compartido el siguiente caso:
+
+{{protocol}}://{{domain}}{{case.get_absolute_url}}

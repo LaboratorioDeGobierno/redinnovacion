@@ -1,0 +1,70 @@
+<div style="background-color: #1467AB; width: 100%; height: 60px">
+  <div style="width:570px; margin:0 auto;">
+    <span style="display:inline-block;padding: 15px 30px 20px; font-family: Brown, sans-serif; font-weight: bold; font-size: 20px; color: #FFFFFF; line-height: 27px;">
+       Red
+    </span>
+    <img src="{{protocol}}://{{domain}}/static/img/logo-red.png" style="float:right; height:42px; width: 90px; margin:10px 30px;">
+  </div>
+</div>
+
+<div style="width: 620px; margin: 0 auto; padding: 0;">
+  <h1 style="font-size:20px; font-family: Brown, sans-serif; font-weight: bold; padding-left:25px;">
+    Hola {{user.get_full_name}}, este es el resumen semanal de actividades en la Red
+  </h1>
+  {% if unread_notifications > 0 or unread_messages > 0 %}
+  <table cellspacing="25" width="100%">
+    <tr>
+      {% if unread_notifications > 0 and unread_messages > 0 %}
+      <td style="background-color: #E9F1F7; text-align: center; padding: 10px 0 25px 0; width:45%">
+        <h2 style="font-size: 18px; font-family: Brown, sans-serif; font-weight: bold;">
+          {% if unread_notifications > 1 %}
+          {{unread_notifications}} nuevas notificaciones
+          {% else %}
+          {{unread_notifications}} nueva notificación
+          {% endif %}
+
+        </h2>
+        <a href="{{protocol}}://{{domain}}/notifications/" style="width:180px; margin: 0 auto; display: block; font-size:16px; font-family: Brown, sans-serif; color: #fff; background-color: #1467AB; font-weight: normal; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; white-space: nowrap; padding: 6px 12px; line-height: 1.42857143; border-radius: 4px; text-decoration: none;">
+          Ver notificaciones
+        </a>
+      </td>
+      <td style="background-color: #E9F1F7; text-align: center; padding: 10px 0 25px 0; width:45%">
+        <h2 style="font-size: 18px; font-family: Brown, sans-serif; font-weight: bold;">
+          {% if unread_messages > 1 %}
+          {{unread_messages}} mensajes sin leer
+          {% else %}
+          {{unread_messages}} mensaje sin leer
+          {% endif %}
+        </h2>
+        <a href="{{protocol}}://{{domain}}/messages/" style="width:180px; margin:0 auto; display: block; font-size:16px; font-family: Brown, sans-serif; color: #fff; background-color: #1467AB; font-weight: normal; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; white-space: nowrap; padding: 6px 12px; line-height: 1.42857143; border-radius: 4px; text-decoration: none;">
+          Ver Mensajes
+        </a>
+      </td>
+      {% else %}
+        <td style="background-color: #E9F1F7; text-align: center; padding: 10px 0 25px 0; width: 90%;">
+          <h2 style="font-size: 18px; font-family: Brown, sans-serif; font-weight: bold;">
+            {% if unread_notifications > 1 %}
+            {{unread_notifications}} nuevas notificaciones
+            {% elif unread_notifications > 0 %}
+            {{unread_notifications}} nueva notificación
+            {% elif unread_messages > 1 %}
+            {{unread_messages}} mensajes sin leer
+            {% else %}
+            {{unread_messages}} mensaje sin leer
+            {% endif %}
+          </h2>
+          {% if unread_notifications > 0 %}
+          <a href="{{protocol}}://{{domain}}/notifications/" style="width:180px; margin: 0 auto; display: block; font-size:16px; font-family: Brown, sans-serif; font-weight: bold; color: #fff; background-color: #1467AB; font-weight: normal; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; white-space: nowrap; padding: 6px 12px; line-height: 1.42857143; border-radius: 4px; text-decoration: none;">
+             Ver notificaciones
+          </a>
+          {% else %}
+          <a href="{{protocol}}://{{domain}}/messages/" style="width:180px; margin: 0 auto; display: block; font-size:16px; font-family: Brown, sans-serif; font-weight: bold; color: #fff; background-color: #1467AB; font-weight: normal; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; white-space: nowrap; padding: 6px 12px; line-height: 1.42857143; border-radius: 4px; text-decoration: none;">
+            Ver Mensajes
+          </a>
+          {% endif %}
+        </td>
+      {% endif %}
+    </tr>
+  </table>
+  {% endif %}
+</div>

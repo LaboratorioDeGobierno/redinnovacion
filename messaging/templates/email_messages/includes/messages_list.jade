@@ -1,0 +1,19 @@
+{% for email_messages in email_messages_by_dates reversed %}
+h4.text-center {{email_messages.date}}
+{% for email_message in email_messages.email_messages reversed %}
+
+.message(class="{% if email_message.from_user_id != current_user.id %}your-message{% endif %}" data-id="#{email_message.id}")
+  if email_message.from_user.avatar
+    .user-avatar.img-circle(
+      style="background-image: url('{{ email_message.from_user.avatar.url }}');"
+    )
+  else
+    i.fa.fa-user-circle.user-icon.text-primary(
+      aria-hidden="true"
+    )
+  .text {{email_message.message}}
+  span.when {{ email_message.created_at.time}}
+.clearfix
+{% endfor %}
+
+{% endfor %}

@@ -1,0 +1,112 @@
+extends base.jade
+
+- load staticfiles
+- load humanize
+
+block title
+  | Personas
+  
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'people_list' %}") INTEGRANTES
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; Personas
+      - include 'includes/search_title.jade' with page_title='Personas que componen la Red' subtitle='Aquí puedes conocer todas las instituciones que están en la Red, y saber quienes participan de cada una de ellas.'
+  - include 'includes/tabs.jade' with active_tab='people' search_form=True
+  .bg-color-gray-7
+    .container.pad-top.pad-bottom
+      .row
+        .col-xs-12.col-sm-3
+          .aside-table
+            h3 
+              .number #{total_users | intcomma}
+              .description miembros de la Red
+            table
+              for region in regions
+                tr(class="{% if region.order == current_region.order %}active{% endif %}")
+                  td 
+                    a(href="{% url 'participants_list' %}?region={{region.order}}&by={{by}}&p=1") #{region.name}
+                  td #{region.users__count | intcomma}
+                  td #{region.percent}%
+            
+        .col-xs-12.col-sm-9
+          - if 'region' not in clean_query_string
+            h3 Miembros más activos de la Red
+            .row
+              for top_user in top_users
+                .col.xs-12.col-sm-4
+                  .member-card
+                    a(href="{{top_user.get_message_url}}").write-comment
+                      i.fa.fa-2x.fa-commenting-o(aria-hidden="false")
+                    .avatar
+                      if top_user.avatar
+                        img(src="{{top_user.avatar.url}}")
+                      else
+                        i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+                    h4 
+                      a(href="{{top_user.get_absolute_url}}")
+                        #{top_user.get_full_name}
+                    p.description #{top_user.charge|truncatechars:80}
+                    p.organization #{top_user.institution}
+                    .row.card-footer
+                      .col-xs-6
+                        .number #{top_user.comment_set.all.count}
+                        .info Comentarios
+                      .col-xs-6
+                        .number #{top_user.useractivity_set.all.count}
+                        .info Actividades
+
+          h4 {{current_region}}
+          ul.no-bullets
+            for user_iter in user_list
+              li.member-long-card
+                a.btn.write-comment(href="{{ user_iter.get_message_url }}")
+                  i.fa.fa-commenting-o(aria-hidden="false")
+                  span.hidden-xs Mensaje
+                .avatar
+                  if user_iter.avatar
+                    img(src="{{user_iter.avatar.url}}")
+                  else
+                    i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+                h4 
+                  a(href="{{user_iter.get_absolute_url}}")
+                   #{user_iter.get_full_name}
+                p.description #{user_iter.charge}
+                p.organization 
+                  a(href="{{user_iter.institution.get_absolute_url}}")
+                    #{user_iter.institution}
+                p.region.hidden-xs Región #{user_iter.region.name}
+                
+          .row
+            .col-sm-6.text-left
+              if user.is_member
+                a.btn.btn-success(
+                  href="{% url 'export_users' %}?region={{request.GET.region}}&status={{user.STATUS_ACCEPTED}}"
+                )
+                  | Exportar datos
+                  i.fa.fa-table.fa-right
+                | &nbsp;
+            .col-sm-6.text-right
+              span.dropdown
+                button.btn.btn-inverse.btn-primary.dropdown-toggle(
+                  type='button', data-toggle='dropdown'
+                )
+                  | Mostrar {{by}} #[span.caret]
+                ul.dropdown-menu
+                  li
+                    a(href='?{% if request.GET.region %}region={{request.GET.region}}&{% endif %}by=10{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 10
+                  li
+                    a(href='?{% if request.GET.region %}region={{request.GET.region}}&{% endif %}by=20{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 20
+                  li
+                    a(href='?{% if request.GET.region %}region={{request.GET.region}}&{% endif %}by=25{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 25
+                  li
+                    a(href='?{% if request.GET.region %}region={{request.GET.region}}&{% endif %}by=50{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 50
+              if is_paginated
+                {% include 'includes/pagination.jade' with objects=page_obj paginator=paginator %}

@@ -1,0 +1,24 @@
+- load i18n static
+
+.nav-tabs-inverse-container.hidden-xs
+  .container
+    .row
+      .col-xs-8.col-sm-9
+        ul.nav.nav-tabs.nav-tabs-inverse
+          li(class="{% if active_tab = 'people' %}active{% endif %}")
+            a(href="{% url 'participants_list' %}")
+              {% trans 'participants' %}
+          li(class="{% if active_tab = 'institutions' %}active{% endif %}")
+            a(href="{% url 'institutions_list' %}")
+              {% trans 'institutions' %}
+      if search_form
+        .col-xs-4.col-sm-3
+          form(action="", method="GET")
+            .input-group
+              input.form-control(
+                type="text", name="q", value="{{ q|default:'' }}",
+                placeholder="Buscar"
+              )
+              .input-group-addon.input-group-button
+                button.btn.btn-sm.btn-link(type="submit")
+                  i.fa.fa-2x.fa-search

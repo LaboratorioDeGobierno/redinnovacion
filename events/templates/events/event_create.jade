@@ -1,0 +1,47 @@
+extends base.jade
+- load bootstrap
+- load staticfiles
+
+block title 
+  | Crear evento
+  
+block content
+  .container
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+
+      li.breadcrumb-not-selected
+        span &nbsp; Crear Actividad
+
+    div
+      a(href="{% url 'calendar' %}") 
+        i.fa.fa-chevron-left
+        |  Volver al Calendario de Actividades
+    h3.title-people Crear Actividad
+
+  form#institution-form(
+    method="post"
+    enctype="multipart/form-data"
+    role="form"
+  )
+    if stage_forms
+      .bg-color-gray-7
+        .container.pad-top.pad-bottom
+          h3 Etapas de la actividad
+          for stage_form in stage_forms
+            {% include 'events/includes/stage_form.jade' with form=stage_form %}
+    .container.pad-top.pad-bottom
+        {% csrf_token %}
+        .row.row-flex.flex-start
+          each field in form
+            .col-md-6
+              | {{ field|bootstrap }}
+        if form_actions|default_if_none:True
+          .row
+            .col-xs-12.text-right
+              button.btn.btn-link.text-primary(type="reset")
+                | Cancelar cambios
+              button.btn.btn-primary(type="submit")
+                | Guardar

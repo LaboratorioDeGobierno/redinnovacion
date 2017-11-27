@@ -1,0 +1,45 @@
+
+- load staticfiles
+
+.share-modal.modal.fade(role="dialog")
+  .modal-dialog
+
+    .modal-content
+      .modal-header.bg-color-light-blue
+        button.close(type="button" data-dismiss="modal")&times;
+        h6.modal-title Comparte con usuarios de la Red
+
+      .modal-body
+        form.share-form
+          {% csrf_token %}
+          .input-group
+            span.input-group-addon
+              i.fa.fa-user
+            select.form-control.user-search.filtered(
+              multiple,
+              name="users"
+            )
+              option Buscar miembro de la red...
+          textarea(
+            placeholder="Ingresa un comentario"
+            name="message"
+          )
+        
+        .publication-card.bg-color-gray-6
+          if object.logo
+            img(src="{% static object.logo.url %}")
+          else
+            .img
+          .title(href="{{obj.get_absolute_url}}") #{object.title}
+          .text #{object.about|truncatechars:200}
+        .alert.alert-danger.no-users-alert.hidden Selecciona usuarios por favor
+        .alert.alert-danger.server-error-alert.hidden Un error ocurrió en el servidor
+        
+      .modal-footer.bg-color-gray-6
+        .footer-button-group
+          i.fa.fa-cog.fa-spin.fa-2x.fa-fw.hidden
+          //- fa-3x fa-fw"></i>
+          a.btn(data-dismiss="modal") Cancelar
+          a.btn.btn-filled.confirm-share-btn
+            i.fa.fa-paper-plane
+            |&nbsp;Enviar por Email      

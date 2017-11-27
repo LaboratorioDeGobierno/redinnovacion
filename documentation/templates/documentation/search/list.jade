@@ -1,0 +1,168 @@
+extends base.jade
+
+- load i18n static
+- load thumbnail
+- load staticfiles
+- load utils
+
+block stylesheets
+  link(type="text/less", rel="stylesheet", href="{% static 'css/components/documentation-commons.less' %}")
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'methodology_list' %}") DOCUMENTACIÓN
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; RESULTADO DE BÚSQUEDA
+      - include 'includes/search_title.jade' with page_title=title
+  - include 'documentation/includes/documentation_tabs.jade' with active_tab=active_tab search_form=True
+
+  .bg-color-white
+    .container.documentation-search
+        .col-xs-hidden.col-sm-4.col-md-3
+          aside
+            h6 Tu búsqueda:
+            form(action="{{request.path}}", method="GET")
+              .input-group
+                input.form-control(
+                  type="text", name="q", value="{{ q|default:'' }}",
+                  placeholder="Buscar"
+                )
+                .input-group-addon.input-group-button
+                  button.btn.btn-sm.btn-link(type="submit")
+                    i.fa.fa-2x.fa-search
+
+            .separator
+            h6 Filtro por Categoría:
+            ul.dashed-list.categories-list
+              li
+                a.title(class="{% if active == 'methodology' %}active{% endif %}",
+                  href="{% url 'documentation_search' %}{% query_parameters type='methodology' %}"
+                )
+                  | Metodología
+                span.count (#{methodology_count})
+              li
+                a.title(class="{% if active == 'tool' %}active{% endif %}",
+                  href="{% url 'documentation_search' %}{% query_parameters type='tool' %}"
+                )
+                  | Herramienta
+                span.count (#{tool_count})
+              li
+                a.title(class="{% if active == 'publication' %}active{% endif %}",
+                  href="{% url 'documentation_search' %}{% query_parameters type='publication' %}"
+                )
+                  | Publicación
+                span.count (#{publication_count})
+
+            .separator
+            h6 Filtro por Idioma:
+            ul.dashed-list.categories-list
+              li
+                a.title(class="{% if not language %}active{% endif %}",
+                  href="{% url 'documentation_search' %}{% query_parameters language='' %}"
+                )
+                  | Todos
+                span.count
+              li
+                a.title(class="{% if language == 'es' %}active{% endif %}",
+                  href="{% url 'documentation_search' %}{% query_parameters language='es' %}"
+                )
+                  | Español
+                span.count
+              li
+                a.title(class="{% if language == 'en' %}active{% endif %}",
+                  href="{% url 'documentation_search' %}{% query_parameters language='en' %}"
+                )
+                  | Inglés
+                span.count
+                  
+              .separator
+              h6 Búsquedas relacionadas:
+              ul.dashed-list
+                for search in searches
+                  li
+                    a(href="{{request.path}}?q={{search}}") #{search}
+              
+              if search_users
+                .separator
+                h6 También buscaron "#{q}"
+                ul.no-bullets.users-list
+                  for search_user in search_users
+                    li
+                      if search_user.avatar
+                        .user-avatar.pull-left(
+                          style="background-image: url('{{ search_user.avatar.url }}');"
+                        )
+                      else
+                        i.fa.fa-user-circle.user-avatar.text-primary.pull-left(aria-hidden="true")
+                      
+                      a.user-name #{search_user.get_full_name}
+
+        .col-xs-12.col-sm-8.col-md-9
+          if total_count > 0
+            .row
+              .col-xs-hidden.col-md-9
+              .col-xs-12.col-md-3
+                select.apply-filter-select(placeholder="Ordenar por..." value="{{o_}}")
+                  option(value="") Sin orden
+                  option(value="title", selected=o_ == 'title')
+                    | Orden alfabético &darr;
+                  option(value="-title", selected=o_ == '-title')
+                    | Orden alfabético &uarr;
+
+            .row
+              ul.no-bullets.search-results
+                for obj in object_list
+                  li.card
+                    if obj.documentation_file.image
+                      img(src="{% thumbnail obj.documentation_file.image 320x320 crop %}")
+                    else
+                      .img
+
+                    .content
+                      .type #{obj.get_type_name}
+                      a(href="{{obj.get_absolute_url}}").title #{obj.title}
+                      .text #{obj.about|truncatechars:200|linebreaks}
+              
+            .row
+              .col-sm-8
+              .col-sm-4.text-right
+                if is_paginated
+                  {% include 'includes/pagination.jade' with objects=page_obj paginator=paginator %}
+          else
+            .sorry-message 
+              h4 Lo sentimos, no hemos encontrado ningún resultado para la búqueda de 
+                strong “{{q|default:''}}”
+                if language == 'es'
+                  strong (Español)
+                elif language == 'en'
+                  strong (Inglés)
+                strong .
+              .proposition.bg-color-gray-6
+                h5 Intenta los siguientes consejos para mejorar tu búqueda:
+              
+                p - Comprueba la ortografía.
+                p - Busca otros términos de búsqueda.
+                p - Haz una búqueda más general y con menos términos.
+            
+              h5 Términos más buscados:
+              {% for search in searches %}
+              a(href="{{request.path}}?q={{search}}") #{search} 
+              {% if forloop.last == False%}
+              span , 
+              {% endif %}
+              {% endfor %}
+
+    
+    input(type="hidden", name="request_path", value="{{request.path}}")
+    input(type="hidden", name="q", value="{{q}}")
+    input(type="hidden", name="o", value="{{o_}}")
+            
+iEspañolf not user.is_accepted
+  block active_users

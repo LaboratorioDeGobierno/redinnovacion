@@ -1,0 +1,58 @@
+- load bootstrap
+- load i18n static
+
+.panel.panel-primary.panel-form.panel-lg
+  .panel-heading
+    .logo-right
+      a(href="{% url 'home' %}") 
+        img.logo-sm(src="{% static 'img/logo-red.svg' %}")
+    h2 Formulario de inscripción
+  .panel-body
+    p.step Paso 2 de 2
+    h3 Participación en la Red
+    if form.non_field_errors
+      for error in form.non_field_errors
+        .alert.alert-error {{ error }}
+    - with field=wizard.form.time_in_ri
+      .form-group(class="{% if field.errors %}has-error{% endif %}")
+        label.control-label(for='id_1-{{ field.name }}_0')
+          | ¿Cuál sería tu disponibilidad de tiempo aproximado para participar en las actividades de la Red?
+        for option in field
+          .radio {{ option }}
+        span.help-inline.help-block {{ field.errors|striptags }}
+    - with field=wizard.form.topic_of_interests
+      .form-group(class="{% if field.errors %}has-error{% endif %}")
+        label.control-label(for='id_1-{{ field.name }}_0')
+          | ¿Qué temas te interesan abordar en la Red?
+        for option in field
+          .checkbox {{ option }}
+        .checkbox
+          label
+            input(id="other-topics-checkbox" type="checkbox")
+            | Otra
+        span.help-inline.help-block {{ field.errors|striptags }}
+    - with field=wizard.form.other_topics
+      .form-group.hidden(class="{% if field.errors %}has-error{% endif %}")
+        label.control-label(for='id_1-{{ field.name }}_0')
+          | ¿Te interesan otros temas?
+        .sub-label Ingresa los temas que te interesan abordar separados por comas
+        {{ field }}
+        span.help-inline.help-block {{ field.errors|striptags }}
+    - with field=wizard.form.show_public_information
+      .form-group(class="{% if field.errors %}has-error{% endif %}")
+        label.control-label(for='id_1-{{ field.name }}_0')
+          | ¿Estás de acuerdo con que tus datos sean públicos entre los
+          | integrantes de la Red?
+        for option in field
+          .radio {{ option }}
+        span.help-inline.help-block {{ field.errors|striptags }}
+  .panel-footer
+    .text-right
+      button.btn.btn-inverse.btn-primary.pull-left(
+        name="wizard_goto_step", type="submit",
+        value="{{ wizard.steps.prev }}"
+      )
+        i.fa.fa-left.fa-angle-left
+        | Volver
+      button(type="submit").btn.btn-primary
+        | Enviar

@@ -1,0 +1,13 @@
+extends form.jade
+
+- load i18n
+
+block form_title
+  | Nuevo caso
+
+block form_fields
+  {% include "includes/form.jade" with form=form %}
+  {% include "includes/form.jade" with form=tags_form %}
+
+block cancel_button_url
+  | {% url 'case_list' %}

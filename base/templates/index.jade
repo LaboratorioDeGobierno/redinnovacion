@@ -1,0 +1,228 @@
+extends base.jade
+
+- load i18n
+- load thumbnail
+- load staticfiles
+- load humanize
+
+block stylesheets
+  link(href="{% static 'bower_components/dropzone/dist/dropzone.css' %}", rel="stylesheet")
+
+block javascripts
+  script(type='text/javascript', src="{% static 'bower_components/dropzone/dist/dropzone.js' %}")
+  script(type="text/javascript", src="{% static 'bower_components/lg-zoom/dist/lg-zoom.min.js' %}")
+  script(src="{% static 'js/graphs.js' %}")
+
+block javascript_data
+  script.
+    window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));
+
+mixin media-user()
+  .media.user-controls
+    .media-left
+      a(href='{{ user.get_absolute_url }}')
+        if user.avatar
+          img.media-object.img-circle(src="{{ user.avatar.url }}")
+        else
+          i.fa.fa-user-circle.text-primary.media-object
+    .media-body
+      h4.media-heading {{ user.get_full_name }}
+      .controls
+        .btn-group
+          a.btn.btn-sm.btn-link(href="{% url 'email_message_list' %}")
+            img(src="{% static 'img/shape-envelop.svg' %}")
+          a.btn.btn-sm.btn-linka(href="{% url 'user_update' %}")
+            img(src="{% static 'img/shape-book.svg' %}")
+          a.btn.btn-sm.btn-link(href="{% url 'calendar' %}")
+            img(src="{% static 'img/shape-calendar.svg' %}")
+          a.btn.btn-sm.btn-link(href="{% url 'notification_list' %}")
+            .fa-stack
+              i.fa.fa-circle-o.fa-stack-2x(style="font-size:2em;")
+              i.fa.fa-exclamation.fa-stack-1x(style="font-size:1em;")
+        //Disabled for now
+        //- .badge.new-messages-badge 10
+        //- .badge.new-events-badge 4
+          
+block content
+  .nav-tabs-inverse-container.hidden-xs.hidden
+    .container
+      ul.nav.nav-tabs.nav-tabs-inverse
+        li(class="{% if active_tab = 'messages' %}active{% endif %}")
+          a(href="")
+            | Mensajes
+        li(class="{% if active_tab = 'notifications' %}active{% endif %}")
+          a(href="")
+            | Notificaciones
+  .bg-color-gray-7
+    .container.pad-top.pad-bottom
+      .hidden-sm.hidden-md.hidden-lg
+        +media-user()
+      .row
+        .col-sm-8.col-sm-push-4.col-md-6.col-md-push-3
+          .media.pad-all.mar-bottom.bg-color-white(
+            class="{% if user.is_pending %}pending-user{% endif %}"
+            )
+            .media-left
+              .hidden-xs
+                if user.avatar
+                  img.media-object.img-circle.user-avatar.mar-no(
+                    src="{{ user.avatar.url }}"
+                  )
+                else
+                  i.fa.fa-user-circle.text-primary.media-object
+            .media-body
+              if user.is_authenticated
+                form#comment-form(method="POST", action="{% url 'comment_create' %}")
+                  {% csrf_token %}
+                  .hidden
+                    select#id_images.filtered(multiple=True, name="images")
+                    select.filtered.comment-mentions(
+                      multiple=True, name="user_mentions"
+                    )
+                  .form-group
+                    textarea.form-control(
+                      placeholder='Publica aquí',
+                      rows="5",
+                      required=True,
+                      name="text",
+                      maxlength=500,
+                    )
+                  .row
+                    .col-sm-8
+                      .dropzone#commentDropzone(
+                        role="form",
+                        data-action="{% url 'comment_image_create' %}",
+                      )
+                    .col-sm-4
+                      button.btn.btn-block.btn-primary.btn-lg(type="submit")
+                        | Publicar
+          .comments.comments-wide.comment-list
+            - include 'comments/includes/list.jade'
+        .col-sm-4.col-sm-pull-8.col-md-3.col-md-pull-6
+          .hidden-xs
+            +media-user()
+          if incomming_events
+            h4 Próximas actividades
+            each event in incomming_events
+              .box-event
+                .box-event-header.fc-today(
+                  class="event-type-{{event.activity_type|lower}}"
+                )
+                  span.text-uppercase
+                    | {{ event.get_activity_type_display|default:'&nbsp;' }}
+                .box-event-content
+                  p.title
+                    a(href="{% url 'event_detail' event.pk %}")
+                      | {{ event.get_base_activity }}
+                  p {{ event.start_date.date|date:'DATE_FORMAT'|default:'Fecha por definir' }}
+                  p.participants
+                    | {{ event.get_base_activity.useractivity_set.count }} integrantes
+          if my_pending_activities
+            h4 Mis actividades
+            each attendance in my_pending_activities
+              {% with event=attendance.activity.event %}
+              .box-event
+                .box-event-header.fc-today(
+                  class="event-type-{{event.activity_type|lower}}"
+                )
+                  span.text-uppercase
+                    | {{ event.get_activity_type_display|default:'&nbsp;' }}
+                .box-event-content
+                  p.title
+                    a(href="{% url 'event_detail' event.pk %}")
+                      | {{ event.get_base_activity }}
+                  p {{ event.start_date.date|date:'DATE_FORMAT'|default:'Fecha por definir' }}
+                  p.participants
+                    | {{ event.get_base_activity.useractivity_set.count }} integrantes
+              {% endwith %}
+        .col-sm-12.col-md-3
+          #region-data.box-event
+            .canvas-container
+              canvas#region-chart(height="260", width="260")
+              #chart-text  
+                h3 {{total_users|intcomma}}
+                p miembros
+                  br
+                  | de la Red
+            #region-legend
+              ul.region-list.fa-ul
+                - for region in regions
+                  li.region-bullet(
+                    class="{% if forloop.counter > 3 %}hidden{% endif %}"
+                  )
+                    i.fa-li.fa.fa-circle
+                    span {{region.name|truncatechars:15}}
+                    span.right.percent {{region.percent}}%
+                    span.right.count {{region.users__count}}
+                  - if forloop.last
+                    li.region-bullet.others
+                      i.fa-li.fa.fa-circle
+                      span Otras regiones
+                      span.right.percent {{others.percent}}%
+                      span.right.count {{others.users__count}}
+                    
+            
+                
+            .more-region
+              button.btn.btn-block.btn-primary.show-all-regions
+                | Ver todas las regiones
+              button.btn.btn-block.btn-primary.hide-some-regions.hidden
+                | Ocultar regiones
+          #institutions
+            .row
+              .col-xs-4.number
+                span {{ institutions_count|intcomma }}
+              .col-xs-8.text(
+                  class="{% if institutions_count > 999 %}small-text{% endif %}"
+                )
+                p Instituciones
+                  br
+                  | participan en la Red
+          .box-event
+            .online-users
+              span
+                | Personas en línea ({{active_users.count}})
+            .box-event-content.online
+              ul.list-unstyled.div-online-users(
+                  class="{% if active_users.count < 6 %}no-overflow{% endif %}"
+                )
+                - for active_user in active_users
+                  li.title.online-user
+                    a.inset(href='{{ active_user.get_absolute_url }}')
+                      if active_user.avatar
+                        img(src="{{ active_user.avatar.url }}")
+                      else
+                        i.fa.fa-user-circle.text-primary.media-object
+                      span {{ active_user.get_full_name|truncatechars:20 }}
+                  - empty
+                    li.title.online-user
+                      span.no-user No hay usuarios en línea
+          h4 Qué se está hablando sobre innovación pública
+          .mar-sm-bottom
+            a.twitter-timeline(
+              href="", data-widget-id="878360800167153668",
+              data-height="500", data-chrome="nofooter noheader"
+            )
+          .mar-sm-bottom
+            a.twitter-timeline(
+              href="https://twitter.com/labgobcl",
+              data-height="500", data-chrome="nofooter"
+            )
+              | Tweets by labgobcl
+    
+block active_users

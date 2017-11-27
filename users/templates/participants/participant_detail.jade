@@ -1,0 +1,211 @@
+extends base.jade
+
+block title
+  | personas
+
+block content
+  .participant-detail
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'people_list' %}") INTEGRANTES
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'people_list' %}") PERSONAS
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; #{participant.get_full_name}
+            if not participant.is_active
+              |  (Desactivada)
+      if user.is_staff
+        .hidden-sm.hidden-md.hidden-lg
+          p
+          p
+            a.btn.btn-inverse.btn-primary(
+              href="{% url 'participant_user_update' participant.pk %}"
+            )
+              | Configurar cuenta
+            a.btn.btn-inverse.btn-primary(
+              href="{% url 'accept_staff_user_redirect_view' participant.pk %}"
+            )
+              | Convertir en Staff
+      .row.hidden-sm.hidden-md.hidden-lg
+        .col-xs-12
+          .pull-left
+            if participant.avatar
+              .user-avatar.img-circle(
+                style="background-image: url('{{ participant.avatar.url }}')"
+              )
+            else
+              i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+          h2
+            = participant.get_full_name
+      .row
+        .hidden-xs.col-sm-3
+          if participant.avatar
+            .user-avatar.img-circle(
+              style="background-image: url('{{ participant.avatar.url }}')"
+            )
+          else
+            i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+          
+
+        .col-xs-12.col-sm-9
+          .row
+            .hidden-xs.col-sm-12
+              .row
+                .col-sm-8
+                  h2= participant.get_full_name
+                .col-sm-4
+                  if user.is_staff
+                    p
+                    p
+                    .btn-group.btn-group-vertical
+                      a.btn.btn-inverse.btn-primary(
+                        href="{% url 'participant_user_update' participant.pk %}"
+                      )
+                          | Configurar cuenta
+                      a.btn.btn-inverse.btn-primary(
+                        href="{% url 'accept_staff_user_redirect_view' participant.pk %}"
+                      )
+                        | Convertir en Staff
+            .col-xs-12
+              if participant.charge and participant.profile.show_charge
+                h6
+                  = participant.charge
+              if participant.institution
+                p
+                  strong Institución: &nbsp;
+                  a(href="{{ participant.institution.get_absolute_url }}")
+                    = participant.institution
+              //- if participant.region
+              //-   p
+              //-     strong Región: &nbsp;
+              //-     = participant.region
+              if participant.status = participant.STATUS_PENDING
+                p
+                  strong Fecha de ingreso de solicitud: &nbsp;
+                  = participant.created_at
+            .col-xs-12.col-md-6
+              if participant.is_staff or participant.profile.show_phone or participant.profile.show_email
+                h6.info
+                  | Información de contacto
+              if participant.is_staff or participant.profile.show_email
+                p
+                  | Email:
+                  | #[a= participant.email]
+              if participant.is_staff or participant.profile.show_phone
+                p
+                  | Teléfono:
+                  if participant.phone.national_number
+                    a(href="tel:{{ participant.phone }}")
+                      | {{participant.phone|default_if_none:''}}
+              if user.is_staff
+                p
+                  if participant.status == participant.STATUS_PENDING
+                    | Estado: Pendiente
+                  elif participant.status == participant.STATUS_REJECTED
+                    | Estado: Rechazado
+                  elif participant.is_active
+                    | Funcionario 
+                  else
+                    | Externo
+                  if participant.is_staff
+                    |  (Staff)
+            if participant.profile.show_interests and participant.interest_list.exists
+              .col-xs-12.col-md-6
+                h6
+                  | Intereses
+                div 
+                  each interest in participant.interest_list.all
+                    span.badge.badge-default= interest
+              hr
+          if user.is_staff and participant.status = participant.STATUS_PENDING
+            .btn-toolbar.pull-right
+              .btn-group
+                a.btn.btn-link.a-red(
+                  href="{% url 'reject_user_redirect_view' participant.pk %}"
+                )
+                  | Rechazar
+              .btn-group
+                a.btn.btn-primary(
+                  href="{% url 'accept_staff_user_redirect_view' participant.pk %}"
+                )
+                  | Aceptar funcionario
+              .btn-group
+                a.btn.btn-primary(
+                  href="{% url 'accept_extern_user_redirect_view' participant.pk %}"
+                )
+                  | Aceptar externo
+            .clearfix
+    .bg-color-white-blue
+      .container
+        .row.pad-top
+          .col-sm-3
+            a.btn.btn-primary.btn-block(href="{{participant.get_message_url}}").write-message
+              i.fa.fa-commenting-o(aria-hidden="false")
+              |  Mensaje
+            
+            .last-converstaions.hidden
+              h5 Conversaciones recientes
+              
+              ul
+                for sender in senders
+                  li
+                    a.sender(href="{{ sender.get_message_url }}")
+                      if sender.avatar
+                        .user-avatar.img-circle.pull-left(
+                          style="background-image: url('{{ sender.avatar.url }}');"
+                        )
+                      else
+                        i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+                    
+                      .sender-name
+                        {{sender.get_full_name}}
+              
+
+            if my_pending_activities
+              h5 Actividades inscritas
+              each attendance in my_pending_activities
+                {% with event=attendance.activity.event %}
+                .box-event
+                  .box-event-header.fc-today(
+                    class="event-type-{{event.activity_type|lower}}"
+                  )
+                    span.text-uppercase
+                      | {{ event.get_activity_type_display|default:'&nbsp;' }}
+                  .box-event-content
+                    p.title
+                      a(href="{% url 'event_detail' event.pk %}")
+                        | {{ event.get_base_activity }}
+                    p {{ event.start_date.date|date:'DATE_FORMAT'|default:'Fecha por definir' }}
+                    p.participants
+                      | {{ event.get_base_activity.useractivity_set.count }} integrantes
+                {% endwith %}
+
+            if past_activities
+              h5 Actividades pasadas
+              each attendance in past_activities
+                {% with event=attendance.activity.event %}
+                .box-event
+                  .box-event-header.fc-today(
+                    class="event-type-{{event.activity_type|lower}}"
+                  )
+                    span.text-uppercase
+                      | {{ event.get_activity_type_display|default:'&nbsp;' }}
+                  .box-event-content
+                    p.title
+                      a(href="{% url 'event_detail' event.pk %}")
+                        | {{ event.get_base_activity }}
+                    p {{ event.start_date.date|date:'DATE_FORMAT'|default:'Fecha por definir' }}
+                    p.participants
+                      | {{ event.get_base_activity.useractivity_set.count }} integrantes
+                {% endwith %}
+
+          .col-sm-9
+            h4 Publicaciones
+            .comments.comments-wide.comment-list
+              {% include 'comments/includes/list.jade' with author=participant %}

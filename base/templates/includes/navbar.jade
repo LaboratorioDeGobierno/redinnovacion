@@ -1,0 +1,175 @@
+- load staticfiles
+- load i18n static
+- load humanize 
+
+
+.navbar.navbar-inverse.navbar-fixed-top
+  .container
+    .navbar-header
+      button.navbar-toggle.collapsed(
+        type="button"
+        data-toggle="collapse"
+        data-target="#site-navbar-collapse"
+        aria-expanded="false"
+      )
+        span.toggle-text
+          {% trans 'menu' %}
+        span.icon-bar.top-bar
+        span.icon-bar.middle-bar
+        span.icon-bar.bottom-bar
+      a.navbar-brand(href="{% url 'home' %}")
+        img(src="{% static 'img/logo-red.svg' %}" height="50")
+    #site-navbar-collapse.navbar-collapse.collapse
+      ul.nav.navbar-nav.hidden-sm.hidden-md
+
+      ul.nav.navbar-nav.navbar-right
+      
+        li(class="{% if navbar_active == 'home' %}active{% endif %}")
+          a(href="{% url 'home' %}")
+            {% trans 'home'|capfirst %}      
+      
+        li.hidden-sm(class="{% if navbar_active == 'about' %}active{% endif %}")
+          a(href="{% url 'whats' %}")
+            {% trans 'what is this Network?'|capfirst %}
+        if not user.is_authenticated
+          li
+            a(href="{% url 'register' %}")
+              {% trans 'inscription'|capfirst %}
+        if user.is_authenticated
+          li.dropdown(class="{% if navbar_active == 'participants' %}active{% endif %}")
+            a.dropdown-toggle(
+              data-toggle="dropdown"
+              role="button"
+              aria-expanded="false"
+            )
+              {% trans 'participants'|capfirst %}
+            ul.dropdown-menu
+              li
+                a(href="{% url 'people_list' %}")
+                  {% trans 'people' %}
+              if user.is_staff
+                li
+                  a(href="{% url 'participant_list' %}") Aceptados
+                li
+                  a(href="{% url 'pending_participant_list' %}") Espera
+                li
+                  a(href="{% url 'extern_participant_list' %}") Externos
+                li
+                  a(href="{% url 'rejected_participant_list' %}") Rechazados
+              li
+                a(href="{% url 'institution_list' %}")
+                  {% trans 'institutions'|capfirst %}
+          li(class="{% if navbar_active == 'activities' %}active{% endif %}")
+            a(href="{% url 'calendar' %}")
+              {% trans 'activities'|capfirst %}
+        li(class="{% if navbar_active == 'documentation' %}active{% endif %}")
+          a(href="{% url 'documentation_list' %}")
+            {% trans 'Recursos'|capfirst %}
+        li(class="{% if navbar_active = 'cases' %}active{% endif %}")
+          a(href="{% url 'case_list' %}")
+            | Casos
+        if user.is_authenticated
+          li.dropdown.stick-to-next.hidden-xs
+            a#notifications-dropdown.dropdown-toggle(
+              type="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="true"
+            )
+              if user.avatar
+                .user-avatar.img-circle.pull-left(
+                  style="background-image: url('{{ user.avatar.tiny.url }}');"
+                )
+              else
+                .user-avatar.img-circle.pull-left
+                  i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+              
+              {% if total_notifications > 0 %}
+              div.badge.badge-danger#new-notifications-badge {{total_notifications}}
+              {% endif %}
+                
+            .dropdown-menu.notifications(aria-labelledby="notifications-dropdown") 
+              {% if total_notifications == 0 %}
+              .no-unread-notifications-message No tienes nuevas notificaciones
+              {% endif %}
+              ul
+                if user.is_authenticated
+                  for notification in dropdown_notifications_list
+                    li
+                      div(class="{% if notification.is_user_based_notification %}avatar{% else %}event-image{% endif%}")
+                        if notification.from_user.avatar
+                          img(src="{{notification.from_user.avatar.url}}")
+                          else
+                            if notification.is_user_based_notification
+                              i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+                            else
+                              .day {{notification.event.start_date.day}}
+                              .month {{notification.event.start_date|date:"b"}}
+                      .notification-info
+                        {% include 'notifications/includes/text.jade' %}
+                        .when Hace #{notification.updated_at|timesince}
+              
+              a.btn.btn-primary(href="{% url 'notification_list' %}")
+                | Ver notificaciones
+                {% if unread_notifications > 0 %}
+                | &nbsp;&nbsp;
+                span.badge {{unread_notifications}}
+                {% endif %}     
+              a.btn.btn-primary(href="{% url 'email_message_list' %}") 
+                | Ver mensajes
+                {% if unread_messages > 0 %}
+                | &nbsp;&nbsp;
+                span.badge {{unread_messages}}
+                {% endif %}
+
+          li.dropdown.nav-emphasis
+            a#user-session-dropdown.dropdown-toggle(
+              type="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="true"
+            )
+              .visible-xs
+                if user.avatar
+                  .user-avatar.img-circle.pull-left(
+                    style="background-image: url('{{ user.avatar.url }}');"
+                    )
+                else
+                  .user-avatar.img-circle.pull-left
+                    i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")  
+              | {{user.first_name|truncatechars:30}} {{user.last_name.0}}.
+            ul.dropdown-menu(aria-labelledby="user-session-dropdown")
+              - if user.is_staff
+                li
+                  a(href="{% url 'user_admin_list_view' %}")
+                    {% trans 'settings' %}
+                li
+                  a(href="{% url 'admin:index' %}") 
+                    |  Administración
+                li
+                  a(href="{% url 'excel_global_participants' %}")
+                    | Reportes
+                li
+                  a(href="{% url 'newsletter_list' %}") 
+                    | Newsletters
+              li
+                a(href="{% url 'user_profile' %}")
+                  {% trans 'profile' %}
+              li.visible-xs  
+                a(href="{% url 'notification_list' %}") 
+                  | Ver notificaciones    
+              li.visible-xs
+                a(href="{% url 'email_message_list' %}") 
+                  | Ver mensajes     
+              li
+                a(href="{% url 'user_update' %}")
+                  | Configurar cuenta
+              li
+                a(href="
+                  {% if request.session.loginas_from_user %}
+                  {% url 'loginas-logout' %}
+                  {% else %}
+                  {% url 'logout' %}
+                  {% endif %}"
+                )
+                  {% trans 'log out' %}

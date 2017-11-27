@@ -1,0 +1,39 @@
+.labeled-box {
+  p {
+    color: @gray-5;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  h6 {
+    line-height: 27px;
+  }
+
+  @media (min-width: @screen-sm-min) {
+    border: @table-border-width solid @gray-5;
+    border-radius: @table-outlined-radius;
+    padding: 30px 40px;
+    margin-bottom: 20px;
+    position: relative;
+
+    &:hover,
+    &:focus {
+      border-color: @blue;
+      background-color: @light-blue;
+    }
+
+    h6 {
+      margin: 0 0 20px;
+    }
+
+    p {
+      position: absolute;
+      bottom: 30px;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+extends base.jade
+
+- load i18n static
+- load thumbnail
+- load staticfiles
+
+block stylesheets
+  link(type="text/less", rel="stylesheet", href="{% static 'css/components/documentation-commons.less' %}")
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; RECURSOS
+      - include 'includes/search_title.jade' with page_title=title subtitle=subtitle
+  - include 'documentation/includes/documentation_tabs.jade' with active_tab=active_tab search_form=True
+
+  .bg-color-white
+    .container.documentation-tools
+      .row
+        .col-xs-12.col-sm-8.col-md-9
+          h3(style="margin: 25px 0;") Kit para aplicar y realizar actividades de innovación
+          
+          ul.no-bullets.methodology-list
+            - for methodology in object_list
+              li.methodology-card.tc-1
+                if methodology.documentation_file.image
+                  img(src="{% thumbnail methodology.documentation_file.image 240x200 crop %}")
+                else
+                  .img
+                a.title(href="{% url 'methodology_detail' methodology.id %}") #{methodology.title}
+                .text #{methodology.about|truncatechars:200|linebreaks}
+          unless paginator.num_pages == 1
+            a.btn.load-more-btn(data-pages="{{paginator.num_pages}}") Ver más
+          
+          if user.is_staff
+            a.btn.btn-success(href="{% url 'methodology_create' %}") Crear una metodología
+            a.btn.btn-success(href="{% url 'tool_create' %}") Crear una herramienta
+        .hidden-xs.col-sm-4.col-md-3
+          aside
+            h5 Publicaciones
+            p(
+              style="padding: 10px 0px;"
+            ) Descarga publicaciones sobre diversas temáticas relacionadas a la innovación en el sector público.
+            ul.no-bullets
+              for publication in publications
+                li.publication-card
+                  if publication.documentation_file.image
+                    img(src="{% thumbnail publication.documentation_file.image 160x240 %}")
+                  else
+                    .img
+                  a.title(href="{% url 'publication_detail' publication.id %}") #{publication.title}
+                  .text #{publication.short_description|truncatechars:140}
+              
+            a.btn(href="{% url 'publication_list' %}") 
+              span.visible-lg Ver todas las Publicaciones
+              span.hidden-lg Ver todas
+  
+
+if not user.is_accepted
+  block active_users

@@ -1,0 +1,103 @@
+body {
+  font-family: Brown;
+}
+
+p {
+  margin-bottom: 2px;
+}
+
+.margin-dotted {
+  border: 1px dashed #000;
+  padding-right: 120px;
+  padding-left: 120px;
+  padding-top: 55px;
+  padding-bottom: 55px;
+  min-height: 700px;
+}
+
+.logo {
+  width: 37%;
+}
+
+.content {
+  margin-top: 70px;
+  margin-bottom: 0px;
+  margin-left: 55px;
+  margin-right: 55px;
+  font-style: normal;
+}
+
+.content > p {
+  margin-bottom: 22px;
+  font-size: 2.0em;
+  font-style: normal;
+}
+
+p.certification-text{
+  font-size: 2.0em;
+  font-style: normal;
+  line-height: 90%;
+  height:200px;
+  padding-top:15px;
+}
+
+p.date {
+  font-size: 1.2em;
+  font-style: normal;
+}
+
+p.logo-footer-text{
+  font-size: 0.85em;
+  font-style: normal;
+}
+
+p.signature-name{
+  font-weight: bold;
+}
+
+.fillable {
+  text-align: center;
+  width: 100%;
+  display: table;
+  clear: both;
+}
+
+.fillable > .title {
+  display: table-cell;
+  text-align: left;
+}
+
+.fillable > .title.user {
+  width: 70px;
+}
+
+.fillable > .title.charge {
+  width: 200px;
+}
+
+.fillable > .text {
+  border-bottom: 1px dashed #000;
+  display: table-cell;
+  padding-bottom: -20px;
+}
+
+.endorser {
+  margin-top: 42px;
+  text-align: center;
+}
+
+.endorser img {
+  max-height: 114px;
+}
+
+.endorser .signature{
+  width: 70%;
+}
+
+.footer {
+  margin-top: 45px;
+}
+
+.row.bottom{
+  padding-top: 17px;
+}

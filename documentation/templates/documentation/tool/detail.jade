@@ -1,0 +1,102 @@
+extends base_resource.jade
+
+- load i18n static
+- load staticfiles
+- load thumbnail
+
+block summary_title
+  .title Sobre el documento:
+
+block breadcrumbs
+  li
+    a(href="{% url 'home' %}") INICIO
+    i.fa.fa-angle-right.li-breadcrumb
+  li
+    a(
+      href="{% url 'methodology_list' %}"
+    ) &nbsp; RECURSOS
+    i.fa.fa-angle-right.li-breadcrumb
+  li
+    a(
+      href="{% url 'methodology_list' %}"
+    ) METODOLOGÍAS Y HERRAMIENTAS
+    i.fa.fa-angle-right.li-breadcrumb
+  li.breadcrumb-not-selected
+    span &nbsp; {{object.title|upper}}
+
+block summary_footer
+  .footer-button-group
+    if object.documentation_file
+      if user.is_accepted
+        a.btn.btn-filled(
+          href="{% url 'documentation_file_download' object.documentation_file.hash_id %}",
+          download
+        ) 
+          i.fa.fa-download
+          | &nbsp;Descargar Documento
+      else
+        a.btn.btn-filled.login-to-download(
+          href="#",
+        ) 
+          i.fa.fa-download
+          | &nbsp;Descargar Documento
+    
+    if user.is_accepted  
+      a.btn(data-toggle="modal" data-target=".share-modal")
+        i.fa.fa-paper-plane
+        | &nbsp;Enviar por Email
+  
+  if user.is_accepted
+    - include 'documentation/includes/share-modal.jade'
+  
+block description
+  h5 ¿De qué se trata esta herramienta?
+  p #{object.description|linebreaks}
+  h5 Como y cuando utlizarla
+  p #{object.how_to_use|linebreaks}
+  
+  .highlight
+    h5 ¿Qué se necesita?
+    p #{object.what_you_need|linebreaks}
+  
+  if user.is_accepted
+    - include 'documentation/includes/dynamic_content.jade' with content=tool.dynamiccontent_set.all
+    
+    if user.is_staff
+      a.btn.btn-success(href="{% url 'tool_dynamic_content_create' object.pk %}")
+        | Agregar Contenido
+      a.btn.btn-success(href="{% url 'tool_update' object.pk %}") Editar herramienta
+      a.btn.btn-success(href="{% url 'tool_delete' object.pk %}") Eliminar herramienta
+    
+    div(style="margin-top:30px;")
+    - include 'comments/includes/comments_section.jade' with el=object type='tool' no_list=True
+  
+block aside_top_content
+  if object.documentation_file
+    if object.documentation_file.image
+      img.mar-top(src="{% thumbnail object.documentation_file.image 400x600 %}")
+    
+    if user.is_accepted
+      p
+        a.title(
+          href="{% url 'documentation_file_download' object.documentation_file.hash_id %}",
+          download
+        ) Descargar Documento
+    else
+      p
+        a.title.login-to-download(
+          href="#",
+        ) Descargar Documento
+
+    if object.country
+      p 
+        b País
+      p {{object.country}}
+
+    if object.language
+      p 
+        b Idioma
+      p {{object.language}}
+
+if not user.is_accepted
+  block active_users

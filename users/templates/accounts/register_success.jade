@@ -1,0 +1,34 @@
+extends accounts/base_accounts.jade
+
+- load staticfiles
+- load i18n static
+
+block content
+  .container
+    .text-center
+      a(href="{% url 'home' %}")
+        img.logo-lg(src="{% static 'img/logo-red.svg' %}")
+    .row
+      .col-xs-12.col-sm-8.col-sm-offset-2
+        .panel.panel-primary
+          .panel-heading
+          .panel-body.text-center
+            h2 {% blocktrans %}¡Muchas Gracias! {% endblocktrans %}
+            br
+            p
+              | Muchas gracias por tu inscripción, revisaremos la información que
+              | ingresaste y en un momento te enviaremos un e-mail de confirmación.
+            p
+              | Mientras esperas te invitamos a recorrer la plataforma de la Red: 
+              a(href="#")
+                | tu-sitio.cl
+              |  y el sitio del Laboratorio de Gobierno 
+              a(href="https://www.lab.gob.cl")
+                | www.lab.gob.cl
+            br
+            p.water
+              | La información proporcionada será utilizada sólo para los fines
+              | asociado a la Red, resguardado su seguridad,
+              | confidencialidad y privacidad conforme a lo dispuesto en el artículo
+              | 19 N° 4 de la Construcción  Política de la República y en la Ley N°
+              | 19.628, sobre Protección de la Vida Privada

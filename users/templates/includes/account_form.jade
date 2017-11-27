@@ -1,0 +1,14 @@
+.row
+  .col-md-6
+    if participant.is_active
+      h6 Eliminar cuenta
+      a.btn.btn-danger(
+        href="{% url 'deactivate' participant.pk %}",
+        onclick="return confirm('¿Seguro que quieres cerrar la cuenta?')"
+      )
+        if user.is_staff
+          | Deseo rechazar la cuenta
+        else
+          | Deseo eliminar mi cuenta
+    else
+      .alert.alert-info Esta cuenta no está activa

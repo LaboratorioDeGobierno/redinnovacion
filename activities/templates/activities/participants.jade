@@ -1,0 +1,57 @@
+
+extends base.jade
+
+- load i18n
+
+block title
+  | Evento
+
+block content
+  .container
+    ul.page-breadcrumb.mar-top
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'event_list' %}") EVENTOS
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{{ activity.event.get_absolute_url }}")= activity.event.name
+        i.fa.fa-angle-right.li-breadcrumb
+
+      li.breadcrumb-not-selected
+        span &nbsp; Participantes
+
+    h2.font-accent= activity.name
+
+    if useractivities
+      div
+        h2(style="display:inline-block;")
+          b #{useractivities.count} Usuarios 
+          if user.is_staff
+            |  ({{activity.event.quota}} cupos en total)
+        if user.is_staff or in_activity
+          a.btn.btn-primary.pull-right(
+            style="margin-top: 20px;"
+            href="{% url 'excel_activity_participants' activity.id %}"
+          )
+            | Descargar listado
+
+      table.table
+        tbody
+          for useractivity in useractivities
+            tr
+              td.name
+                a(href="{{ useractivity.user.get_absolute_url }}")
+                  | #{ useractivity.user.first_name } #{ useractivity.user.last_name }
+              td= useractivity.user.email
+              td.td-last
+                if useractivity.attendance_date
+                  span.green-font
+                    | {% trans 'attended'|capfirst %}
+                else
+                  if user.is_staff
+                    a.btn.btn-link(href="{% url 'user_activity_attend' useractivity.pk %}")
+                      | {% trans 'attend'|capfirst %}
+                  else
+                    | {% trans 'not attended'|capfirst %}

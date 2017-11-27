@@ -1,0 +1,60 @@
+extends base.jade
+
+- load i18n static
+- load thumbnail
+- load staticfiles
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; CASOS
+      - include 'includes/search_title.jade' with page_title='Casos' subtitle='Aquí encontrarás casos y experiencias de innovación realizados por equipos de servidores públicos del país. También, puedes subir tus propios casos y compartirlos con todos los miembros de la Red.'
+  - include 'cases/includes/cases_tabs.jade' with search_form=True
+   
+  .bg-color-white
+    .container.mar-bottom
+      if user.is_accepted
+        a.btn.btn-primary(
+          href="{% url 'case_create' %}",
+          style="margin-top:15px;"
+        ) Sube tu caso
+      ul.cases-list.no-bullets
+        for case in object_list
+          li.publication-card
+            if case.logo
+              img(src="{{case.logo|thumbnail_url:'small'}}")
+            else
+              .img
+            a.title(href="{% url 'case_detail' case.id %}") #{case.title}
+            .text #{case.about|truncatechars:200}
+  
+      .row
+        .col-sm-6
+          if user.is_accepted
+            a.btn.btn-primary(
+              href="{% url 'case_create' %}"
+            ) Sube tu caso
+        .col-sm-6.text-right
+          span.dropdown
+            button.btn.btn-inverse.btn-primary.dropdown-toggle(
+              type='button', data-toggle='dropdown'
+            )
+              | Mostrar {{by}} #[span.caret]
+            ul.dropdown-menu
+              li
+                a(href='?by=6') 6
+              li
+                a(href='?by=12') 12
+              li
+                a(href='?by=24') 24
+  
+          if is_paginated
+            {% include 'includes/pagination.jade' with objects=page_obj paginator=paginator %}
+
+if not user.is_accepted
+  block active_users

@@ -1,0 +1,23 @@
+@import "./calendar_variables";
+
+.make-event-type-panels(@events; @event-colors; @index) when (@index > 0) {
+  .make-event-type-panels(@events; @event-colors; (@index - 1));
+  @event: extract(@events, @index);
+  @color: extract(@event-colors, @index);
+
+  .event-type-@{event} {
+    .panel.panel-accent {
+      border-color: @color;
+
+      &.panel-bordered .panel-heading {
+        background-color: @color;
+      }
+    }
+
+    .font-accent {
+      color: @color;
+    }
+  }
+}
+
+.make-event-type-panels(@events; @event-colors; length(@events));

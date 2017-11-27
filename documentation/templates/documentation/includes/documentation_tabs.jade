@@ -1,0 +1,28 @@
+- load i18n static
+
+.nav-tabs-inverse-container.hidden-xs.green-bg-2
+  .container
+    .row
+      .col-sm-6
+        ul.nav.nav-tabs.nav-tabs-inverse
+          li(class="{% if active_tab = 'tools' %}active{% endif %}")
+            a(href="{% url 'methodology_list' %}")
+              | METODOLOGÍAS Y HERRAMIENTAS
+          li(class="{% if active_tab = 'publications' %}active{% endif %}")
+            a(href="{% url 'publication_list' %}")
+              | PUBLICACIONES
+      if search_form
+        .col-sm-6
+          form.documentation-search-form(action="{% url 'documentation_search' %}", method="GET")
+            input.form-control(
+              type="text", name="q", value="{{ q|default:'' }}",
+              placeholder="Buscar"
+            )
+            select.form-control.filtered(name="type")
+              option(value="all" selected) Todos los archivos
+              option(value="methodology") Metodologías
+              option(value="tool") Herramientas
+              option(value="publication") Publicaciones
+              
+            button.btn.btn-sm.btn-link(type="submit")
+              i.fa.fa-2x.fa-search

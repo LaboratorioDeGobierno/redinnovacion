@@ -1,0 +1,189 @@
+# Translations for the base app
+# Copyright (C) 2016
+# This file is distributed under the same license as the django-project-template package.
+# Ignacio Munizaga <muni@magnet.cl>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-07 17:07-0400\n"
+"PO-Revision-Date: 2016-09-17 08:21-0300\n"
+"Last-Translator: Ignacio Munizaga <muni@magnet.cl>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
+"Language: es\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:22
+msgid "My site admin"
+msgstr "Sitio de administración"
+
+#: admin.py:25
+msgid "My administration"
+msgstr "Administración"
+
+#: admin.py:28
+msgid "Site administration"
+msgstr "Sitio de administración"
+
+#: admin.py:45
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: admin.py:86
+msgid "Download Data"
+msgstr "Descargar datos"
+
+#: definitions.py:7
+msgid "January"
+msgstr "Enero"
+
+#: definitions.py:8
+msgid "February"
+msgstr "Febrero"
+
+#: definitions.py:9
+msgid "March"
+msgstr "Marzo"
+
+#: definitions.py:10
+msgid "April"
+msgstr "Abril"
+
+#: definitions.py:11
+msgid "May"
+msgstr "Mayo"
+
+#: definitions.py:12
+msgid "June"
+msgstr "Junio"
+
+#: definitions.py:13
+msgid "July"
+msgstr "Julio"
+
+#: definitions.py:14
+msgid "August"
+msgstr "Agosto"
+
+#: definitions.py:15
+msgid "September"
+msgstr "Septiembre"
+
+#: definitions.py:16
+msgid "October"
+msgstr "Octubre"
+
+#: definitions.py:17
+msgid "November"
+msgstr "Noviembre"
+
+#: definitions.py:18
+msgid "December"
+msgstr "Diciembre"
+
+#: models.py:42
+msgid "No"
+msgstr "No"
+
+#: models.py:42
+msgid "Yes"
+msgstr "Sí"
+
+#: models.py:46
+msgid "creation date"
+msgstr "Fecha de Creación"
+
+#: models.py:50
+msgid "edition date"
+msgstr "Fecha de edición"
+
+#: templates/exceptions/400.jade:6
+msgid "bad request"
+msgstr "Solicitud errónea"
+
+#: templates/exceptions/403.jade:6
+msgid "permission denied"
+msgstr "permiso denegado"
+
+#: templates/includes/field.jade:18
+msgid "optional"
+msgstr "opcional"
+
+#: templates/includes/navbar.jade:14
+msgid "menu"
+msgstr "menu"
+
+#: templates/includes/navbar.jade:24
+msgid "home"
+msgstr "inicio"
+
+#: templates/includes/navbar.jade:29
+msgid "inscription"
+msgstr "inscripción"
+
+#: templates/includes/navbar.jade:42
+msgid "participants"
+msgstr "integrantes"
+
+#: templates/includes/navbar.jade:47 templates/includes/tabs.jade:10
+msgid "people"
+msgstr "personas"
+
+#: templates/includes/navbar.jade:57 templates/includes/tabs.jade:13
+msgid "institutions"
+msgstr "instituciones"
+
+#: templates/includes/navbar.jade:66
+msgid "activities"
+msgstr "actividades"
+
+#: templates/includes/navbar.jade:69
+msgid "what is this Network?"
+msgstr "¿Qué es la Red?"
+
+#: templates/includes/navbar.jade:72
+msgid "cases"
+msgstr "casos"
+
+#: templates/includes/navbar.jade:75
+msgid "documentation"
+msgstr "documentación"
+
+#: templates/includes/navbar.jade:92
+msgid "settings"
+msgstr "configuración"
+
+#: templates/includes/navbar.jade:95
+msgid "profile"
+msgstr "perfil"
+
+#: templates/includes/navbar.jade:101
+msgid "log out"
+msgstr "cerrar sesión"
+
+#~ msgid "page not found"
+#~ msgstr "página no encontrada"
+
+#~ msgid "There has been an error"
+#~ msgstr "Ha ocurrido un error"
+
+#~ msgid "What is it"
+#~ msgstr "Qué es la Red"
+
+#~ msgid "Register here"
+#~ msgstr "¿Quieres ser parte de la Red? Inscríbete Aquí"
+
+#~ msgid "integrants"
+#~ msgstr "integrantes"
+
+#~ msgid "events"
+#~ msgstr "eventos"
+
+#~ msgid "Logged in as"
+#~ msgstr "Ingresado como"

@@ -1,0 +1,10 @@
+.form-group(
+  class="{% if field.errors %}has-error{% endif %} form-group-{{field.name}}"
+)
+  label.control-label.required
+    {{field.label}}
+    - if field.field.required and not hide_required
+      small.text-muted
+        | (requerido)
+  {{ field }}
+  span.help-inline.help-block {{ field.errors|striptags }}

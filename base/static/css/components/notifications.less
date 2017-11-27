@@ -1,0 +1,140 @@
+.notifications {
+  @avatar-size: 36px;
+  color: @white;
+
+
+  .no-unread-notifications-message {
+    font-family: Lato;
+    font-weight: normal;
+    font-size: 13px;
+
+    line-height: 17px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  ul {
+    height: auto;
+    max-height: 420px;
+    overflow-x: hidden;
+    padding: 10px 10px;
+    width: 320px;
+
+    li {
+      list-style-type: none;
+      min-height: 47px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid @dark-blue;
+    }
+
+    .avatar, {
+      height: @avatar-size;
+      width: @avatar-size;
+      border: 1px solid @gray-5;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 15px;
+      float: left;
+      img {
+        height: 100%; width: 100%;
+        border-radius: 50%;
+      }
+      i {
+        font-size: @avatar-size - 2;
+      }
+    }
+
+    .event-image {
+      height: 32px;
+      width: 37px;
+      background-color: @bright-blue;
+      border-radius: 5px;
+      position: relative;
+      display: inline-block;
+      margin: 5px 15px;
+      margin-bottom: 0;
+      float: left;
+
+      &::before , &::after{
+        content: "";
+        font-size: 0;
+        width: 0; height: 0;
+        border: 4px solid @bright-blue;
+        border-radius: 3px;
+        position: absolute;
+        top: -6px;
+        left: 5px;
+      }
+
+      &::after {
+        left: 22px;
+      }
+
+      .day {
+        font-family: Brown;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 5px;
+      }
+
+      .month {
+        font-family: Lato;
+        font-size: 11px;
+        text-align: center;
+        margin-top: -10px;
+      }
+    }
+
+    .info {
+      font-family: Lato;
+      font-weight: normal;
+      line-height: 17px;
+      margin-left: 60px;
+      font-size: 13px;
+
+      a {
+        color: @white;
+        font-weight: bold;
+      }
+    }
+
+    .when {
+      font-family: Lato;
+      font-size: 12px;
+      font-weight: normal;
+      margin-bottom: 5px;
+      margin-left: 67px;
+    }
+  }
+
+  a.btn {
+    background-color: @blue;
+    border: 0;
+    padding: 10px;
+    width: 100%;
+    font-family: Lato;
+    font-weight: bold;
+    font-size: 13px;
+    color: @white;
+
+    &:hover {
+      background-color: @dark-blue;
+    }
+  }
+
+
+  ul::-webkit-scrollbar {
+      width: 12px;
+  }
+
+  ul::-webkit-scrollbar-track {
+      border-radius: 10px;
+  }
+
+  ul::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: @dark-blue;
+      // -webkit-box-shadow: inset 0 0 6px @bright-blue;
+  }
+}

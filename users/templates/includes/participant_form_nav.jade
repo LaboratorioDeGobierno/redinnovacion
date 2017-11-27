@@ -1,0 +1,16 @@
+ul.nav.nav-tabs.nav-default.nav-justified
+  li(class="{% if active_tab == 'privacy' %}active{% endif %}")
+    a(href="{% url 'participant_profile_update' participant.pk %}")
+      | Privacidad
+  li(class="{% if active_tab == 'profile' %}active{% endif %}")
+    a(href="{% url 'participant_user_update' participant.pk %}")
+      | Perfil
+  li(class="{% if active_tab == 'password' %}active{% endif %}")
+    a(href="{% url 'participant_password_update' participant.pk %}")
+      | Contraseña
+  li(class="{% if active_tab == 'avatar' %}active{% endif %}")
+    a(href="{% url 'participant_avatar_update' participant.pk %}")
+      | Foto
+  li(class="{% if active_tab == 'account' %}active{% endif %}")
+    a(href="{% url 'participant_account_update' participant.pk %}")
+      | Cuenta

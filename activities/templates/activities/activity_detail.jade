@@ -1,0 +1,167 @@
+extends base.jade
+
+- load i18n
+
+block title
+  | Evento
+
+block content
+  .container
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'event_list' %}") EVENTOS
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{{ event.get_absolute_url }}")= event.name
+        i.fa.fa-angle-right.li-breadcrumb
+      li.breadcrumb-not-selected
+        span &nbsp; #{ activity.name }
+    h2.font-accent= activity.name
+    .row.big-pad-bottom
+      .col-md-12
+        .panel.panel-accent
+          .panel-body.pad-all
+            .row.row-flex
+              .col-md-7.col-sm-12.bor-col.justify-content-start
+                .row
+                  .col-md-12
+                    h3.pad-no.mar-bottom ¿En que consiste el taller?
+                    p.pad-no.mar-bottom.text-descriptive= activity.description
+                  .col-md-7.col-sm-6.info-box
+                    p ¿CUÁNDO?
+                    h3 #{activity.start_date | date:'l d \d\e F'}
+                    if activity.start_date and activity.end_date
+                      .h3 #{activity.start_date | date:'fa'} a #{activity.end_date | date:'fa'}
+                  .col-md-5.col-sm-6.info-box
+                    p ¿DÓNDE?
+                    h6= activity.address|default:''
+                .bor-bottom.bor-gray-5.hidden-sm.hidden-xs
+              .col-md-5.col-sm-12.justify-content-start
+                img.img-responsive(src='https://ibin.co/3NpsAWNGNTUv.png')
+            .row.row-flex
+              .col-md-7.col-sm-7.col-xs-12
+                .row
+                  .col-md-6.info-box
+                    p CIUDAD
+                    h6= activity.city
+                  .col-md-6.info-box
+                    p REGION
+                    h6= activity.region
+              .col-md-5.col-sm-5.col-xs-12.text-right.justify-content-end
+                .div
+                  a.btn.btn-primary(href="{% url 'event_evaluation_create' activity.id %}")
+                    | Evalúa la Actividad
+    .row
+      .col-md-4.col-sm-12.pull-right
+        .big-pad-bottom
+          .panel.panel-bordered.panel-accent
+            .panel-heading
+            .panel-body
+              h3 Recursos utilizados en la actividad
+              a.text-primary Descarga pdf presentación de la actividad
+              h5.mar-top Material del Taller
+              ul.list-unstyled
+                li
+                  a.text-primary Link de descarga de archivos 01
+                li
+                  a.text-primary Link de descarga de archivos 02
+                li
+                  a.text-primary Link de descarga de archivos 03
+              ul.list-unstyled
+                li
+                  a.text-primary Láminas utilizadas 01
+                li
+                  a.text-primary Láminas utilizadas 02
+          a.btn.btn-block.btn-primary.btn-bordered(
+            href="{% url 'activity_participants' activity.id %}"
+          )
+            | Ver listado de Asistentes
+          a.btn.btn-block.btn-primary(
+            href="{% static 'Certificado_Participacion_Red.pdf' %}"
+          )
+            | Descargar Certificado
+        .big-pad-bottom
+          h5.pad-bottom Etiquetas
+          ul.list-inline.list-rounded-square.list-default
+            li
+              a innovación
+            li
+              a diseño
+            li
+              a administración
+            li
+              a edicación
+        .big-pad-bottom
+          h5.pad-bottom Quizás te interese
+          .box-event.bg-color-gray-6
+            .box-event-content
+              a Nombre de la actividad lorem ipsum
+          .box-event.bg-color-gray-6
+            .box-event-content
+              a Nombre del caso lorem ipsum
+          .box-event.bg-color-gray-6
+            .box-event-content
+              a Nombre del caso lorem ipsum
+      .col-md-8.col-sm-12.pull-right
+        p.big-pad-bottom= activity.description
+
+        .comments
+          .comments-heading 10 Comentarios
+          .comments-actions
+            .btn-group
+              .btn.btn-default.active
+                i.fa.fa-heart
+                | Me gusta
+                span.quantity 8
+          textarea.form-control(cols=40, rows=4)
+          .comment
+            .comment-avatar.img-circle(
+              style="background-image: url('https://robohash.org/CatalinaAcevedo?set=set3');"
+            )
+            .comment-body
+              .comment-content
+                .comment-heading Catalina Acevedo
+                  .comment-time Hace 13 horas
+                p Vestibulum varius nibh quis pretium hendrerit. Praesent molestie odio sit amet elit hendrerit, quis auctor ante tincidunt. Maecenas ut tellus ac ipsum facilisis gravida pulvinar sit amet leo. Nullam tincidunt rutrum velit. Nulla sit amet magna nec neque porta iaculis a sed nisl. In hac habitasse platea dictumst.
+              .comment-actions
+                .btn-group
+                  .btn.btn-default
+                    i.fa.fa-angle-up
+                  .btn.btn-default
+                    i.fa.fa-angle-down
+                  .btn.btn-default Responder
+            .comment
+              .comment-avatar.img-circle(
+              style="background-image: url('https://robohash.org/AlejandroAlarcon?set=set3');"
+              )
+              .comment-body
+                .comment-content
+                  .comment-heading Alejandro Alarcon
+                    .comment-time Hace 11 horas
+                  p Vestibulum varius nibh quis pretium hendrerit. Praesent molestie odio sit amet elit hendrerit, quis auctor ante tincidunt. Maecenas ut tellus ac ipsum facilisis gravida pulvinar sit amet leo. Nullam tincidunt rutrum velit. Nulla sit amet magna nec neque porta iaculis a sed nisl. In hac habitasse platea dictumst.
+                .comment-actions
+                  .btn-group
+                    .btn.btn-default
+                      i.fa.fa-angle-up
+                    .btn.btn-default
+                      i.fa.fa-angle-down
+                    .btn.btn-default Responder
+          .comment
+            .comment-avatar.img-circle(
+            style="background-image: url('https://robohash.org/AlejandroAlarcon?set=set3');"
+            )
+            .comment-body
+              .comment-content
+                .comment-heading Alejandro Alarcon
+                  .comment-time Hace 9 horas
+                p Vestibulum varius nibh quis pretium hendrerit. Praesent molestie odio sit amet elit hendrerit, quis auctor ante tincidunt. Maecenas ut tellus ac ipsum facilisis gravida pulvinar sit amet leo. Nullam tincidunt rutrum velit. Nulla sit amet magna nec neque porta iaculis a sed nisl. In hac habitasse platea dictumst.
+              .comment-actions
+                .btn-group
+                  .btn.btn-default
+                    i.fa.fa-angle-up
+                  .btn.btn-default
+                    i.fa.fa-angle-down
+                  .btn.btn-default Responder

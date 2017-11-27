@@ -1,0 +1,77 @@
+extends base.jade
+doctype 5
+
+- load compress
+- load staticfiles
+- load i18n static
+
+block title
+  | Eventos
+
+block content
+  .container.section
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li.breadcrumb-not-selected
+        span &nbsp; Actividad
+
+    br
+    .row
+      .col-xs-12.col-sm-12.col-md-9.col-lg-9
+        h2.title-people Eventos que componen la Red
+      .col-xs-12.col-sm-12.col-md-3.col-lg-3
+        a.btn.btn-primary.pull-right.whatsapp(
+          href="{% url 'event_create' %}"
+        )
+          | Agregar actividad
+    br
+    table.table.table-outlined.hidden-xs.hidden-sm
+      thead
+        tr
+          th Nombre de evento
+          th Actividades
+          th Fecha de inicio
+          th Fecha de fin
+          th Dirección
+          if perms.events.change_event
+            th
+      tbody
+        for event in event_list
+          tr
+            td
+              a(href="{{ event.get_absolute_url  }}")
+                | {{ event.name }}
+            - if event.activity_count
+              td.participants {{ event.activity_count }} actividades
+            - else
+              td.participants No tiene actividades
+            td
+              {{ event.start_date|default:'' }}
+            td
+              {{ event.end_date|default:'' }}
+            td
+              {{ event.address }}
+            if perms.events.change_event
+              td.td-last
+                a(href="{% url 'event_update' pk=event.pk %}")
+                  | Editar
+    .hidden-lg.hidden-md
+      for event in event_list
+        hr
+        h3
+          a(href="{{ event.get_absolute_url  }}") {{ event.name }}
+        p.participants {{ event.activity_count }} actividades
+      hr
+    .row
+      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+        .form-group
+          a.btn.btn-inverse.btn-primary(href="#")
+            i.fa.fa-left.fa-chevron-left
+            | Anterior
+      .col-xs-6.col-sm-6.col-md-6.col-lg-6
+        .form-group
+          a.btn.btn-inverse.btn-primary.pull-right(href="#")
+            | Siguiente
+            i.fa.fa-chevron-right

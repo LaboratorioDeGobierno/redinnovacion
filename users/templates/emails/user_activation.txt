@@ -1,0 +1,13 @@
+¡Hola {{user.get_full_name}}!
+
+Esperando estés bien, te escribimos para contarte que ¡ya eres parte de la Red!
+
+Para que puedas acceder a tu usuario en la plataforma web de la Red, puedes acceder al siguiente link y editar tu contraseña: {{ protocol }}://{{ domain }}{% url 'users.views.password_reset_confirm' uidb64=uid token=token %}
+
+A través de esta plataforma, podrás estar al tanto de todas las actividades que se están realizando en el marco de la innovación pública, conectarte y compartir con otros funcionarios del país, tener un seguimiento de tu participación en la Red, descargar material e información, entre muchas otras opciones que te iremos contando.
+
+Te invitamos a participar de las próximas actividades inscribiéndote a través del sitio web.
+
+Muchas gracias por tu interés.
+
+¡Un abrazo!

@@ -1,0 +1,111 @@
+@import "../variables.less";
+
+.nav-tabs.nav-default {
+  margin-bottom: 26px;
+  border-bottom: 2px solid @gray-5;
+
+  & > li {
+    margin-bottom: -2px;
+  }
+
+  & > li > a,
+  & > li > a:hover,
+  & > li > a:focus,
+  & > li.active > a,
+  & > li.active > a:hover,
+  & > li.active > a:focus {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  & > li > a {
+    border-bottom: 2px solid @gray-5;
+    font-size: 19px;
+    color: @gray-5;
+  }
+
+  & > li > a:hover,
+  & > li > a:hover {
+    border-bottom-color: @gray-3;
+    color: @gray-3;
+  }
+
+  & > li.active > a,
+  & > li.active > a:hover,
+  & > li.active > a:focus {
+    color: @gray-2;
+    border-bottom: 2px solid @gray-2;
+  }
+}
+
+.nav-tabs-inverse-container {
+  background-color: darken(@blue, 10%);
+
+  .form-control {
+    background-color: @green-3;
+    border-radius: 0;
+    font-family: Brown, sans-serif;
+    font-weight: normal;
+    color: @white;
+  }
+
+  .input-group-addon {
+    background-color: @blue;
+    border-radius: 0;
+  }
+
+  .btn-link {
+    color: @white;
+  }
+
+  input, input:focus, .input-group-addon {
+    border: none;
+    box-shadow: none;
+  }
+
+  *::-webkit-input-placeholder {
+    color: @white;
+  }
+  *::-moz-placeholder {
+      /* FF 19+ */
+      color: @white;
+  }
+  *:-ms-input-placeholder {
+      /* IE 10+ */
+      color: @white;
+  }
+}
+
+.nav-tabs-inverse {
+  background-color: transparent;
+
+  & > li > a {
+    color: fade(@white, 50%);
+    text-transform: uppercase;
+    font-size: 13px;
+    font-family: 'Brown', sans-serif;
+    font-weight: 100;
+    border: none;
+    border-bottom: 5px solid transparent;
+  }
+
+  & > li > a:hover,
+  & > li > a:focus,
+  & > li > a:active,
+  & > li.active > a,
+  & > li.active > a:hover,
+  & > li.active > a:focus {
+    color: @white;
+    background-color: inherit;
+    border: none;
+    border-bottom: 5px solid transparent;
+    cursor: pointer;
+  }
+
+  & > li.active > a,
+  & > li.active > a:hover,
+  & > li.active > a:focus {
+    border-bottom: 5px solid @bright-red
+  }
+}

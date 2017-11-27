@@ -1,0 +1,96 @@
+extends base_resource.jade
+
+- load i18n static
+- load staticfiles
+- load thumbnail
+
+block summary_title
+  .title Sobre esta metodología:
+
+block breadcrumbs
+  li
+    a(href="{% url 'home' %}") INICIO
+    i.fa.fa-angle-right.li-breadcrumb
+  li
+    a(
+      href="{% url 'methodology_list' %}"
+    ) RECURSOS
+    i.fa.fa-angle-right.li-breadcrumb
+  li
+    a(
+      href="{% url 'methodology_list' %}"
+    ) METODOLOGÍAS Y HERRAMIENTAS
+    i.fa.fa-angle-right.li-breadcrumb
+  li.breadcrumb-not-selected
+    span &nbsp; {{object.title|upper}}
+
+block description
+  h5 Descripción
+  p #{object.description|linebreaks}
+  
+  if methodology.tools.count > 0
+    ol.tools-list.highlight
+      h5 Herramientas
+      for tool in methodology.tools.all
+        li
+          if tool.image
+            img(src="{% thumbnail tool.image 350x250 %}")
+          else
+            .img
+          .content
+            a.title(href="{% url 'tool_detail' tool.id %}") #{tool.title}
+            .text #{tool.about}
+  
+  if user.is_accepted
+    - include 'documentation/includes/dynamic_content.jade' with content=methodology.dynamiccontent_set.all
+
+    if user.is_staff
+      a.btn.btn-success(href="{% url 'methodology_dynamic_content_create' object.pk %}")
+        | Agregar Contenido
+      a.btn.btn-success(href="{% url 'methodology_update' object.pk %}") Editar metodología
+      a.btn.btn-success(href="{% url 'methodology_delete' object.pk %}") Eliminar metodología  
+      a.btn.btn-success(href="{% url 'methodology_tool_create' object.pk %}") Agregar herramienta  
+
+    .footer-button-group
+      a.btn(data-toggle="modal" data-target=".share-modal")
+        i.fa.fa-paper-plane
+        | &nbsp;Enviar por Email
+  
+    div(style="margin-top:30px;")
+      - include 'comments/includes/comments_section.jade' with el=object type='methodology'
+    - include 'documentation/includes/share-modal.jade'
+  
+
+
+block aside_top_content
+  if object.documentation_file
+    h6 Presentación
+    if object.documentation_file.image
+      img(src="{% thumbnail object.documentation_file.image 400x600 %}")
+    
+    if user.is_accepted
+      p 
+        a.title(
+          href="{% url 'documentation_file_download' object.documentation_file.hash_id %}",
+          download
+        ) #{object.documentation_file.name}
+    else
+      p 
+        a.title.login-to-download(
+          href="#",
+        ) #{object.documentation_file.name}
+
+    if object.country
+      p 
+        b País
+      p {{object.country}}
+
+    if object.language
+      p 
+        b Idioma
+      p {{object.language}}
+
+      
+
+if not user.is_accepted
+  block active_users

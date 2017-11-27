@@ -1,0 +1,59 @@
+@import "../variables.less";
+
+.box-event {
+  font-family: 'Lato-Regular';
+  font-size: @box-event-font-size * .875;
+  color: @gray-2;
+  background-color: @white;
+  margin-bottom: 15px;
+  border-radius: @common-border-radius;
+  @media (min-width: @screen-sm-min) {
+    font-size: @box-event-font-size;
+    margin-bottom: 20px;
+  }
+}
+
+.box-event-content {
+  padding: 15px 20px;
+  border-bottom-left-radius: @common-border-radius;
+  border-bottom-right-radius: @common-border-radius;
+  @media (min-width: @screen-sm-min) {
+    padding: 15px 30px;
+  }
+
+  p {
+    font-size: 1em;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+
+  .title {
+    font-size: 1.1875em;
+    line-height: 1.158;
+    @media (min-width: @screen-sm-min) {
+      font-size: 1.3125em;
+      line-height: 1.325;
+    }
+  }
+
+  .participants {
+    font-size: .625em;
+    text-transform: uppercase;
+    @media (min-width: @screen-sm-min) {
+      font-size: .75em;
+    }
+  }
+}
+
+.box-event-header {
+  background-color: @yellow;
+  padding: 10px 20px;
+  border-top-right-radius: @common-border-radius;
+  border-top-left-radius: @common-border-radius;
+  font-size: .75em;
+  @media (min-width: @screen-sm-min) {
+    padding: 10px 30px;
+  }
+}

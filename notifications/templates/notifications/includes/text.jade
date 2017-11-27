@@ -1,0 +1,46 @@
+.info
+  if notification.is_user_based_notification
+    a(href="{{protocol}}{{domain}}{{notification.from_user.get_absolute_url}}")
+      | {{notification.from_user.get_full_name}}
+
+  if notification.kind == notification.MENTION
+    |  te mencionó en  
+    if notification.event
+      a(href="{{protocol}}{{domain}}{% url 'event_detail_with_comment' notification.event_id notification.comment_id %}")
+        {{notification.event.name}}
+    else
+      |  un   
+      a(
+        href="{{protocol}}{{domain}}{% url 'home' %}c/{% if notification.comment.parent %}{{notification.comment.parent_id}}{% else %}{{notification.comment_id}}{% endif %}/"
+      ) comentario
+  elif notification.kind == notification.RESPONSE
+    if notification.event
+      |  respondió tu comentario en 
+      a(href="{{protocol}}{{domain}}{% url 'event_detail_with_comment' notification.event_id notification.comment_id %}")
+        {{notification.event.name}}
+    else
+      |  comentó tu 
+      a(
+        href="{{protocol}}{{domain}}{% url 'home' %}c/{% if notification.comment.parent %}{{notification.comment.parent_id}}{% else %}{{notification.comment_id}}{% endif %}/"
+      ) publicación
+  elif notification.kind == notification.MESSAGE
+    {% with email_count=notification.get_email_message_count %}
+    | te escribió
+    {% if email_count == 1 %}
+    | un   
+    a(href="{{ notification.from_user.get_message_url}}")
+      | mensaje
+    {% elif email_count > 1 %}
+    | {{email_count}}   
+    a(href="{{ notification.from_user.get_message_url}}")
+      | mensajes  
+    {% endif %}
+    {% endwith %}
+  elif notification.kind == notification.REMINDER
+    |Queda 1 día para la actividad: 
+    a(href="{{protocol}}{{domain}}{{notification.event.get_absolute_url}}")
+      {{notification.event.name}}
+  elif notification.kind == notification.EVENT
+    |Se ha agregado una nueva actividad en la Red: 
+    a(href="{{protocol}}{{domain}}{{notification.event.get_absolute_url}}")
+      {{notification.event.name}}

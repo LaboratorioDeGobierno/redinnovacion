@@ -1,0 +1,14 @@
+{% autoescape off %}
+
+<p>
+  {{sender.get_full_name|capfirst}} te ha compartido el siguiente caso:
+  <a href="{{protocol}}://{{domain}}{{case.get_absolute_url}}">{{case.title}}</a>
+</p>
+{% if message %}
+<p><i>"{{message}}"</i></p>
+{% endif %}
+<br>
+<br>
+{% include 'emails/includes/footers.html' %}
+
+{% endautoescape %}

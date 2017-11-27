@@ -1,0 +1,12 @@
+¡Hola {{user.get_full_name}}!
+
+Hemos recibido tu inscripción a la actividad "{{ event.name }}".
+
+Te recordamos algunos datos de la actividad, para que lo puedas agendar en tu calendario:
+    * Se realizará el {{event.start_date}}.
+    * El lugar de la actividad es: {{event.address}}, {{event.place}}, {{event.county.name}}
+
+¡Nos vemos y que estés muy bien!
+Saludos,
+
+Por favor no responder a este correo.

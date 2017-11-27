@@ -1,0 +1,175 @@
+- load thumbnail
+- load staticfiles
+- load i18n static
+- load humanize
+- load base
+
+.comment
+  if comment.user.avatar
+    .comment-avatar.img-circle(
+      style="background-image: url('{{ comment.user.avatar.url }}')"
+    )
+  else
+    .comment-avatar.img-circle
+      i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+  .comment-body
+    .comment-content.collapse.in(class="comment-edit-{{comment.id}}")
+      .comment-heading
+        a(href="{{comment.user.get_absolute_url}}")
+          | {{comment.user.get_full_name}}
+        if comment.event
+          span.text-gray-3 &nbsp; comentó en
+          a(href="{{comment.event.get_absolute_url}}")
+            |  {{comment.event.name}}
+      .comment-time {{comment.created_at}}
+      p.text-descriptive {{comment.text|urlize|url_target_blank|linebreaks}}
+      if comment.images.exists
+        .row.row-flex.flex-start.comment-gallery
+          for image in comment.images.all
+            .comment-image.col-sm-4(data-src="{{image.image.url}}")
+              img.img-thumbnail(
+                src="{{image.image|thumbnail_url:'small'}}",
+                style="width: 100%;"
+              )
+    .collapse(
+      class="comment-edit-{{comment.id}} {% if user.is_pending %}pending-user{% endif %}"
+    )
+      form.edit-form(method="POST", action="{% url 'comment_update' comment.pk %}")
+        {% csrf_token %}
+        .hidden
+          input(type="hidden", name="activity", value="{{comment.activity_id}}")
+          input(type="hidden", name="event", value="{{comment.event_id}}")
+          input(type="hidden", name="parent", value="{{comment.parent_id}}")
+        .form-group
+          textarea.form-control(
+            name="text",
+            required=True,
+            maxlength=500,
+            class="comment-edit-{{comment.id}}"
+          )
+            | {{ comment.text }}
+        .text-right
+          button.btn.btn-primary.btn-sm(type="submit")
+            | Editar
+          button.btn.btn-inverse.btn-danger.btn-sm(
+            data-toggle="collapse", href=".comment-edit-{{comment.id}}"
+          )
+            | Cancelar
+    .collapse(class="comment-collapse-{{comment.id}}")
+      .comments-heading
+        .pull-right
+          a.btn.btn-xs(
+            data-toggle="collapse", href=".comment-collapse-{{comment.id}}",
+            title="Colapsar"
+          )
+            i.fa.fa-angle-up.text-gray-3
+        {% blocktrans count counter=comment.public_children.count %}
+        {{ counter }} comentario
+        {% plural %}
+        {{ counter }} comentarios
+        {% endblocktrans %}
+    div
+      .comments-actions
+        .btn-group
+          if comment.id in user.get_liked_comment_ids
+            .btn.btn-link.liked
+              i.fa.fa-heart
+              | Me gusta
+              span.quantity {{comment.commentlike_set.count}}
+          else
+            .btn(
+              data-comment-id="{{comment.id}}",
+              class="{% if not user.is_pending %}btn-link active comment-like-btn
+                     {% else %}disabled{% endif %}"
+            )
+              i.fa.fa-heart
+              | Me gusta
+              span.quantity {{comment.commentlike_set.count}}
+
+          if user.is_staff
+            .btn.btn-link.comment-highlight-btn(
+              data-comment-id="{{comment.id}}"
+              class="{% if comment.highlighted %}highlighted{% endif %}"
+            )
+              i.fa.fa-star
+
+          if comment.user == user
+            a.btn.btn-link.comment-edit(data-toggle="collapse", href=".comment-edit-{{comment.id}}")
+              i.fa.fa-edit
+              | Editar
+            a.btn.btn-link(href="{% url 'comment_hide' comment.pk %}")
+              i.fa.fa-trash
+              | Eliminar
+    if not readonly
+      .collapse.bor-top.bor-gray-6.in(class="comment-collapse-{{comment.id}}")
+        div
+          a.btn.btn-link(data-toggle="collapse", href=".comment-collapse-{{comment.id}}")
+            img.fa-left(src="{% static 'img/shape-comment.svg' %}")
+            if user.is_pending
+              span Ver comentarios
+            else
+              span Comentar
+            span.text-gray-3
+              |  ({{ comment.public_children.count }})
+    .collapse.comment-answer-list(
+        class="comment-collapse-{{comment.id}}"
+      )
+      form.comment-answer(
+          method="POST",
+          action="{% url 'comment_answer_create' %}",
+          class="{% if user.is_pending %}pending-user{% endif %}"
+      )
+        {% csrf_token %}
+        input(type="hidden", name="parent", value="{{comment.id}}")
+        .hidden
+          select.filtered.comment-mentions(multiple, name="user_mentions")
+        .form-group
+          textarea.form-control(
+            name="text",
+            required=True,
+          )
+        .text-right
+          button.btn.btn-primary.btn-sm(type="submit")
+            | Publicar
+      for child_comment in comment.public_children
+        .comment
+          if child_comment.user.avatar
+            .comment-avatar.img-circle(
+              style="background-image: url('{{ child_comment.user.avatar.url }}')"
+            )
+          else
+            i.fa.fa-user-circle.comment-avatar.text-primary
+          .comment-body
+            .comment-content
+              .comment-heading
+                a(href="{{child_comment.user.get_absolute_url}}")
+                  | {{child_comment.user.get_full_name}}
+                small.text-gray-3
+                  |  &middot; {{child_comment.created_at|naturaltime}}
+              p.text-descriptive {{child_comment.text|urlize|url_target_blank|linebreaks}}
+            .comments-actions.bor-no
+              .btn-group
+                if child_comment.id in user.get_liked_comment_ids
+                  .btn.btn-link.liked
+                    i.fa.fa-heart
+                    span.quantity {{child_comment.commentlike_set.count}}
+                else
+                  .btn(
+                    data-comment-id="{{child_comment.id}}",
+                    class="{% if not user.is_pending %}btn-link active comment-like-btn
+                           {% else %}disabled{% endif %}"
+                  )
+                    i.fa.fa-heart
+                    span.quantity {{child_comment.commentlike_set.count}}
+                if not user.is_pending
+                  .btn.btn-link(href="#") &middot;
+                  a.btn.btn-link.comment-answer-btn(
+                    href="javascript:void(0)",
+                    data-user="{{child_comment.user.slug}}"
+                    data-user-id="{{child_comment.user.id}}"
+                  )
+                    | Responder
+                if child_comment.user == user
+                  .btn.btn-link(href="#") &middot;
+                  a.btn.btn-link(href="{% url 'comment_hide' child_comment.pk %}")
+                    | Eliminar

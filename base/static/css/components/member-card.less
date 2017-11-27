@@ -1,0 +1,81 @@
+@import "../variables.less";
+
+.member-card {
+  background-color: @white;
+  border-radius: 5px;
+  padding-top: 5px;
+  text-align: center;
+  @avatar-size: 100px;
+
+  .avatar {
+    border: 1px solid @gray-5;
+    border-radius: 50%;
+    height: @avatar-size;
+    width: @avatar-size;
+    margin: 15px auto;
+
+    img {
+      height: 100%; width: 100%;
+      border-radius: 50%;
+    }
+
+    i {
+      font-size: @avatar-size;
+    }
+  }
+
+  h4 {
+    color: @blue;
+    font-family: Brown;
+    font-size: 19px;
+    font-weight: bold;
+    line-height: 23px;
+    margin: 0 auto;
+    text-transform: capitalize;
+  }
+
+  p, p a {
+    color: @gray-2;
+    font-family: Lato;
+    font-size: 14px;
+    line-height: 25px;
+    margin-bottom: 0;
+    &.organization {
+      color: @blue;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 16px;
+      margin-bottom: 10px;
+      min-height: 40px;
+    }
+    &.description {
+      height: 50px;
+    }
+  }
+
+  .card-footer {
+    background-color: @blue;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: @white;
+    font-family: Brown;
+    font-weight: bold;
+    margin: 0;
+    height: 53px;
+    padding: 10px 0;
+
+    .number {
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 20px;
+    }
+    .info {
+      font-size: 12px;
+    }
+  }
+
+  a.write-comment {
+    position: absolute;
+    right: 30px; top: 13px;
+  }
+}

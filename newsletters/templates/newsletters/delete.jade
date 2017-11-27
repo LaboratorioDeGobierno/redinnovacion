@@ -1,0 +1,23 @@
+extends base.jade
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'newsletter_list' %}")
+      | {% trans 'newsletter list'|capfirst %}
+  li
+    a(href="{% url 'newsletter_detail' object.pk %}")
+      | {{object}}
+
+
+block content
+  form(action="" method="post")
+    {% csrf_token %}
+    .alert.alert-danger
+      {% blocktrans %}Are you sure you want to delete' "{{ object }}"?{% endblocktrans %}
+    .text-right
+      .btn-group
+        input.btn.btn-primary(type="submit" value="{% trans 'Confirm' %}")
+        a.btn.btn-default(href="{% url 'newsletter_detail' object.pk %}")
+          | {% trans 'Cancel' %}

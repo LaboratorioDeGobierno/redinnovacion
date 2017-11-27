@@ -1,0 +1,82 @@
+extends base.jade
+
+- load i18n static
+
+block stylesheets
+  link(type="text/less", rel="stylesheet", href="{% static 'css/components/documentation-commons.less' %}")
+  link(href="{% static 'bower_components/sweetalert2/dist/sweetalert2.css' %}", rel="stylesheet")
+
+  
+block javascripts
+  script(src="{% static 'js/dynamic_content.js' %}")
+  script(src="{% static 'bower_components/sweetalert2/dist/sweetalert2.js' %}")
+
+
+block content
+  {% block jumbotron_header %}
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        {% block breadcrumbs %}
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; DOCUMENTACIÓN
+        {% endblock breadcrumbs %}
+      - include 'includes/search_title.jade' with page_title=title subtitle=subtitle
+  - include 'documentation/includes/documentation_tabs.jade' with active_tab=active_tab search_form=True
+  {% endblock %}
+
+  .bg-color-white
+    .container.resource-detail
+      .row
+        .col-xs-12.col-sm-8.col-md-9
+          .text-jumbo #{object.title}
+          .summary
+            {% block summary_title %}
+            .title Sobre el documento:
+            {% endblock %}
+            .text #{object.about|linebreaks} 
+            {% block summary_footer %}
+            {% endblock %} 
+              
+          {% block description %}
+          {% endblock %}
+          
+        .hidden-xs.col-sm-4.col-md-3
+          aside
+            {% block aside_top_content%}
+            {% endblock %}
+            .separator
+            
+            {% if object.tags.count > 0 %}
+            h6 Etiquetas      
+            for tag in object.tags.all
+              span.tag #{tag}
+            .separator
+            {% endif %}   
+            
+            {% block users_list %}
+            {% if object.documentation_file.get_documentfilelogs.count > 0 %}
+            h6 Usuarios que descargaron este documento
+            ul.users-list.no-bullets
+              for download_log in object.documentation_file.get_documentfilelogs
+                li
+                  if download_log.user.avatar
+                    .user-avatar.pull-left(
+                      style="background-image: url('{{ download_log.user.avatar.url }}');"
+                    )
+                  else
+                    i.fa.fa-user-circle.user-avatar.text-primary.pull-left(aria-hidden="true")
+                  
+                  a.user-name(href="{{download_log.user.get_absolute_url}}")
+                    #{download_log.user.get_full_name|capfirst}
+            
+            {% endif %}
+            {% endblock %}
+  .bg-color-white-blue
+    .container
+      {% block below %}
+      {% endblock %}
+    

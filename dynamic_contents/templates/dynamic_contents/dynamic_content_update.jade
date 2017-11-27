@@ -1,0 +1,62 @@
+extends form.jade
+- load staticfiles
+
+- load i18n
+
+block stylesheets
+  link(
+    href="{% static 'bower_components/dropzone/dist/dropzone.css' %}",
+    rel="stylesheet"
+  )
+
+block javascripts
+  script(src="{% static 'js/dynamic_content.js' %}")
+  script(src="{% static 'js/dynamic_content_create.js' %}")
+  script(type='text/javascript', src="{% static 'bower_components/dropzone/dist/dropzone.js' %}")
+  script(src="{% static 'js/documents.js' %}")
+
+block extra_content
+  .textarea-hint
+    | Acá puedes editar el texto que saldrá junto a la imagen. Si quieres borrar el estilo (colores, tamaño de letra, etc) puedes presionar el botón de "borrar estilo" 
+    span 
+      img(src="{% static 'img/remove_styles_btn.png' %}")
+  .gallery
+    .photos-gallery
+      h2 Galería de fotos
+      form.dropzone#photosDropzone(
+        method="POST",
+        action="{% url 'photo_create' %}",
+        enctype="multipart/form-data",
+        role="form",
+      )
+        {% csrf_token %}
+        input(type="hidden", name="dynamic_content_id", value="{{object.id}}")
+      .row.row-flex.flex-end.mar-top
+        for photo in object.photos.all
+          .col-sm-2.uploaded-item
+            img.img-thumbnail(src="{{photo.photo.url}}")
+            .mar-sm-top.text-right
+              a.btn.btn-sm.btn-link.btn-danger.delete-btn(
+                data-url="{% url 'photo_delete' photo.id %}"
+              )
+                i.fa.fa-left.fa-trash
+                | Eliminar
+    
+    .image-gallery
+      h2 Imagen
+      form.dropzone#imageDropzone(
+        method="POST",
+        action="{% url 'photo_create' %}",
+        enctype="multipart/form-data",
+        role="form",
+      )
+        {% csrf_token %}
+        input#id_dynamic_content_id(
+          type="hidden",
+          name="dynamic_content_id",
+          value="{{object.id}}"
+        )
+
+  h3 Vista previa
+  #dynamic-content-preview(data-url="{% url 'dynamic_content_detail' object.id %}")
+    - include 'documentation/includes/single_dynamic_content.jade' with dynamic_content=object readonly=True

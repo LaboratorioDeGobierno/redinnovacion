@@ -1,0 +1,49 @@
+- load staticfiles
+- load i18n static
+footer
+  .container
+    .row
+      .col-sm-3.footer-brand
+        img.logo-footer.img-responsive(src="{% static 'img/logo-red.svg' %}")
+        p
+          | Innovaciones para un continente
+        //- p.logo-italic
+        //-   | Creando juntos el Estado del futuro
+        p.text-gray-5
+          small correo@correo.cl
+        div.footer-line.hidden-xs
+      .col-sm-9
+        .row
+          hr.hidden-lg.hidden-md.hidden-sm
+          .col-sm-6
+            p.option
+              a(href="{% url 'home' %}")
+                | Inicio
+            p.option
+              a(href="{% url 'terms' %}")
+                | Términos y condiciones
+            if user.is_authenticated
+              p.option
+                a(href="{% url 'people_list' %}")
+                  | Integrantes
+              p.option
+                a(href="{% url 'calendar' %}")
+                  | Actividades
+          .col-sm-6.text-right
+            hr.hidden-lg.hidden-md.hidden-sm
+            .row
+              .col-sm-12.col-md-6
+                a(href="https://www.lab.gob.cl/" target="_blank")
+                  img.logo-gob.img-responsive(src="{% static 'img/Logo-Laboratorio-de-Gobierno-01.svg' %}")
+              .col-xs-3.col-sm-5.col-md-3.col-md-offset-3
+                img.footer-logo(src="{% static 'img/Isologos_Gobierno-01.svg' %}")
+              .col-xs-12.text-right
+                .license-icons
+                  br
+                  a(rel="license", href="https://creativecommons.org/licenses/by/3.0/cl/", title="Creative Commons Attribution 3.0 International license")
+                    i.fa.fa-creative-commons &nbsp &nbsp
+                    i.fa.fa-male
+                    br
+                    p Esta obra está bajo una Licencia
+                      br
+                      | Creative Commons  Atribución 3.0 Chile.

@@ -1,0 +1,18 @@
+extends form.jade
+
+- load i18n
+- load static
+
+block javascripts
+  script(src="{% static 'js/dynamic_content_create.js' %}")
+
+block breadcrumbs
+  li
+    a(href="{% url 'dynamic_content_list' %}")
+      | {{opts.verbose_name_plural.capfirst}}
+
+block extra_content
+  .textarea-hint
+    | Acá puedes editar el texto que saldrá junto a la imagen. Si quieres borrar el estilo (colores, tamaño de letra, etc) puedes presionar el botón de "borrar estilo" 
+    span 
+      img(src="{% static 'img/remove_styles_btn.png' %}")

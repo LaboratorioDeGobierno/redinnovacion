@@ -1,0 +1,191 @@
+extends base.jade
+
+- load i18n static
+- load thumbnail
+- load staticfiles
+
+block stylesheets
+  link(rel="stylesheet", type="text/less", href="{% static 'css/events/detail_types.less' %}")
+
+block javascripts
+  script(type="text/javascript", src="{% static 'bower_components/lg-zoom/dist/lg-zoom.min.js' %}")
+  script.
+    $('#event-gallery').lightGallery({
+      selector: '.col-sm-3',
+      speed: 300,
+    });
+
+block title
+  | Evento
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; {{ event.name }}
+      h2
+        | {{ event.name }}
+  .jumbotron-nav
+    .container
+      ul.list-inline
+        li
+          a(href="{% url 'calendar' %}")
+            i.fa.fa-left.fa-angle-left.fa-2x.mv-bottom
+            span(style="line-height: 2")
+              | Volver a Calendario de Actividades
+  .container(class="event-type-{{event.activity_type|lower}}")
+    - include 'includes/stage-bar.jade' with stages=event.get_stages
+    .row.big-pad-bottom
+      .col-md-12
+        .panel.panel-accent
+          .panel-body.pad-all
+            .row.row-flex
+              .col-md-7.col-sm-12.bor-col.justify-content-start
+                .row
+                  .col-md-12
+                    h3.pad-no.mar-bottom ¿En qué consiste esta actividad?
+                    p.pad-no.mar-bottom.text-descriptive
+                      | {{ event.what_does_it_consist_of }}
+                    if event.manager_id
+                      p
+                        a(href="{{event.manager.get_absolute_url}}")
+                          | Creado por: {{event.manager.get_full_name}}
+                    elif event.creator_id
+                      p
+                        a(href="{{event.creator.get_absolute_url}}")
+                          | Creado por: {{event.creator.get_full_name}}
+                  .col-md-7.col-sm-6.info-box
+                    p ¿CUÁNDO?
+                    h3 {{ event.start_date|date:'l d \d\e F' }}
+                    if event.start_date and event.end_date
+                      .h3
+                        | {{ event.start_date|date:'H:i' }}
+                        | a {{ event.end_date|date:'H:i' }}
+                  .col-md-5.col-sm-6.info-box
+                    p ¿DÓNDE?
+                    h6 {{event.place|default:'' }}
+                    p {{ event.address|default:'' }}
+                .bor-bottom.bor-gray-5.hidden-sm.hidden-xs
+              .col-md-5.col-sm-12.justify-content-start
+                .embed-responsive.embed-responsive-4by3
+                  | {{ event.google_maps_iframe|safe }}
+            .row.row-flex
+              .col-md-7.col-sm-7.col-xs-12
+                .row
+                  .col-md-4.info-box
+                    p COMUNA
+                    h6 {{ event.county|default:'' }}
+                  .col-md-8.info-box
+                    p REGION
+                    h6 {{ event.region|default:'' }}
+              .col-xs-12.col-sm-5.justify-content-end
+                .text-right
+                  if event.activity_type != event.ACTIVITY_TYPES.EXTERNAL
+                    if evaluation_average and not event.is_experimenta
+                      .rating-stars
+                        | Valoración general de la actividad
+                        for i in star_range
+                          span.rating(data-value="#{i}", class="star-#{i}")
+                            span.rating-star
+                              if i <= evaluation_average
+                                i.fa.fa-star.fa.text-primary.fa-fw
+                              else
+                                i.fa.fa-star-o.fa.text-gray-4.fa-fw
+                        | ({{evaluation_average}})
+                    if stage.stage_type == stage.STAGE_TYPE_INSCRIPTION and not event.is_over and not event.is_experimenta
+                      if user_activity
+                        a.btn.btn-danger(
+                          href="{% url 'user_activity_delete' activity.id %}"
+                        )
+                          | Cancelar Inscripción
+                      else
+                        a.btn.btn-success(
+                          href="{% url 'user_activity_create' activity.id %}"
+                        )
+                          | Inscríbete
+                    if stage.stage_type == stage.STAGE_TYPE_EVALUATION and not evaluation
+                      if user_activity.attendance_date and not event.is_experimenta
+                        a.btn.btn-primary(
+                          href="{% url 'event_evaluation_create' activity.id %}"
+                        )
+                          | Evalúa la Actividad
+                    if user.is_staff
+                      a.btn.btn-primary(
+                        href="{% url 'event_update' event.id %}"
+                      )
+                        | Editar Evento
+                  elif user.id == event.creator_id or user.is_staff
+                    a.btn.btn-primary(
+                      href="{% url 'event_update' event.id %}"
+                    )
+                      | Editar Evento
+    .row
+      .col-xs-12.col-md-4.pull-right
+        if event.activity_type != event.ACTIVITY_TYPES.EXTERNAL
+          .big-pad-bottom
+            .panel.panel-bordered.panel-accent
+              .panel-heading
+              .panel-body
+                h3 Recursos utilizados en la actividad
+                if event.presentation
+                  ul.list-unstyled
+                    li
+                      a.text-primary(href="{{ event.presentation.url }}")
+                        | Descarga pdf presentación de la actividad
+                h6.mar-top Material del Taller
+                ul.list-unstyled
+                  for file, truncate in files
+                    li
+                      a.text-primary(href="{{ file.archive.url }}", target="_blank")
+                        if truncate
+                          | {{ file.get_filename|truncatechars:30 }}
+                        else
+                          | {{ file.get_filename }}
+                    - empty
+                      | Sin archivos
+            a.btn.btn-block.btn-primary.btn-bordered(
+              href="{% url 'activity_participants' activity.id %}"
+            )
+              | Ver listado de Asistentes
+            if user_activity.attendance_date and not event.is_experimenta
+              a.btn.btn-block.btn-primary(
+                href="{% url 'activity_certificate' activity.pk %}",
+                target="_blank",
+              )
+                | Descargar Certificado
+          .big-pad-bottom
+            h5.pad-bottom Etiquetas
+            ul.list-inline.list-rounded-square.list-default
+              for tag in event.get_tags
+                li
+                  a {{ tag }}
+        if recent_events
+          .big-pad-bottom
+            h5.pad-bottom Quizás te interese
+            .box-event.bg-color-gray-6
+            for recent_event in recent_events
+              .box-event.bg-color-gray-6
+                .box-event-content
+                  a(href="{{ recent_event.get_absolute_url }}")
+                    | {{ recent_event }}
+      .col-xs-12.col-md-8.pull-right
+        p.big-pad-bottom
+          | {{ event.description|linebreaksbr }}
+        
+        - if not event.is_experimenta
+          - include 'comments/includes/comments_section.jade'
+
+    if event.activity_type != event.ACTIVITY_TYPES.EXTERNAL
+      h3 Galería de fotos
+      #event-gallery.row.row-flex.flex-start
+        for photo in event.photos.all
+          .col-sm-3(data-src="{{photo.photo.url}}")
+            a.thumbnail(href="#")
+              img(
+                src="{{photo.photo|thumbnail_url:'small'}}",
+                style="width: 100%",
+              )

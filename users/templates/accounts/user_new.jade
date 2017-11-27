@@ -1,0 +1,22 @@
+extends accounts/base_accounts.jade
+
+- load compress bootstrap
+- load staticfiles
+- load i18n static
+
+block title
+  | Registro
+
+block javascripts
+  script(src="{% static 'js/jquery.maskedinput.min.js' %}")
+  script(src="{% static 'js/format_phone.js' %}")
+  script(src="{% static 'js/institution_selection.js' %}")
+  script(src="{% static 'js/interests_selection.js' %}")
+
+block content
+  .container
+    .row
+      .col-xs-12.col-sm-8.col-sm-offset-2
+        form(action="", method="post")
+          {% csrf_token %}
+          {% include 'accounts/include/register_form.jade' %}

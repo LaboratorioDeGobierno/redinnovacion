@@ -1,0 +1,37 @@
+extends base.jade
+
+block content
+  .container
+    .text-right
+      .btn-group
+        a.btn.btn-primary(href="{% url 'newsletter_create' %}")
+          | Crear nuevo Newsletter
+          i.fa.fa-plus
+
+    table.table.table-bordered.table-hover
+      thead
+        th Id
+        th Fecha envío
+        th
+        th
+        th
+      tbody
+        for newsletter in object_list
+          tr
+            td
+              a(href="{% url 'newsletter_detail' newsletter.id %}")
+                | {{newsletter.id}}
+            td
+              a(href="{% url 'newsletter_detail' newsletter.id %}")
+                | {{newsletter.sent_at}}
+            td
+              a(href="{% url 'newsletter_update' newsletter.id %}")
+                i.fa.fa-edit
+            td
+              a(href="{% url 'newsletter_delete' newsletter.id %}")
+                i.fa.fa-times
+            td
+              a(href="{% url 'newsletter_send_email' newsletter.id %}")
+                | send email
+
+    {% include 'includes/pagination.jade' with objects=object_list %}

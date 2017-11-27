@@ -1,0 +1,42 @@
+{% load utils %}
+{% load humanize %}
+
+<div style="width: 100%; background-color: #F0F0F0; border-top: 1px solid #1467AB; border-bottom: 1px solid #1467AB;">
+  <div style="width: 620px; margin: 0 auto;">
+    <h1 style="font-size:20px; font-family: Brown, sans-serif; font-weight: bold; padding-left:25px; margin-top:30px;">
+      Próximos Eventos y Actividades
+    </h1>
+    <table cellspacing="25" width="100%;" >
+      {% for event in next_events %}
+      {% if forloop.counter0 == 0 %}<tr width="100%">
+      {% elif forloop.counter0|divisibleby:2 %}</tr><tr>
+      {% endif %}
+        <td style="padding: 0;">
+          <div style="border-radius:5px;background-color:#fff; height:200px; width:270px;">
+            <div style="background-color:{{event_colors|get_item:event.activity_type}}; color: #fff;padding: 10px 30px; border-top-right-raduius: 5px; border-top-left-radius: 5px">
+              <span style="font-family: Brown, sans-serif; font-size: 12px; font-weight: bold; text-transform:uppercase">
+                {{event.get_activity_type_display}}
+              </span>
+            </div>
+            <div style="padding: 15px 30px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; position:relative; height:100%;">
+              <p><a href="{{protocol}}://{{domain}}{% url 'event_detail' event.id %}" style="font-family: Brown, sans-serif; font-weight: bold;font-size:16px; color: #1467AB; line-height:23px;">
+                {{event.name|truncatechars:90}}
+              </a></p>
+              <p style="font-family: Brown, sans-serif; font-size:16px; color: #464646; position: absolute; bottom: 50px;">
+                {{event.start_date|date:'DATE_FORMAT'}}
+              </p>
+            </div>
+          </div>
+        </td>
+        {% if forloop.last%}<td width="50%"></td>{% endif %}
+      {% endfor %}</tr>
+      <tr>
+        <td colspan="2">
+          <a href="{{protocol}}://{{domain}}/events/calendar/" style="width:360px; display: block; font-size:16px; font-family: Brown, sans-serif; font-weight: bold; color: #fff; background-color: #1467AB; font-weight: normal; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; white-space: nowrap; padding: 6px 12px; line-height: 1.42857143; border-radius: 4px; margin: 0 auto; text-decoration:none; text-align: center">
+            Ver calendario de actividades
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+.container.stage-bar-container
+  // The .stage-bar uses the full width of its parent.
+  .stage-bar
+    // Every stage uses 1/@stage-bar-stages of the bar.
+    // You can change between 3 kind of stages:
+    //   .stage
+    //   .stage.current
+    //   .stage.future
+    // There isn't a specific order of stages required.
+    // There isn't a minimum amount of stages of any kind required.
+    for stage in stages
+      if stage.is_active
+        .stage(class="{% if stage.is_current_stage %}current{% elif not stage.has_started %}future{% endif %}")
+          .title
+            span(class="{% if not stage.is_current_stage %}hidden-xs{% endif %}")
+              {{stage.name}}
+            .visible-xs
+              | &nbsp;
+          .separator
+            if stage.is_current_stage 
+              .progress-bar(
+                role="progressbar",
+                aria-valuenow="{{stage.progress_percentage}}",
+                aria-valuemin="0",
+                aria-valuemax="100",
+                style="width: {{stage.progress_percentage}}%;"
+              )
+          .detail.hidden-xs
+            if stage.is_current_stage 
+                | En proceso
+            elif not stage.has_started 
+              | {{ stage.start_date|date:"d" }} {{ stage.start_date|date:"F"|slice:"0:3" }} al
+              | {{ stage.end_date|date:"d"}} {{ stage.end_date|date:"F"|slice:"0:3" }}
+            else
+              {{stage.name}} Cerrada

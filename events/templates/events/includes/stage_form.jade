@@ -1,0 +1,10 @@
+- load bootstrap
+
+h4 {{form.instance.name}}
+.row
+  .col-sm-4
+    | {{ form.start_date|bootstrap }}
+  .col-sm-4
+    | {{ form.end_date|bootstrap }}
+  .col-sm-4
+    | {{ form.is_active|bootstrap }}

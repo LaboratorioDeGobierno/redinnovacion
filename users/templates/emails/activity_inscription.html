@@ -1,0 +1,31 @@
+{% load i18n %}{% autoescape off %}
+<h3>
+  ¡Hola {{user.get_full_name}}!
+</h3>
+
+<h4>
+  Hemos recibido tu inscripción a la actividad "{{ event.name }}".
+</h4>
+
+<p>
+Te recordamos algunos datos de la actividad, para que lo puedas agendar en tu calendario:
+</p>
+
+<ul>
+  <li>
+    Se realizará el <b>{{event.start_date}}</b>
+  </li>
+  <li>
+    El lugar de la actividad es: <b>{{event.address}}, {{event.place}}, {{event.county.name}}</b>.
+  </li>
+</ul>
+
+<p>
+¡Nos vemos y que estés muy bien!
+Saludos,
+</p>
+
+<p>
+<em>Por favor no responder a este correo.<em>
+</p>
+{% endautoescape %}

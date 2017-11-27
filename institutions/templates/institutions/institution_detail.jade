@@ -1,0 +1,73 @@
+extends base.jade
+
+block title
+  | Instituciones
+
+block content
+  .container.section.institution-detail
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="#") INTEGRANTES
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'institution_list' %}") INSTITUCIONES
+        i.fa.fa-angle-right.li-breadcrumb
+      li.breadcrumb-not-selected
+        span &nbsp; #{institution.name}
+    h2
+      = institution.name
+    p
+      = institution.role_description|default:''
+    p
+      a(href="{{ institution.url }}" target="_blank")
+        = institution.url|default:''
+    h6
+      if user_list
+        strong #{user_list.count} Integrantes
+      else
+        strong Integrantes
+
+    table.table.table-outlined.table-hover-alt.hidden-xs
+      colgroup
+        col.col-md-1
+        col.col-md-3
+        col.col-md-4
+        col.col-md-4
+      tbody
+        each iter_user in user_list
+          tr
+            td
+              if iter_user.avatar
+                .user-icon.img-circle(
+                  style="background-image: url('{{ iter_user.avatar.url }}')"
+                )
+              else
+                i.fa.fa-user-circle.user-icon
+            td
+              h5
+                a(href="{{ iter_user.get_absolute_url }}")
+                  = iter_user.get_full_name
+              if iter_user.profile.show_charge
+                = iter_user.charge|default_if_none:''
+            td
+              if iter_user.profile.show_email
+                = iter_user.email|default_if_none:''
+            td
+              = iter_user.region.name|default:''
+          - empty
+            tr
+              td Sin integrantes
+    .hidden-sm.hidden-md.hidden-lg
+      hr
+      for iter_user in user_list
+        h3
+          a(href="{{ iter_user.get_absolute_url }}")
+            = iter_user.get_full_name
+        p
+          = iter_user.charge|default_if_none:''
+        p
+          = iter_user.institution
+        hr

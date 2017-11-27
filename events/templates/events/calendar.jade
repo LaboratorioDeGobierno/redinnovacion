@@ -1,0 +1,109 @@
+extends base.jade
+
+- load staticfiles
+- load i18n static
+
+block title 
+  | : {% trans 'calendar'|capfirst %}
+
+block javascripts
+  script(src="{% static 'bower_components/moment/min/moment.min.js' %}")
+  script(src="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.js' %}")
+  script(src="{% static 'bower_components/fullcalendar/dist/locale/es.js' %}")
+  script(src="{% static 'bower_components/sweetalert2/dist/sweetalert2.js' %}")
+  script(src="{% static 'js/events/calendar.js' %}")
+    
+block stylesheets
+  link(type="text/css", rel="stylesheet", href="{% static 'bower_components/fullcalendar/dist/fullcalendar.min.css' %}")
+  link(href="{% static 'bower_components/sweetalert2/dist/sweetalert2.css' %}", rel="stylesheet")
+  link(type="text/less", rel="stylesheet", href="{% static 'css/events/calendar.less' %}")
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.green-bg
+    .container
+      ul.page-breadcrumb.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; Calendario de Actividades
+      h2
+        | {% trans 'calendario de Actividades'|capfirst %}
+      p.mar-top
+        | Aquí puedes estar al tanto y compartir en el calendario de
+        | actividades, ver y descargar el contenido de cada una de estas
+        | instancias e inscribirte para participar.
+  .container
+    form.row.row-flex.filters
+      .col-sm-3.justify-content-end
+        .form-group
+          label Filtrar por
+          .btn-group
+            button(type="button", data-toggle="dropdown").btn.btn-default.dropdown-toggle.region-button
+              span.region-name Región
+              span.caret
+            ul.dropdown-menu.dropdown-menu-region
+              li 
+                .radio
+                  label
+                    input(type="radio", name="region", value="", checked=True) 
+                    | Todas
+              for region in regions
+                li 
+                  .radio
+                    label
+                      input(type="radio", name="region", value="{{region.id}}") 
+                      {{region.name}}
+
+
+      .col-sm-7.justify-content-end.calendar-filters
+        .form-group
+          label ¿En qué tipo de actividades te gustaría participar?
+          label.checkbox.btn.btn-event-event
+            | Eventos
+            input(type="checkbox", checked=true, name="events")
+          label.checkbox.btn.btn-event-workshop
+            | Talleres
+            input(type="checkbox", checked=true, name="workshops")
+          label.checkbox.btn.btn-event-meeting
+            | Encuentros
+            input(type="checkbox", checked=true, name="meetings")
+          label.checkbox.btn.btn-event-talk
+            | Charlas
+            input(type="checkbox", checked=true, name="talks")
+          - if user.is_experimenta or user.is_staff
+            label.checkbox.btn.btn-event-experimenta
+              | Experimenta
+              input(type="checkbox", checked=true, name="experimenta")
+          label.checkbox.btn.btn-event-others
+            | De otros miembros de la red
+            input(type="checkbox", checked=true, name="external")
+
+      .col-sm-2.justify-content-end
+        .form-group.text-right
+          label.sr-only Acción
+          a.btn.btn-success(href="{% url 'event_create' %}")
+            .popover-toggle(
+              data-toggle="popover"
+              data-trigger="hover focus"
+              data-placement="top"
+              data-content="¿Quieres compartir alguna actividad de innovación con la Red? ¡Agrégala acá!"
+            )
+              i.fa.fa-plus
+              |  Agregar actividad
+    .row
+      .col-sm-12
+        hr
+        #calendar.big-mar-bottom
+          #event-view
+            .panel.panel-bordered.panel-accent
+              .panel-heading
+              .panel-body
+                .panel-close
+                  i.fa.fa-times
+                h3#event-title
+                p#event-time
+                p#event-place
+                .text-right
+                  a#event-link Ver más
+                  a#event-apply.btn.btn-success Inscríbete

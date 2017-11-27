@@ -1,0 +1,53 @@
+.poll-form {
+
+  .form-group {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    > label {
+      font-family: 'Lato';
+      font-weight: normal;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .rating-stars {
+      text-align: center;
+      font-family: 'Lato';
+      font-weight: bold;
+      font-style: italic;
+      color: @gray-5;
+
+      .rating {
+        font-size: 15px;
+        .rating-star {
+          cursor: pointer;
+          .fa.fa-star {
+            color: @gray-5;
+
+            &.fa-2x {
+              font-size: 2.2em;
+            }
+          }
+        }
+
+        &.active {
+          color: @dark-blue;
+          .rating-star {
+            .fa.fa-star {
+              transition: color 1s;
+              color: @blue;
+            }
+          }
+        }
+      }
+
+
+      .rating-quantity {
+        label {
+          font-size: 22px;
+        }
+      }
+    }
+  }
+
+}

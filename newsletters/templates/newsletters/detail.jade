@@ -1,0 +1,29 @@
+extends base.jade
+
+- load i18n
+- load staticfiles
+
+//- We have these styles because cellspacing html property is outdated 
+//- and will not work in modern browsers, but will work in email
+block stylesheets
+  style.
+    table[cellspacing] {
+      width: 620px;
+      border-spacing: 25px;
+      border-collapse: separate;
+    }
+
+block content
+  .newsletter
+    .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+      .container
+        ul.page-breadcrumb.mar-top.hidden-xs
+          li
+            a(href="{% url 'home' %}") INICIO
+            i.fa.fa-angle-right.li-breadcrumb
+          li
+            a(href="{% url 'newsletter_list' %}") NEWSLETTERS
+            i.fa.fa-angle-right.li-breadcrumb
+  
+        - include 'includes/search_title.jade' with page_title='Newsletters de Red' subtitle=newsletter.sent_at
+    {% include './emails/newsletter.html' %} 

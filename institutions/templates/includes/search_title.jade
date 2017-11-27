@@ -1,0 +1,18 @@
+div
+  .row.row-flex
+    .col-xs-12
+      h2
+        | {{ page_title }}
+      if subtitle
+        p {{ subtitle }}
+    if with_search
+      .col-xs-8.col-sm-4
+        form(action="", method="GET")
+          .input-group
+            input.form-control(
+              type="text", name="q", value="{{ q|default:'' }}",
+              placeholder="Buscar"
+            )
+            .input-group-addon.input-group-button
+              button.btn.btn-sm.btn-link(type="submit")
+                i.fa.fa-search.text-muted

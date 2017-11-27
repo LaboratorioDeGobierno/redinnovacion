@@ -1,0 +1,28 @@
+extends base.jade
+
+- load i18n static
+
+block title
+  | Instituciones
+
+block javascripts
+  script(src="{% static 'js/jquery.maskedinput.min.js' %}")
+  script(src="{% static 'js/format_phone.js' %}")
+
+block content
+  .container
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'people_list' %}") INTEGRANTES
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'institution_list' %}") INSTITUCIONES
+        i.fa.fa-angle-right.li-breadcrumb
+      li.breadcrumb-not-selected
+        span &nbsp; Nueva institución
+    .page-header
+      h2 Información general
+    - include 'institutions/include/institution_form.jade'

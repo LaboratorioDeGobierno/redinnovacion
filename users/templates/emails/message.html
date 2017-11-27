@@ -1,0 +1,26 @@
+{% load i18n %}{% autoescape off %}
+<p>
+Hola {{user.get_full_name}},
+</p>
+
+<p>
+{{sender.get_full_name}} se quiere comunicar contigo a través de la plataforma de la Red, y te ha escrito lo siguiente:
+</p>
+
+<p>
+{{message}}
+</p>
+
+<p>
+Para ver el mensaje desde la Plataforma y responderle, accede al siguiente link: https://urldelsitio.cl{{sender.get_message_url}}
+</p>
+
+<p>
+<b>Por favor no responder a este correo.<b>
+</p>
+
+<p>
+Saludos!
+</p>
+
+{% endautoescape %}

@@ -1,0 +1,120 @@
+@import "../variables.less";
+
+// Default is past
+// @stage-bar-past-color;
+// @stage-bar-background-color;
+// @stage-bar-current-color;
+@stage-bar-future-color: @stage-bar-background-color;
+
+@stage-bar-current-background: repeating-linear-gradient(
+  -45deg, @stage-bar-current-color, @stage-bar-current-color 2px,
+  @stage-bar-background-color 2px, @stage-bar-background-color 6px
+);
+
+
+.stage-bar-container {
+  padding: @stage-bar-padding (@stage-bar-ball-size / 2);
+
+  .stage-bar-title {
+    font-weight: normal;
+    color: fade(@gray-4, 40);
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    a {
+      color: fade(@gray-4, 40);
+    }
+  }
+}
+
+.stage-bar {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+  .stage {
+    width: 100% / @stage-bar-stages;
+    display: inline-block;
+
+    .title {
+      font-size: 12px;
+    }
+
+    .separator {
+      background: @stage-bar-past-color;
+      height: @stage-bar-separator-size;
+      margin: 4px -(@stage-bar-ball-size / 4);
+      position: relative;
+      // Ball at the begining of the separator
+      &:before,
+      &:after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        border-radius: @stage-bar-ball-size;
+        top: -(@stage-bar-ball-size - @stage-bar-separator-size) / 2;
+        width: @stage-bar-ball-size;
+        height: @stage-bar-ball-size;
+      }
+
+      &:before {
+        background: @stage-bar-current-color;
+        left: -@stage-bar-ball-size / 2;
+      }
+
+      &:after {
+        background: @stage-bar-background-color;
+        right: -0.5 * @stage-bar-ball-size;
+      }
+    }
+
+    &:first-child .separator {
+      border-top-left-radius: @stage-bar-separator-size / 2;
+      border-bottom-left-radius: @stage-bar-separator-size / 2;
+
+      .progress-bar {
+        border-top-left-radius: @stage-bar-separator-size / 2;
+        border-bottom-left-radius: @stage-bar-separator-size / 2;
+      }
+    }
+
+    &:last-child .separator {
+      border-top-right-radius: @stage-bar-separator-size / 2;
+      border-bottom-right-radius: @stage-bar-separator-size / 2;
+    }
+
+    .detail {
+      font-size: 11px;
+    }
+
+    // Color variations for current stage
+    &.current {
+      .separator {
+        background: @stage-bar-current-background;
+        &:before {
+          background: none;
+        }
+
+        .progress-bar {
+          background-color: @stage-bar-current-color;
+        }
+      }
+    }
+
+    // Color variations for future stages
+    &.future {
+      .separator {
+        background: @stage-bar-future-color;
+        &:before {
+          background: @stage-bar-past-color;
+        }
+      }
+    }
+
+    &:first-child .separator:before,
+    &:last-child .separator:after {
+      background: none;
+    }
+  }
+}

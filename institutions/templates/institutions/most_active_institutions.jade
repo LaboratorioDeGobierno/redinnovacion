@@ -1,0 +1,99 @@
+extends base.jade
+
+- load staticfiles
+- load humanize
+
+block title
+  | Institucines
+  
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'people_list' %}") INTEGRANTES
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; Personas
+      - include 'includes/search_title.jade' with page_title='Instituciones que componen la Red' subtitle='Aquí puedes conocer todas las instituciones que están en la Red, y saber quienes participan de cada una de ellas.'
+  - include 'includes/tabs.jade' with active_tab='institutions' search_form=True
+  .bg-color-gray-7
+    .container.pad-top.pad-bottom
+      .row
+        .col-xs-12.col-md-4.col-lg-3
+          .aside-table
+            h3.to-right 
+              .number #{institutions.count | intcomma}
+              .description
+                |instituciones
+                br
+                |participan en la Red
+            table.hidden
+              for type in institution_types
+                tr
+                  td
+                    a(href="{% url 'institutions_list' %}?institution_kind={{type.id}}&by={{by}}&p=1") #{type.count} #{type.name}
+                  td #{type.users__count | intcomma}
+                  td #{type.percent}%
+        
+        .col-xs-12.col-md-12.col-lg-12
+          .row
+            .col-sm-6
+              h3 #{current_institution}
+            .col-sm-6.text-right
+              span.dropdown
+                button.btn.btn-inverse.btn-primary.dropdown-toggle(
+                  type='button', data-toggle='dropdown'
+                )
+                  | Ordenar por:
+                  if ordering == 'name'
+                      | Alfabético
+                  else
+                      | Más integrantes en la Red
+                  |  #[span.caret]
+                ul.dropdown-menu
+                  li
+                    a(href='?region={{request.GET.region}}&by={{by}}&order=-num_users') 
+                      | Más integrantes en la Red
+                  li
+                    a(href='?region={{request.GET.region}}&by={{by}}&order=name')
+                      | Alfabético
+          for institution in object_list
+            .institution-card
+              .avatar
+                if institution.logo
+                  img(src="{{institution.logo.url}}")
+                else
+                  img(src="http://via.placeholder.com/720x720")
+              h4 
+                a(href="{{ institution.get_absolute_url }}")
+                  | #{institution.name | truncatechars:60 }
+              span.number #{institution.users.count}
+              span.description INTEGRANTES 
+      
+      .row
+        .col-sm-6
+          if user.is_staff
+            a.btn.btn-success(href="{% url 'institution_create' %}")
+              i.fa.fa-left.fa-plus
+              | Agregar institución
+        .col-sm-6.text-right
+          span.dropdown
+            button.btn.btn-inverse.btn-primary.dropdown-toggle(
+              type='button', data-toggle='dropdown'
+            )
+              | Mostrar {{by}} #[span.caret]
+            ul.dropdown-menu
+              li
+                a(href='?{% if request.GET.region %}region={{request.GET.region}}&{% endif %}by=10{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 10
+              li
+                a(href='?{% if request.GET.region %}region={{request.GET.region}}&{% endif %}by=20{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 20
+              li
+                a(href='?{% if request.GET.region %}region={{request.GET.region}}&{% endif %}by=25{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 25
+              li
+                a(href='?{% if request.GET.region %}region={{request.GET.region}}&{% endif %}by=50{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 50
+          if is_paginated
+            {% include 'includes/pagination.jade' with objects=page_obj paginator=paginator %}

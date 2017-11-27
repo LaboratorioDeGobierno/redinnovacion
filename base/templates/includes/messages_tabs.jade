@@ -1,0 +1,28 @@
+- load i18n static
+
+.nav-tabs-inverse-container
+  .container
+    .row
+      .col-xs-8.col-sm-9
+        ul.nav.nav-tabs.nav-tabs-inverse
+          li(class="{% if active_tab = 'notifications' %}active{% endif %}")
+            a(href="{% url 'notification_list' %}")
+              | Notificaciones 
+              span.badge.badge-danger {{unread_notifications}}
+
+          li(class="{% if active_tab = 'messages' %}active{% endif %}")
+            a(href="{% url 'email_message_list' %}")
+              | Mensajes 
+              span.badge.badge-danger {{unread_messages}}
+
+      if search_form
+        .col-xs-4.col-sm-3
+          form(action="", method="GET")
+            .input-group
+              input.form-control(
+                type="text", name="q", value="{{ q|default:'' }}",
+                placeholder="Buscar"
+              )
+              .input-group-addon.input-group-button
+                button.btn.btn-sm.btn-link(type="submit")
+                  i.fa.fa-2x.fa-search

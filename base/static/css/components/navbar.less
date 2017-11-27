@@ -1,0 +1,272 @@
+@import "../variables.less";
+
+body {
+  margin-top: @navbar-height;
+}
+
+.navbar {
+  font-family: Brown;
+  font-weight: 700;
+
+  a {
+    font-family: inherit;
+  }
+
+  .navbar-brand img {
+    margin: -15px 0 0 -15px;
+    max-width: 250px;
+  }
+
+  .navbar-toggle,
+  .navbar-toggle:active,
+  .navbar-toggle:focus,
+  .navbar-toggle:hover {
+    border: none;
+  }
+
+  .user-avatar {
+    // transform: translateY(-10%);
+    width: 25px;
+    height: 25px;
+
+    i {
+      font-size: 25px;
+    }
+
+  }
+
+  #new-notifications-badge {
+    position: relative;
+    right: 35px;
+    bottom: 30px;
+    font-family: Brown;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    background-color: @red;
+    color: @white;
+  }
+
+  .navbar-collapse.in,
+  .navbar-collapse.collapsing {
+    background-color: @dark-blue;
+
+    .navbar-nav {
+      margin-top: 4px;
+      margin-bottom: 4px;
+      & > li > a {
+        color: @white;
+        font-size: 16px;
+      }
+
+      li.nav-emphasis {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+      }
+    }
+  }
+}
+
+.navbar-nav {
+  & > li > a {
+    font-size: 20px;
+  }
+
+  & > .nav-emphasis {
+    margin-top: 10px;
+    border-top: 1px solid fade(white, 10%);
+    padding-top: 15px;
+  }
+
+  .dropdown-menu {
+    border: none;
+    border-radius: 0;
+
+    & > li > a {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.navbar-inverse {
+  .navbar-nav > .open > a,
+  .navbar-nav > .open > a:focus,
+  .navbar-nav > .open > a:hover {
+    background-color: transparent;
+    opacity: 1;
+  }
+
+  .navbar-toggle {
+    color: @white;
+    text-transform: capitalize;
+    font-size: 16px;
+
+    .icon-bar {
+      background-color: @dark-blue;
+    }
+  }
+
+  .navbar-toggle:focus,
+  .navbar-toggle:hover {
+    background-color: transparent;
+  }
+
+  .user-avatar {
+    background-color: fade(@white, 8%);
+  }
+
+  .dropdown-menu {
+    padding: 0;
+    & > li > a,
+    & > li > a:focus,
+    & > li > a:hover {
+      opacity: 1;
+      background-color: transparent;
+      color: @white;
+    }
+
+    & > li.divider {
+      opacity: 0.5;
+    }
+
+    & > li {
+      padding: 6px 0;
+      border-bottom: 1px solid fade(@white, 50%);
+      &:last-child {
+        border: none;
+      }
+    }
+  }
+
+  .open .dropdown-menu {
+    background-color: @dark-blue;
+  }
+
+  .navbar-nav > li .popover-content {
+    color: @gray-2;
+  }
+
+  .navbar-nav > .active > a,
+  .navbar-nav > .active > a:focus,
+  .navbar-nav > .active > a:hover {
+    background-color: transparent;
+  }
+}
+
+.navbar-toggle {
+  padding: 9px 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  .icon-bar {
+    display: block;
+  }
+
+  .toggle-text {
+    display: none;
+  }
+
+  .top-bar {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+  }
+
+  .middle-bar {
+    opacity: 0;
+  }
+
+  .bottom-bar {
+    transform: rotate(-45deg);
+    transform-origin: 10% 90%;
+  }
+
+  &.collapsed {
+    .icon-bar {
+      display: none;
+    }
+
+    .toggle-text {
+      display: block;
+    }
+
+    .top-bar {
+      transform: rotate(0);
+    }
+
+    .middle-bar {
+      opacity: 1;
+    }
+
+    .bottom-bar {
+      transform: rotate(0);
+    }
+  }
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+@media (min-width: @screen-sm-min) {
+  .navbar {
+    .user-avatar {
+      transform: translateY(-30%);
+      width: 54px;
+      height: 54px;
+
+      i {
+        font-size: 54px;
+      }
+    }
+  }
+
+  .navbar-nav {
+    & > li > a {
+      font-size: 14px;
+    }
+
+    & > .nav-emphasis {
+      margin-top: 0;
+      border-top: none;
+      padding-top: 0;
+    }
+
+    & > .nav-emphasis > a {
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    .dropdown-menu {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      margin-left: 12%;
+    }
+
+    .open .dropdown-menu {
+      background-color: @blue;
+    }
+  }
+
+  .navbar-inverse {
+    .open .dropdown-menu {
+      background-color: @blue;
+    }
+  }
+
+  li.stick-to-next + li {
+    margin-left: -30px;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .navbar-nav {
+    & > li > a {
+      font-size: 18px;
+    }
+
+    & > .nav-emphasis > a {
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+- load i18n static
+- load thumbnail
+- load staticfiles
+
+- for methodology in object_list
+  li.methodology-card.tc-1
+    if methodology.documentation_file.image
+      img(src="{% thumbnail methodology.documentation_file.image.url 400x400 %}")
+    else
+      .img
+    a.title(href="{% url 'methodology_detail' methodology.id %}") #{methodology.title}
+    .text #{methodology.about}

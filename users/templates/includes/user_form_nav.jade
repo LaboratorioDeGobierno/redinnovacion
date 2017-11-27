@@ -1,0 +1,11 @@
+ul.nav.nav-tabs.nav-default.nav-justified
+  li(class="{% if active_tab == 'privacy' %}active{% endif %}")
+    a(href="{% url 'user_profile_update' %}") Privacidad
+  li(class="{% if active_tab == 'profile' %}active{% endif %}")
+    a(href="{% url 'user_update' %}") Perfil
+  li(class="{% if active_tab == 'password' %}active{% endif %}")
+    a(href="{% url 'user_password_update' %}") Contraseña
+  li(class="{% if active_tab == 'avatar' %}active{% endif %}")
+    a(href="{% url 'user_avatar_update' %}") Foto
+  li(class="{% if active_tab == 'account' %}active{% endif %}")
+    a(href="{% url 'user_account_update' %}") Cuenta

@@ -1,0 +1,29 @@
+{% load i18n %}{% autoescape off %}
+
+
+<p>
+¡Hola!
+</p>
+
+<p>
+Te escribimos para recordarte los datos de la actividad en la que realizaste tu inscripción, correspondiente al {{event.name}} en la Región {{event.region}}.
+</p>
+
+<p>
+Los datos del taller son los siguientes:
+<p>
+<ul>
+  <li>
+    Se realizará el {{event.start_date|date:'l'}}, {{event.start_date.date}} entre las {{event.start_date.time}} y {{event.end_date.time}} hrs en {{event.county}}
+  </li>
+  <li>
+    El lugar será en el {{event.place}}, {{event.address}}, {{event.county}}
+  </li>
+</ul>
+
+<p>
+¡Nos vemos!</br>
+Saludos,
+</p>
+
+{% endautoescape %}

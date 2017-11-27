@@ -1,0 +1,187 @@
+doctype 5
+
+- load compress
+- load staticfiles
+- load i18n static
+
+html(lang="{{ LANGUAGE_CODE }}")
+  head
+    meta(charset="utf-8")
+    title Red: Cuenta
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="description", content="")
+    meta(name="author", content="http://lab.gob.cl")
+
+    // font-awesome
+    if debug
+      link(href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}", rel="stylesheet")
+    else
+      link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css", rel="stylesheet")
+
+    {% compress css %}
+    link(href="{% static 'css/bootstrap.less' %}", rel="stylesheet", type="text/less", charset="utf-8")
+    link(href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css' %}", rel="stylesheet")
+    link(href="{% static 'bower_components/select2/dist/css/select2.css' %}", rel="stylesheet")
+    link(href="{% static 'css/site.less' %}", type="text/less", rel="stylesheet", charset="utf-8")
+    {% endcompress %}
+
+    //if lte IE 7
+      script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
+
+    //if lt IE 9
+      script(src="{% static 'bower_components/respond/respond.min.js' %}")
+
+    {% compress css %}
+    block stylesheets
+    {% endcompress %}
+
+  body(
+    class='{{ body_class|default:"" }} login',
+
+  )
+    header
+      {% include 'includes/navbar.jade' %}
+
+    main
+      section.intro(
+      )
+
+        div.container
+          div.row
+            {% if messages %}
+            {% for message in messages %}
+            div(class="alert alert-{{ message.tags }}") {{ message }}
+            {% endfor %}
+            {% endif %}
+        div.container
+          .row
+            .col-sm-7.col-xs-12
+              h1 
+                span Lorem Ipsum
+                br
+                | Dolor sit amet
+              p Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus.
+
+
+              
+            .col-sm-4.col-sm-offset-1.col-xs-12
+              form.form-signin(action='', method='post')
+                {% csrf_token %}
+
+                .panel.panel-primary
+                  .panel-heading.text-center
+                    a(href="{% url 'home' %}")
+                      img(src="{% static 'img/logo-red.svg' %}")
+                  .panel-body
+                    h2.text-center {% trans 'Log in' %}
+                    .form-group.row
+                      input(type='hidden', name='this_is_the_login_form', value='1')
+                      input(type='hidden', name='next', value='{{ next }}')
+                    .form-group(class="{% if form.email.errors %}has-error{% endif %}")
+                      input#id_email.form-control(
+                        name='email',
+                        placeholder="Email",
+                        type='text',
+                        value="{{ request.POST.email }}"
+                      )
+                      span.help-inline.help-block
+                        | {{ form.email.errors|striptags }}
+                    .form-group(class="{% if form.password.errors %}has-error{% endif %}")
+                      input.form-control(
+                        name='password', type='password',
+                        placeholder="Contraseña",
+                      )
+                      span.help-inline.help-block {{ form.password.errors|striptags }}
+                    if form.non_field_errors
+                      for error in form.non_field_errors
+                        .alert.alert-error {{ error }}
+                    .form-group
+                      input.btn.btn-primary.btn-login(
+                        type='submit',
+                        value="{% trans 'Access account' %}"
+                      )
+                      if form.captcha
+                        label.control-label.required(for='id_captcha') {{ form.captcha.label }}
+                        | {{ form.captcha }}
+                        span.help-inline.help-block {{ form.captcha.errors|striptags }}
+
+                    .form-group.text-center
+                      a(href="{% url 'password_reset' %}")
+                        b {% trans 'i have forgotten my password'|capfirst %}
+                  .panel-footer
+                      .form-group.text-right
+                          a.btn.btn-block.btn-primary.btn-inverse(
+                            href="{% url 'register' %}"
+                          )
+                            small {% trans 'Register here' %}.
+      section.slide.labs.text-center
+        .container
+          figure
+            i.fa.fa-rocket.fa-5x
+          h4 Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. 
+          p Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.
+          
+          
+          
+      section.slide
+        div.container.text-center
+          .row
+            .col-xs-12.col-md-6
+              figure
+                img.img-responsive(src="{% static 'img/mision.svg' %}")
+              h3 Misión
+              hr
+              p Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+              
+            .col-xs-12.col-md-6
+              figure
+                img.img-responsive(src="{% static 'img/vision.svg' %}")
+              h3 Visión
+              hr
+              p Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+              
+          br
+          br
+          .row
+            .col-xs-12.col-md-8.col-md-offset-2
+              .panel.panel-primary.panel-bordered
+                .panel-heading
+                .panel-body
+                  h4 Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+                  ol
+                    li Nemo enim ipsam voluptatem quia voluptas.  
+                    li Curabitur ullamcorper ultricies nisi. Nam eget dui.
+                    li Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero.
+                    li Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.
+              
+              
+      div
+        {% include 'includes/footer.jade' %}
+      //Le javascript
+      //Placed at the end of the document so the pages load faster
+      // uncompressible javascripts
+      {% if debug %}
+      script(src="{% static 'bower_components/jquery/dist/jquery.min.js' %}")
+      {% else %}
+      script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+      {% endif %}
+      block uncompressible_javascripts
+
+      {% compress js %}
+      script(src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}")
+      script(src="{% static 'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js' %}")
+      script(src="{% static 'bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js' %}")
+      script(type='text/javascript', src="{% static 'bower_components/moment/min/moment.min.js' %}")
+      script(src="{% static 'bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}")
+      script(src="{% static 'bower_components/select2/dist/js/select2.min.js' %}")
+      script(src="{% static 'bower_components/select2/dist/js/i18n/es.js' %}")
+      script(src="{% static 'js/vendor/oop.js' %}")
+      script(src="{% static 'js/app.js' %}")
+      script(src="{% static 'js/form.js' %}")
+      {% endcompress %}
+
+      script(src="{% static 'js/login.js' %}")
+
+      {% compress js %}
+      block javascripts
+      {% endcompress %}

@@ -1,0 +1,55 @@
+- load i18n static
+
+.panel.panel-primary.panel-form.panel-lg
+  .panel-heading
+    .logo-right
+      a(href="{% url 'home' %}")
+        img.logo-sm(src="{% static 'img/logo-red.svg' %}")
+    h2 Formulario de inscripción
+  .panel-body
+    h3
+      | Información personal
+    if form.non_field_errors
+      each error in form.non_field_errors
+        .alert.alert-error {{ error }}
+    {% include 'accounts/include/register_field.jade' with field=form.first_name %}
+
+    {% include 'accounts/include/register_field.jade' with field=form.last_name %}
+
+    {% include 'accounts/include/register_field.jade' with field=form.mother_family_name %}
+
+    {% include 'accounts/include/register_field.jade' with field=form.institution %}
+
+    {% include 'accounts/include/register_field.jade' with field=form.other_institution_name %}
+
+    {% include 'accounts/include/register_field.jade' with field=form.region %}
+
+    label ¿Cuál es tu dirección institucional?&nbsp;
+      small.text-muted
+        | (requerido)
+    .row
+      .col-sm-4
+        {% include 'accounts/include/register_field.jade' with field=form.address hide_required=True %}
+
+      .col-sm-4
+        {% include 'accounts/include/register_field.jade' with field=form.county hide_required=True %}
+
+      .col-sm-4
+        {% include 'accounts/include/register_field.jade' with field=form.city hide_required=True %}
+
+    {% include 'accounts/include/register_field.jade' with field=form.charge %}
+
+    h3.padding-without Información de contacto
+
+    {% include 'accounts/include/register_field.jade' with field=form.email %}
+
+    {% include 'accounts/include/register_field.jade' with field=form.phone %}
+
+    {% include 'accounts/include/register_field.jade' with field=form.description %}
+
+
+  .panel-footer
+    .text-right
+      button(type="submit").btn.btn-inverse.btn-primary
+        | Enviar&nbsp;
+        i.fa.fa-angle-right

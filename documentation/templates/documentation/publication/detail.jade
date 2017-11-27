@@ -1,0 +1,114 @@
+extends base_resource.jade
+
+- load i18n static
+- load staticfiles
+- load thumbnail
+
+block summary_title
+  .title Sobre esta publicación:
+  
+block summary_footer
+  table
+    tr
+      th Autor:
+      th Año de Publicación:
+      th Tipo de Documento:
+    tr
+      td #{object.author} 
+      td.no-decoration #{object.publication_date.year|default:"-"}
+      td #{object.kind} 
+  
+block breadcrumbs
+  li
+    a(href="{% url 'home' %}") INICIO
+    i.fa.fa-angle-right.li-breadcrumb
+  li
+    a(
+      href="{% url 'methodology_list' %}"
+    ) &nbsp; RECURSOS
+    i.fa.fa-angle-right.li-breadcrumb
+  li
+    a(
+      href="{% url 'publication_list' %}"
+    ) PUBLICACIONES
+    i.fa.fa-angle-right.li-breadcrumb
+  li.breadcrumb-not-selected
+    span &nbsp; {{object.title|upper}}  
+
+block description
+  h5 Extracto:
+  p #{object.description|linebreaks}
+  
+  .footer-button-group
+    if object.documentation_file
+      if user.is_accepted
+        a.btn.btn-filled(
+          href="{% url 'documentation_file_download' object.documentation_file.hash_id %}",
+          download
+        )
+          i.fa.fa-download
+          | &nbsp;Descargar Documento
+      else
+        a.btn.btn-filled.login-to-download(
+          href="",
+        )
+          i.fa.fa-download
+          | &nbsp;Descargar Documento
+    if user.is_accepted
+      a.btn(data-toggle="modal" data-target=".share-modal")
+        i.fa.fa-paper-plane
+        | &nbsp;Enviar por Email  
+  
+  if user.is_accepted
+    - include 'documentation/includes/share-modal.jade'
+  
+  if user.is_staff
+    a.btn.btn-success(href="{% url 'publication_update' object.pk %}") Editar publicación
+    a.btn.btn-success(href="{% url 'publication_delete' object.pk %}") Eliminar publicación
+  
+block aside_top_content
+  if object.documentation_file
+    if object.documentation_file.image
+      img(src="{% thumbnail object.documentation_file.image 400x600 %}")
+    else
+      .img
+    if user.is_accepted
+      .text-center
+        a.download-link(
+          href="{% url 'documentation_file_download' object.documentation_file.hash_id %}",
+          download
+        ) Descargar PDF
+    else
+      .text-center
+        a.login-to-download.download-link(
+          href="#",
+        ) Descargar PDF
+
+    if object.country
+      p 
+        b País
+      p {{object.country}}
+
+    if object.language
+      p 
+        b Idioma
+      p {{object.language}}
+    
+block below
+  if highlighted_publications
+    .row.documentation-publications
+      h2(
+        style="padding: 10px 0;"
+      ) Tal vez te interese
+      ul.publications-list.no-bullets
+        for hpub in highlighted_publications
+          li.publication-card.bg-color-white
+            if hpub.documentation_file.image
+              img(src="{% thumbnail hpub.documentation_file.image 400x600 %}")
+            else
+              .img
+            a.title(href="{% url 'publication_detail' hpub.id %}") #{hpub.title}
+            .text #{hpub.about}
+  
+if not user.is_accepted
+  block active_users

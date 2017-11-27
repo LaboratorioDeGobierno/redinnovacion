@@ -1,0 +1,90 @@
+extends base.jade
+
+- load i18n static
+
+block title
+  | Instituciones
+
+block javascripts
+  script(src="{% static 'js/jquery.maskedinput.min.js' %}")
+  script(src="{% static 'js/format_phone.js' %}")
+
+block content
+  .container
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'people_list' %}") INTEGRANTES
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'institution_list' %}") INSTITUCIONES
+        i.fa.fa-angle-right.li-breadcrumb
+      li.breadcrumb-not-selected
+        span &nbsp; #{institution.name}
+    .section
+      h2.title-people Información general
+      - include 'institutions/include/institution_form.jade' with form_actions=False
+      h2 Integrantes de la institución
+        if perms.users.add_user
+          a.btn.btn-success.pull-right(
+            href="{% url 'institution_user_create' institution.slug %}"
+            )
+            | Agregar persona
+      table.table.table-outlined.hidden-xs
+        thead
+          tr
+            th Nombre
+            th Rol en la institución
+            th Email
+            th
+        tbody
+          each iter_user in user_list
+            tr
+              td
+                a(href="{{ iter_user.get_absolute_url }}")
+                  | {{ iter_user.get_full_name }}
+              td
+                | {{ iter_user.charge|default:'' }}
+              td
+                | {{ iter_user.email }}
+              td
+                a.text-danger(href="{% url 'deactivate' iter_user.pk %}")
+                  | Eliminar
+            - empty
+              tr
+                td.text-center(colspan="4")
+                  {% trans 'no participants'|capfirst %}
+      .hidden-sm.hidden-md.hidden-lg
+        each iter_user in user_list
+          hr
+          h3
+            a.text-default(href="{{ iter_user.get_absolute_url }}")
+              | {{ iter_user.get_full_name }}
+          p {{ iter_user.charge }}
+          p {{ iter_user.email }}
+        hr
+      .row
+        .col-sm-8
+          button.btn.btn-link.text-primary(type="reset" form="institution-form")
+            | Cancelar cambios
+          button.btn.btn-primary(type="submit" form="institution-form")
+            | Guardar
+        if is_paginated
+          .col-sm-4.text-right
+            strong.text-muted
+              | {{ page_obj.start_index }}-{{ page_obj.end_index }}
+              | de {{ paginator.count }}
+              | &nbsp;
+            if page_obj.has_previous
+              a.btn.btn-inverse.btn-primary(
+                href="{% url 'institution_update' institution.slug %}?p={{page_obj.previous_page_number}}"
+              )
+                i.fa.fa-chevron-left
+              | &nbsp;
+            if page_obj.has_next
+              a.btn.btn-inverse.btn-primary(
+                href="{% url 'institution_update' institution.slug %}?p={{page_obj.next_page_number}}"
+              )
+                i.fa.fa-chevron-right

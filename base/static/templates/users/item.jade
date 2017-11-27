@@ -1,0 +1,13 @@
+//h1 #{name}
+//for institution in #{institution_list}
+h1 #{institutions}
+for institution in institutions
+  .col-xs-12.col-sm-4.col-md-4.col-lg-4
+    .labeled-box
+      p
+        a(href="{{ institution.get_absolute_url }}")
+          {{ institution.name|truncatechars:50 }}
+          #{institution}
+      p
+        span 
+          b{{ institution.users_count }} INTEGRANTES

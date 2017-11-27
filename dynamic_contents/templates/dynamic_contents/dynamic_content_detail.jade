@@ -1,0 +1,25 @@
+extends base.jade
+
+- load i18n
+
+block breadcrumbs
+  li
+    a(href="{% url 'dynamic_content_list' %}")
+      | {{opts.verbose_name_plural|capfirst}}
+
+block content
+  .text-right
+    .btn-group
+      if perms.dynamic_contents.change_dynamic_content
+        a.btn.btn-primary(href="{% url 'dynamic_content_update' dynamic_content.id %}")
+          {% trans 'Update dynamic content' %}
+          i.fa.fa-edit
+      if perms.dynamic_contents.delete_dynamic_content
+        a.btn.btn-danger(href="{% url 'dynamic_content_delete' dynamic_content.id %}")
+          {% trans 'Delete dynamic content' %}
+          i.fa.fa-times
+
+  table.table.table-bordered.table-hover
+    tbody
+      th Id
+      td {{dynamic_content.id}}

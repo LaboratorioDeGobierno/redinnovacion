@@ -1,0 +1,100 @@
+extends base.jade
+- load bootstrap
+- load staticfiles
+
+block title 
+  | Editar actividad
+
+block stylesheets
+  link(
+    href="{% static 'bower_components/dropzone/dist/dropzone.css' %}",
+    rel="stylesheet"
+  )
+
+block javascripts
+  script(type='text/javascript', src="{% static 'bower_components/dropzone/dist/dropzone.js' %}")
+  script(src="{% static 'js/documents.js' %}")
+  
+block content
+  .container
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+
+      li.breadcrumb-not-selected
+        span &nbsp; Editar Actividad
+
+    div
+      a(href="{% url 'calendar' %}") 
+        i.fa.fa-chevron-left
+        |  Volver al Calendario de Actividades
+    h3.title-people Editar Actividad: {{event.name}}
+
+  form#institution-form(
+    method="post"
+    enctype="multipart/form-data"
+    role="form"
+  )
+    .container-fluid.bg-color-gray-7
+      br
+      .container
+        h3 Etapas de la actividad
+        for stage_form in stage_forms
+          {% include 'events/includes/stage_form.jade' with form=stage_form %}
+      br
+
+    .container(style="margin-top: 40px;")
+        {% csrf_token %}
+        .row.row-flex.flex-start
+          each field in form
+            .col-md-6
+              | {{ field|bootstrap }}
+        if form_actions|default_if_none:True
+          .row
+            .col-xs-12.text-right
+              button.btn.btn-link.text-primary(type="reset")
+                | Cancelar cambios
+              button.btn.btn-primary(type="submit")
+                | Guardar
+
+  if user.is_staff
+    .container.section
+      h2 Recursos
+      form.dropzone#filesDropzone(
+        method="POST",
+        action="{% url 'file_create' %}",
+        enctype="multipart/form-data",
+        role="form",
+      )
+        {% csrf_token %}
+        input(type="hidden", name="event", value="{{event.id}}")
+      ul.mar-top
+        for file in event.files.all
+          li.uploaded-item
+            a.text-primary(href="{{ file.archive.url }}", target="_blank")
+              | {{ file.get_filename }}
+            a.btn.btn-sm.btn-link.btn-danger.delete-btn(
+              data-url="{% url 'file_delete' file.id %}"
+            )
+              i.fa.fa-left.fa-trash
+
+      h2 Galería de fotos
+      form.dropzone#photosDropzone(
+        method="POST",
+        action="{% url 'photo_create' %}",
+        enctype="multipart/form-data",
+        role="form",
+      )
+        {% csrf_token %}
+        input(type="hidden", name="event", value="{{event.id}}")
+      .row.row-flex.flex-end.mar-top
+        for photo in event.photos.all
+          .col-sm-2.uploaded-item
+            img.img-thumbnail(src="{{photo.photo.url}}")
+            .mar-sm-top.text-right
+              a.btn.btn-sm.btn-link.btn-danger.delete-btn(
+                data-url="{% url 'photo_delete' photo.id %}"
+              )
+                i.fa.fa-left.fa-trash
+                | Eliminar

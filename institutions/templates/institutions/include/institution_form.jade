@@ -1,0 +1,21 @@
+- load bootstrap
+- load staticfiles
+
+block form
+  form#institution-form(
+    method="post"
+    enctype="multipart/form-data"
+    role="form"
+  )
+    {% csrf_token %}
+    .row
+      each field in form
+        .col-md-6
+          | {{ field|bootstrap }}
+    if form_actions|default_if_none:True
+      .row
+        .col-xs-12.text-right
+          button.btn.btn-link.text-primary(type="reset")
+            | Cancelar cambios
+          button.btn.btn-primary(type="submit")
+            | Guardar

@@ -1,0 +1,628 @@
+# This file is distributed under the same license as the Django package.
+#
+# Translators:
+# Antoni Aloy <aaloy@apsl.net>, 2012-2013.
+# Antoni Aloy <antoni.aloy@trespams.com>, 2012.
+# Jannis Leidel <jannis@leidel.info>, 2011.
+# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2011.
+#   <serra.guillem@gmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: Django\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-04 08:01-0300\n"
+"PO-Revision-Date: 2013-01-10 18:54+0000\n"
+"Last-Translator: Antoni Aloy <aaloy@apsl.net>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/django/language/"
+"es/)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:33
+msgid "Selected users where logged out"
+msgstr "Se ha cerrado sesión a los usuarios seleccionados"
+
+#: admin.py:36
+msgid "Logs out the user from all devices"
+msgstr "Cierra sesión de todos los dispositivos del usuario"
+
+#: admin.py:81
+msgid "Personal info"
+msgstr "Información personal"
+
+#: admin.py:92
+msgid "Permissions"
+msgstr "Permisos"
+
+#: admin.py:100
+msgid "Important dates"
+msgstr "Fechas importantes"
+
+#: admin.py:118 admin.py:120
+msgid "change password"
+msgstr "cambiar contraseña"
+
+#: admin.py:126 admin.py:129
+msgid "send recover password email"
+msgstr "enviar correo recuperación contraseña"
+
+#: enums.py:18
+msgid "Pendiente"
+msgstr ""
+
+#: enums.py:19
+msgid "Aceptado"
+msgstr ""
+
+#: enums.py:20
+msgid "Rechazado"
+msgstr ""
+
+#: enums.py:21 enums.py:41
+msgid "Otro"
+msgstr ""
+
+#: enums.py:36
+msgid "Una vez a la semana"
+msgstr ""
+
+#: enums.py:37
+msgid "Una vez cada 15 días"
+msgstr ""
+
+#: enums.py:38
+msgid "Una vez al mes"
+msgstr ""
+
+#: enums.py:40
+msgid "Solo algunas veces ocasionales al año"
+msgstr ""
+
+#: forms.py:47
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: forms.py:48 forms.py:171
+msgid "Password"
+msgstr "Contraseña"
+
+#: forms.py:51
+msgid ""
+"Please enter a correct email and password. Note that both fields may be case-"
+"sensitive."
+msgstr "Email o contraseña no registrados."
+
+#: forms.py:53
+msgid ""
+"Your Web browser doesn't appear to have cookies enabled. Cookies are "
+"required for logging in."
+msgstr ""
+"Su navegador no parece tener las cookies habilitadas. Las cookies se "
+"necesitan para poder ingresar."
+
+#: forms.py:55
+msgid "This account is inactive."
+msgstr "Esta cuenta está inactiva."
+
+#: forms.py:56
+msgid "You must wait for an administrator to approve your registration"
+msgstr "Debes esperar que un funcionario apruebe tu inscripción"
+
+#: forms.py:123
+msgid "Please log in again, because your session has expired."
+msgstr "Por favor ingresa nuevamente, porque tu sesión a expirado."
+
+#: forms.py:131
+msgid ""
+"Please enter the correct email and password for a staff account. Note that "
+"both fields may be case-sensitive."
+msgstr "El email no está registrado en nuestra plataforma"
+
+#: forms.py:150
+msgid "A user with that email already exists."
+msgstr "Ya existe un usuario con este correo electrónico."
+
+#: forms.py:151 forms.py:379
+msgid "The two password fields didn't match."
+msgstr "Las dos contraseñas no coinciden."
+
+#: forms.py:155
+msgid "E-mail"
+msgstr "Correo electrónico"
+
+#: forms.py:156 forms.py:177 forms.py:387
+msgid "Enter the same password as above, for verification."
+msgstr "Introduzca la misma contraseña que arriba, para verificación."
+
+#: forms.py:159 models.py:85
+msgid "first name"
+msgstr "nombre propio"
+
+#: forms.py:160
+msgid "The name of the user"
+msgstr "El nombre del usuario"
+
+#: forms.py:163 models.py:89
+msgid "last name"
+msgstr "apellido paterno"
+
+#: forms.py:164
+msgid "The last name of the user"
+msgstr "El apellido del usuario"
+
+#: forms.py:167 models.py:93
+msgid "mother family name"
+msgstr "apellido materno"
+
+#: forms.py:175 forms.py:388
+msgid "Password confirmation"
+msgstr "Contraseña (confirmación)"
+
+#: forms.py:276 forms.py:329 forms.py:338
+msgid "other"
+msgstr "otra"
+
+#: forms.py:382 templates/accounts/password_change.jade:44
+#: templates/accounts/password_change.jade:48
+#: templates/registration/password_reset_confirm.jade:21
+#: templates/registration/password_reset_confirm.jade:24
+msgid "New password"
+msgstr "Contraseña nueva"
+
+#: models.py:53
+msgid "Users"
+msgstr "Usuarios"
+
+#: models.py:66 templates/participants/extern_participant_list.jade:89
+#: templates/participants/participant_list.jade:89
+#: templates/participants/pending_participant_list.jade:89
+#: templates/participants/people_list.jade:38
+#: templates/participants/people_list.jade:90
+#: templates/participants/rejected_participant_list.jade:85
+msgid "region"
+msgstr "región"
+
+#: models.py:73
+msgid "county"
+msgstr "comuna"
+
+#: models.py:81
+msgid "email address"
+msgstr "dirección de correo electrónico"
+
+#: models.py:97
+msgid "charge"
+msgstr "cargo"
+
+#: models.py:102
+msgid "phone"
+msgstr "teléfono"
+
+#: models.py:106 models.py:111
+msgid "address"
+msgstr "dirección"
+
+#: models.py:117 templates/participants/extern_participant_list.jade:82
+#: templates/participants/participant_list.jade:82
+#: templates/participants/pending_participant_list.jade:83
+#: templates/participants/people_list.jade:36
+#: templates/participants/people_list.jade:82
+#: templates/participants/rejected_participant_list.jade:79
+msgid "institution"
+msgstr "institución"
+
+#: models.py:127
+msgid "other institution name"
+msgstr "otro nombre de institución"
+
+#: models.py:130
+msgid "avatar"
+msgstr "avatar"
+
+#: models.py:136
+msgid "description"
+msgstr "descripción"
+
+#: models.py:141
+msgid "status"
+msgstr "estado"
+
+#: models.py:148
+msgid "interests"
+msgstr "intereses"
+
+#: models.py:153
+msgid "staff status"
+msgstr "es staff"
+
+#: models.py:154
+msgid "Designates whether the user can log into this admin site."
+msgstr "Indica si el usuario puede entrar en este sitio de administración."
+
+#: models.py:158
+msgid "active"
+msgstr "activo"
+
+#: models.py:159
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+"Indica si el usuario puede ser tratado como activo. Desmarque esta opción en "
+"lugar de borrar la cuenta."
+
+#: models.py:164
+msgid "date joined"
+msgstr "fecha de alta"
+
+#: models.py:165
+msgid "The date this user was created in the database"
+msgstr "La fecha en la que este usuario fue creado en la base de datos"
+
+#: models.py:168
+msgid "token"
+msgstr "token"
+
+#: models.py:175
+msgid "slug"
+msgstr ""
+
+#: models.py:182
+msgid "last activity"
+msgstr ""
+
+#: models.py:183
+msgid "The datetime of the last activity performed by the user"
+msgstr ""
+
+#: models.py:194 models.py:453
+msgid "user"
+msgstr "usuario"
+
+#: models.py:195
+msgid "users"
+msgstr "usuarios"
+
+#: models.py:458
+msgid "show name"
+msgstr "mostrar nombre"
+
+#: models.py:462
+msgid "show charge"
+msgstr "mostrar cargo"
+
+#: models.py:466
+msgid "show institution"
+msgstr "mostrar institución"
+
+#: models.py:470
+msgid "show email"
+msgstr "mostrar email"
+
+#: models.py:474
+msgid "show phone"
+msgstr "mostrar teléfono"
+
+#: models.py:478
+msgid "show interests"
+msgstr "mostrar intereses"
+
+#: models.py:482
+msgid "send notifications by email"
+msgstr "enviar notificaciones por email"
+
+#: models.py:487
+msgid "time in ri"
+msgstr "uso de ri"
+
+#: models.py:495
+msgid "topic of interests"
+msgstr "temas de interés"
+
+#: models.py:503
+msgid "other topics"
+msgstr "otros temas de interés"
+
+#: models.py:506
+msgid "show public information"
+msgstr "mostrar infomación pública"
+
+#: models.py:527
+msgid "topic"
+msgstr "tema"
+
+#: models.py:531
+msgid "order"
+msgstr "orden"
+
+#: templates/accounts/login.jade:73
+#: templates/registration/password_reset_complete.jade:8
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: templates/accounts/login.jade:98
+msgid "Access account"
+msgstr "Ingresar a tu Cuenta"
+
+#: templates/accounts/login.jade:107
+msgid "i have forgotten my password"
+msgstr "he olvidado mi contraseña"
+
+#: templates/accounts/login.jade:113
+msgid "Register here"
+msgstr "¿Quieres ser parte de la Red? Inscríbete Aquí"
+
+#: templates/accounts/password_change.jade:7
+#: templates/accounts/password_change.jade:17
+msgid "Password set"
+msgstr "Establecer contraseña"
+
+#: templates/accounts/password_change.jade:21
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/accounts/password_change.jade:23
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Por favor ingresa tu nueva contraseña dos veces para que podamos verificar "
+"que la escribiste correctamente."
+
+#: templates/accounts/password_change.jade:35
+#: templates/accounts/password_change.jade:39
+msgid "Old password"
+msgstr "Contraseña antigua"
+
+#: templates/accounts/password_change.jade:53
+#: templates/accounts/password_change.jade:57
+#: templates/registration/password_reset_confirm.jade:33
+#: templates/registration/password_reset_confirm.jade:36
+msgid "Password (again)"
+msgstr "Contraseña (nuevamente)"
+
+#: templates/accounts/password_change.jade:62
+msgid "Change my password"
+msgstr "Establecer contraseña"
+
+#: templates/accounts/password_reset_form.jade:12
+#: templates/accounts/password_reset_form.jade:41
+msgid "Password reset"
+msgstr "Restablecer contraseña"
+
+#: templates/accounts/password_reset_form.jade:43
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll e-mail "
+"instructions for setting a new one."
+msgstr ""
+"¿Olvidaste tu contraseña?, ingresa abajo tu dirección de correo electrónico, "
+"y te enviaremos las instrucciones para establecer una nueva."
+
+#: templates/accounts/password_reset_form.jade:49
+msgid "E-mail address"
+msgstr "Dirección de correo electrónico"
+
+#: templates/accounts/password_reset_form.jade:55
+msgid "Reset my password"
+msgstr "Reestablecer mi contraseña"
+
+#: templates/accounts/register_success.jade:16
+msgid "¡Muchas Gracias! "
+msgstr ""
+
+#: templates/admin/users/user/add_form.html:6
+msgid ""
+"First, enter an email and password. Then, you'll be able to edit more user "
+"options."
+msgstr ""
+"Primero, ingresa un correo electrónico y contraseña. Después, podrás editar "
+"más opciones del usuario"
+
+#: templates/admin/users/user/add_form.html:8
+msgid "Enter an email and password."
+msgstr "Introduce un correo electrónico y contraseña"
+
+#: templates/admin/users/user/change_form.jade:9
+#: templates/admin/users/user/change_form.jade:11
+msgid "Log in as user"
+msgstr "Iniciar sesión"
+
+#: templates/emails/user_new.html:2
+#, python-format
+msgid ""
+"You're receiving this e-mail because you registered a new account at "
+"%(site_name)s."
+msgstr ""
+"Estas recibiendo este correo porque registraste una nueva cuenta en "
+"%(site_name)s."
+
+#: templates/emails/user_new.html:4
+msgid "Please go to the following page to confirm your email address:"
+msgstr ""
+"Por favor, ve a la siguiente página para confirmar tu correo electrónico"
+
+#: templates/emails/user_new.html:9
+msgid "Thanks for using our site!"
+msgstr "¡Gracias por utilizar nuestro sitio!"
+
+#: templates/emails/user_new.html:11
+#, python-format
+msgid "The %(site_name)s team"
+msgstr "El equipo de %(site_name)s"
+
+#: templates/emails/user_new_subject.txt:2
+#, python-format
+msgid "Welcome to %(site_name)s"
+msgstr "Bienvenido a %(site_name)s"
+
+#: templates/includes/active_users.jade:7
+msgid "personas en línea"
+msgstr ""
+
+#: templates/participants/admin_people_list.jade:7
+#: templates/participants/people_list.jade:9
+msgid "people"
+msgstr "personas"
+
+#: templates/participants/admin_people_list.jade:17
+#: templates/participants/people_list.jade:19
+msgid "home"
+msgstr "inicio"
+
+#: templates/participants/admin_people_list.jade:21
+#: templates/participants/people_list.jade:23
+msgid "integrants"
+msgstr "integrantes"
+
+#: templates/participants/admin_user_list.jade:42
+msgid "no administrator assigned"
+msgstr "sin administradores asignados"
+
+#: templates/participants/extern_participant_list.jade:79
+#: templates/participants/participant_list.jade:79
+#: templates/participants/pending_participant_list.jade:80
+#: templates/participants/people_list.jade:78
+#: templates/participants/rejected_participant_list.jade:76
+msgid "no charge"
+msgstr "sin cargo"
+
+#: templates/participants/extern_participant_list.jade:86
+#: templates/participants/participant_list.jade:86
+#: templates/participants/pending_participant_list.jade:87
+#: templates/participants/people_list.jade:65
+#: templates/participants/people_list.jade:87
+#: templates/participants/rejected_participant_list.jade:83
+msgid "no institution"
+msgstr "sin institución"
+
+#: templates/participants/people_list.jade:34
+msgid "name and role"
+msgstr "nombre y rol"
+
+#: templates/registration/password_reset_complete.jade:7
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr "Tu contraseña ha sido establecida. Puedes ingresar a la página ahora."
+
+#: templates/registration/password_reset_confirm.jade:6
+msgid "Password reset confirmation"
+msgstr "Reestablecer contraseña (confirmación)"
+
+#: templates/registration/password_reset_confirm.jade:12
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+"Por favor ingresa tu nueva contraseña dos veces para que podamos verificar "
+"que la escribiste correctamente."
+
+#: templates/registration/password_reset_confirm.jade:45
+msgid "Set password"
+msgstr "Establecer contraseña"
+
+#: templates/registration/password_reset_confirm.jade:48
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+"El link para restablecer tu contraseña es inválido, posiblemente ya ha sido "
+"usado. Por favor solicita un nuevo restablecimiento de contraseña"
+
+#: views.py:133
+msgid "An email has been sent to you. Please check it to reset your password."
+msgstr ""
+"Se te ha enviado un correo electrónico. Por favor revísalo para restablecer "
+"tu contraseña."
+
+#: views.py:280
+msgid "La cuenta fue eliminada"
+msgstr ""
+
+#: views.py:286
+msgid "La cuenta fue desactivada"
+msgstr ""
+
+#: views.py:312
+msgid "Your email address has been verified."
+msgstr "Tu dirección correo electrónico ha sido verificada"
+
+#: views.py:315
+msgid "Invalid verification link"
+msgstr "Link de verificación inválido"
+
+#: views.py:745
+msgid "email sent"
+msgstr "correo enviado"
+
+#~ msgid "Password change"
+#~ msgstr "Cambiar Contraseña"
+
+#~ msgid "Password reset complete"
+#~ msgstr "Restablecimiento de la contraseña completado"
+
+#~ msgid "Enter new password"
+#~ msgstr "Ingrese una nueva contraseña"
+
+#~ msgid "New password:"
+#~ msgstr "Contraseña nueva"
+
+#~ msgid "Confirm password:"
+#~ msgstr "Confirmar contraseña"
+
+#~ msgid "Password reset unsuccessful"
+#~ msgstr "La contraseña no se ha podido restablecer."
+
+#~ msgid ""
+#~ "You're receiving this e-mail because you requested a password reset for "
+#~ "your user account at %(site_name)s."
+#~ msgstr ""
+#~ "Estas recibiendo este correo porque solicitaste el restablecer la "
+#~ "contraseña para tu cuenta de usuario en %(site_name)s."
+
+#~ msgid "Please go to the following page and choose a new password:"
+#~ msgstr "Por favor ve a la siguiente página y escoge una nueva contraseña"
+
+#~ msgid "group"
+#~ msgstr "grupo"
+
+#~ msgid "An email has been sent to you. Please check it to verify your email."
+#~ msgstr ""
+#~ "Se te ha enviado un correo electrónico. Por favor revísalo para verificar "
+#~ "tu correo electrónico"
+
+#~ msgid "Your data has been successfully saved."
+#~ msgstr "Tus datos han sido guardados exitósamente."
+
+#~ msgid "Mother's maiden name"
+#~ msgstr "Apellido materno"
+
+#~ msgid "Network access"
+#~ msgstr "Ingreso a la Red"
+
+#~ msgid "An email address that identifies this user"
+#~ msgstr "Un correo electrónico que identifica a este usuario"
+
+#~ msgid "The first name of this user"
+#~ msgstr "El primer nombre de este usuario"
+
+#~ msgid "The last name of this user"
+#~ msgstr "El apellido de este usuario"
+
+#~ msgid "E-mail:"
+#~ msgstr "Correo electrónico"
+
+#~ msgid "Forgotten your password?"
+#~ msgstr "¿Olvidaste tu contraseña?"
+
+#~ msgid "Create new account"
+#~ msgstr "Crea una nueva cuenta"
+
+#~ msgid "Register"
+#~ msgstr "Regístrarme"
+
+#~ msgid "Hello"
+#~ msgstr "Hola"

@@ -1,0 +1,125 @@
+extends base.jade
+doctype 5
+
+- load compress
+- load staticfiles
+- load i18n static
+
+block title
+  {% trans 'people'|capfirst %}
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no-green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}")
+            {% trans 'home' %}
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'institution_list' %}")
+            {% trans 'integrants' %}
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; Personas
+      - include 'includes/search_title.jade' with page_title='Personas que componen la Red' subtitle='Aquí puedes encontrar a todos los servidores públicos que componen la Red, con quienes puedes conectarte y compartir'
+  - include 'includes/tabs.jade' with active_tab='people' search_form=True
+  .container.mar-top
+    table.table.table-outlined.table-hover-alt.hidden-xs.hidden-sm
+      thead
+        tr
+          th.text-center(colspan=2)
+            {% trans 'name and role' %}
+          th
+            {% trans 'institution' %}
+          th
+            {% trans 'region' %}
+      colgroup
+        col.col-sm-1
+        col.col-sm-3
+        col.col-sm-4
+        col.col-sm-4
+      tbody
+        each iter_user in user_list
+          tr
+            td
+              if iter_user.avatar
+                .user-icon.img-circle(
+                  style="background-image: url('#{iter_user.avatar.url}')"
+                )
+              else
+                i.fa.fa-user-circle.user-icon
+            td
+              a.content-primary(href="{{ iter_user.get_absolute_url }}")
+                = iter_user.get_full_name
+              p 
+                if iter_user.profile.show_charge
+                  {{iter_user.charge|default:"Sin cargo"}}
+            td
+              if iter_user.institution
+                a(href="{{ iter_user.institution.get_absolute_url }}")
+                  = iter_user.institution
+              else
+                {% trans 'no institution'|capfirst %}
+            td
+              = iter_user.region|default:''
+    .row.hidden-lg.hidden-md.hidden-sm
+      - for iter_user in user_list
+        .col-xs-12
+          h4.content-primary
+            a(href=iter_user.get_absolute_url())
+              = iter_user.get_full_name
+          p
+            - if iter_user.charge and iter_user.show_charge
+              strong= iter_user.charge
+            - else
+              {% trans 'no charge'|capfirst %}
+          p
+            - if iter_user.institution
+              strong
+                {% trans 'institution'|capfirst %}
+                | :
+              a(href=iter_user.institution.get_absolute_url())
+                |  #{iter_user.institution}
+            - else
+              {% trans 'no institution'|capfirst %}
+          p
+            strong
+              {% trans 'region'|capfirst %}
+              | :
+            |  #{user.region|default:"Sin región"}
+          hr
+    .row
+      .col-sm-6
+      .col-sm-6.text-right
+        span.dropdown
+          button.btn.btn-inverse.btn-primary.dropdown-toggle(
+            type='button', data-toggle='dropdown'
+          )
+            | Mostrar {{by}} #[span.caret]
+          ul.dropdown-menu
+            li
+              a(href='?by=10{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 10
+            li
+              a(href='?by=20{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 20
+            li
+              a(href='?by=25{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 25
+            li
+              a(href='?by=50{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 50
+        if is_paginated
+          strong.text-muted
+            | &nbsp;
+            | {{ page_obj.start_index }}-{{ page_obj.end_index }}
+            | de {{ paginator.count }}
+            | &nbsp;
+          if page_obj.has_previous
+            a.btn.btn-inverse.btn-primary(
+              href="{% url 'people_list' %}?p={{page_obj.previous_page_number}}&by={{by}}"
+            )
+              i.fa.fa-chevron-left
+            | &nbsp;
+          if page_obj.has_next
+            a.btn.btn-inverse.btn-primary(
+              href="{% url 'people_list' %}?p={{page_obj.next_page_number}}&by={{by}}"
+            )
+              i.fa.fa-chevron-right

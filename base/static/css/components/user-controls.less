@@ -1,0 +1,85 @@
+@import "../variables.less";
+@import "../helper-classes.less";
+
+.user-controls {
+  .bg-color-white;
+  .bd-radius-base;
+  .mar-bottom;
+
+  .media-left {
+    .pad-sm-all;
+    border-right: 2px solid @state-info-bg;
+
+    a:hover,
+    a:focus {
+      text-decoration: none;
+    }
+  }
+
+  .media-right {
+    .pad-sm-all;
+    border-left: 2px solid @state-info-bg;
+  }
+
+  .media-object {
+    width: 78px;
+    height: 78px;
+  }
+
+  .media-body {
+  }
+
+  .media-heading {
+    .pad-sm-all;
+    .mar-no;
+    .lh-base;
+    min-height: 66px;
+    text-align: center;
+    @media (min-width: @screen-sm-min) {
+      text-align: left;
+    }
+  }
+
+  .controls {
+    background-color: @state-info-bg;
+    text-align: center;
+    position: relative;
+
+    i.fa {
+      font-size: 20px;
+    }
+
+    .btn-group a {
+      padding-left: 15px;
+      padding-right: 0;
+    }
+
+    .btn-group a:first-child {
+      padding-left: 10px;
+    }
+
+    .btn-group a:last-child {
+      padding-left: 11px;
+      padding-top: 3px;
+      padding-right: 10px;
+    }
+
+    .badge {
+      position: absolute;
+      top: 0px;
+    }
+
+    .new-messages-badge {
+      left: 25px;
+    }
+
+    .new-events-badge {
+      right:10px;
+    }
+
+  }
+}
+
+.fa.media-object {
+  font-size: 78px;
+}

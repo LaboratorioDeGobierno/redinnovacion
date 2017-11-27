@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="193px" height="161px" viewBox="0 0 193 161" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Page 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="0--Login" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Page-1" transform="translate(2.000000, 2.000000)" stroke-width="4">
+            <path d="M148,78.3082069 C148,106.858741 124.878276,130 96.357931,130 C67.8358103,130 45,105.92819 45,77.379431 C45,49.5800862 66.8093621,28.1560862 94.2872759,27.0443966 C95.0295862,27.0159828 95.7718966,27 96.5248621,27 C125.041655,27 148,49.7576724 148,78.3082069 Z" id="Stroke-1" stroke="#000000"></path>
+            <path d="M94,27 C67.3333333,56.1327673 67.3333333,94.143466 94,130" id="Stroke-3" stroke="#000000"></path>
+            <path d="M99,27 C125.666667,56.1372925 125.666667,94.1378965 99,130" id="Stroke-5" stroke="#000000"></path>
+            <path d="M53,105 L141,105" id="Stroke-7" stroke="#000000"></path>
+            <path d="M50,55 L143,55" id="Stroke-9" stroke="#000000"></path>
+            <path d="M45,80 L148,80" id="Stroke-11" stroke="#000000"></path>
+            <polyline id="Stroke-13" stroke="#231F20" stroke-linecap="round" stroke-linejoin="round" points="0 83.4991219 17.3356013 101 34 81"></polyline>
+            <polyline id="Stroke-15" stroke="#231F20" stroke-linecap="round" stroke-linejoin="round" points="189 79.4714592 173.968013 64 160 81"></polyline>
+            <path d="M173.76079,65 C181.417236,105.706581 152.640844,145.635284 113.771701,154.875264 C86.6673855,161.33201 59.4815049,152.671871 41,134.341777" id="Stroke-17" stroke="#231F20" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M17.6663404,101 C5.63096371,55.9905699 35.8628102,12.0747604 77.7192939,2.12174514 C106.635712,-4.76058322 135.59462,5.55578476 154,26.4681598" id="Stroke-19" stroke="#231F20" stroke-linecap="round" stroke-linejoin="round"></path>
+        </g>
+    </g>
+</svg>

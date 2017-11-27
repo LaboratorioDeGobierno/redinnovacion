@@ -1,0 +1,19 @@
+doctype 5
+html(lang="{{ LANGUAGE_CODE }}")
+  head
+    meta(charset="utf-8")
+    title Red: {% block title %} {% endblock %}
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="author", content="http://lab.gob.cl")
+
+    block stylesheets
+
+  body(class="{{ body_class|default:'' }}")
+    div
+      .container
+        .row
+          if messages
+            for message in messages
+              div(class="alert alert-{{ message.tags }}") {{ message }}
+      div
+        block content

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="18px" viewBox="0 0 20 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="11-perfil-new" transform="translate(-264.000000, -163.000000)" fill-rule="nonzero" fill="#367DB7">
+            <g id="Profile-Home" transform="translate(140.000000, 82.000000)">
+                <path d="M142.125,81 L125.875,81 C124.839466,81 124,81.8394661 124,82.875 L124,96.625 C124,97.6605339 124.839466,98.5 125.875,98.5 L142.125,98.5 C143.160534,98.5 144,97.6605339 144,96.625 L144,82.875 C144,81.8394661 143.160534,81 142.125,81 Z M126.5,86.5075958 C128.350817,88.9825382 130.852089,91.3274794 134.003815,93.5424194 L141.5,86.5418434 L141.5,96 L126.5,96 L126.5,86.5075958 Z M126.506437,83.5087891 L141.5,83.5087891 L134.003815,90.5441895 L126.506437,83.5087891 Z" id="Shape-Copy"></path>
+            </g>
+        </g>
+    </g>
+</svg>

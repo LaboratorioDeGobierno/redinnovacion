@@ -1,0 +1,34 @@
+.table {
+  border-collapse: separate;
+  font-family: Brown;
+  font-weight: 700;
+
+  thead {
+    background-color: @gray-6;
+    font-size: 22px;
+  }
+
+  tbody {
+    font-size: 16px;
+    font-family: 'Lato';
+  }
+
+  tbody > tr > td,
+  tbody > tr > th,
+  thead > tr > td,
+  thead > tr > th {
+    border-top-width: 2px;
+  }
+
+  thead > tr > th {
+    padding: @table-padding + 2px @table-padding @table-padding;
+    // REVIEW: th text is 2px above
+    line-height: 1;
+  }
+
+  tbody > tr > td,
+  tbody > tr > th {
+    line-height: 25px;
+    border-top-width: 2px;
+  }
+}

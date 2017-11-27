@@ -1,0 +1,46 @@
+extends base.jade
+
+- load i18n static
+
+block title 
+  | personas
+  
+block content
+  .container.section
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li.breadcrumb-not-selected
+        span &nbsp; Configuración
+    h2.title-people
+      | Configuración de la plataforma
+    ul.nav.nav-tabs.nav-default
+      li.active
+        a(href='#administrators', data-toggle='tab') Administradores
+    br
+    #administrators.tab-pane.active
+      table.table.table-outlined.hidden-xs.hidden-sm
+        thead
+          tr
+            th Nombre
+            th Email
+            th
+        tbody
+          each iter_user in user_list
+            tr
+              td
+                a(href="{{ iter_user.get_absolute_url }}")
+                  = iter_user.get_full_name
+              td= iter_user.email
+              td
+                a.text-danger(href="{% url 'remove_staff_user_redirect_view' iter_user.pk %}")
+                  | Eliminar
+            - empty
+              tr
+                td.text-center(colspan=3)
+                  {% trans 'no administrator assigned' %}
+      a.btn.btn-primary.pull-right.align-button(
+        href="{% url 'user_create' %}"
+      )
+        | Agregar administrador

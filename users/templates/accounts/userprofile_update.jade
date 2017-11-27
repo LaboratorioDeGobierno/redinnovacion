@@ -1,0 +1,9 @@
+extends base.jade
+- load bootstrap
+
+block content
+  form(action="", method="post")
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    button
+      | Actualizar

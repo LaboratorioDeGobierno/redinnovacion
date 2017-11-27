@@ -1,0 +1,27 @@
+extends base.jade
+
+- load staticfiles
+
+block content
+  .container
+    .row.mar-top.mar-bottom
+      .col-sm-10.col-sm-offset-1
+        .row
+          .col-sm-4
+            img.img-responsive.center-block(
+              src="{% static 'img/dead-window.svg' %}"
+            )
+          .col-sm-8
+            h1.text-left.text-jumbo
+              | Página no disponible #[br]
+              small.text-gray-2 Error 404
+            p
+              | Quizás escribiste mal la dirección o seguiste un vínculo antiguo. 
+              | Te recomendamos las siguientes acciones:
+            .btn-toolbar.mar-top
+              .btn-group
+                a.btn.btn-primary(href="{% url 'calendar' %}")
+                  | Ver actividades
+              .btn-group
+                a.btn.btn-inverse.btn-primary(href="/")
+                  | Volver al inicio

@@ -1,0 +1,62 @@
+extends base.jade
+
+- load i18n
+- load staticfiles
+
+block stylesheets
+  link(type="text/less", rel="stylesheet", href="{% static 'css/newsletters.less' %}")
+
+block content
+  .container(
+    style="padding-top:50px;"
+  )
+    form.form-horizontal(
+      method="post"
+    )
+      {% csrf_token %}
+      .form-group
+        label.control-label.col-sm-2(for='events') Eventos:
+        .col-sm-10
+          input.form-control(
+            name='events',
+            type='number',
+            value=0,
+            placeholder='Number of events',
+          )
+      .form-group
+        label.control-label.col-sm-2(for='comments') Comentarios:
+        .col-sm-10
+          input.form-control(
+            name='comments',
+            type='number',
+            value=0,
+            placeholder='Number of comments',
+          )
+      .form-group
+        label.control-label.col-sm-2(for='unread_notifications') Notificaciones:
+        .col-sm-10
+          input.form-control(
+            name='unread_notifications',
+            type='number',
+            value=0,
+            placeholder='Number of unread notifications',
+          )
+      .form-group
+        label.control-label.col-sm-2(for='unread_messages') Mensajes:
+        .col-sm-10
+          input.form-control(
+            name='unread_messages',
+            type='number',
+            value=0,
+            placeholder='Number of unread messages',
+          )
+      .form-group
+        label.control-label.col-sm-2(for='send_email') Enviar como e-mail:
+        .col-sm-1
+          input.checkbox-inline(
+            name='send_email',
+            type='checkbox',
+          )
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          button.btn.btn-default(type='submit') Submit

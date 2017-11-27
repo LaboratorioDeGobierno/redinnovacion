@@ -1,0 +1,142 @@
+.documentation-search{
+
+  a.active {
+    color: black;
+  }
+
+  aside {
+    .input-group-button {
+      background-color: @blue;
+      i {
+        color: @white;
+      }
+    }
+  }
+
+  ul.categories-list {
+    list-style-type: none;
+    padding-left: 0;
+
+    span.count {
+      font-family: Brown;
+      font-weight: bold;
+      font-size: 16px;
+      color: @gray-3;
+      line-height: 23px;
+    }
+  }
+
+  ul.dashed-list {
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+      font-family: Brown;
+      font-weight: bold;
+      font-size: 16px;
+      color: @blue;
+    }
+
+    li::before {
+      content: '- ';
+    }
+
+    a.title {
+      display: inline-block;
+    }
+  }
+
+  span.select2 {
+    margin-top: 25px;
+  }
+
+  .search-results {
+    .card {
+      min-height: 220px;
+      padding: 30px 10px;
+      border-bottom: 1px solid @gray-6;
+
+      .img {
+        float: left;
+        width: 160px;
+        height: 160px;
+        background-color: @gray-6;
+      }
+      img {
+        float: left;
+        width: 160px;
+      }
+
+      .content {
+        padding: 0 15px;
+        display: inline-block;
+        max-width: calc(~'100% - 200px');
+
+        .type {
+          font-family: Brown;
+          font-weight: bold;
+          font-size: 12px;
+          color: @gray-2;
+          text-transform: uppercase;
+          margin-bottom: 15px;
+        }
+
+        a.title {
+          font-family: Brown;
+          font-weight: bold;
+          font-size: 19px;
+          color: @blue;
+          line-height: 23px;
+          margin-bottom: 15px;
+        }
+
+        .text {
+          font-family: Lato;
+          font-size: 14px;
+          color: @gray-2;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+
+  .sorry-message {
+    margin-top: 25px;
+    h4{
+      font-family: Brown;
+      font-weight: normal;
+      font-size: 27px;
+      color: @gray-2;
+      line-height: 27px;
+    }
+
+    .proposition {
+      padding: 15px;
+      margin-bottom: 25px;
+
+      p {
+        font-family: Lato;
+        font-size: 16px;
+        color: @gray-2;
+        line-height: 27px;
+      }
+    }
+
+    h5 {
+      font-family: Brown;
+      font-weight: bold;
+      font-size: 19px;
+      color: @gray-2;
+      line-height: 22px;
+    }
+
+    a {
+      font-family: Brown;
+      font-weight: bold;
+      font-size: 16px;
+      color: @blue;
+      line-height: 23px;
+    }
+
+  }
+}

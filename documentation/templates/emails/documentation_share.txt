@@ -1,0 +1,3 @@
+{{sender.get_full_name|capfirst}} te ha compartido la siguiente {{documentation.get_type_name}}
+
+{{protocol}}://{{domain}}{{documentation.get_absolute_url}}

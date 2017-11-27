@@ -1,0 +1,200 @@
+@avatar-size: 50px;
+
+.comments {
+
+  .big-mar-bottom;
+
+  .comments-heading {
+    font-family: 'Lato';
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .comments-actions {
+    border-top: 2px solid @gray-5;
+
+    .btn {
+      border: none;
+      border-top: 2px solid @blue;
+      background: transparent;
+      border-radius: 0;
+      margin-top: -2px;
+      font-size: 12px;
+      color: @gray-3;
+      font-family: 'Lato';
+      font-weight: bold;
+      padding-right: 0;
+
+      .fa {
+        margin: 4px 4px 4px 0;
+      }
+
+      .quantity {
+        margin-left: 4px;
+        color: @gray-3;
+      }
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:hover,
+      &:focus,
+      &.focus {
+        outline: 0;
+        color: @blue;
+      }
+
+      &:active {
+        outline: 0;
+        background-image: none;
+        box-shadow: inset 0 6px 5px -3px rgba(0, 0, 0, 0.125);
+      }
+
+      &.active {
+        color: @blue;
+        box-shadow: none;
+      }
+
+      &.highlighted {
+        color: @yellow;
+      }
+
+      &.liked {
+        color: @bright-red;
+      }
+    }
+
+    &.bor-no,
+    &.bor-no .btn {
+      border: none;
+    }
+  }
+
+  .comment {
+    .comment-avatar {
+      .user-avatar;
+      width: @avatar-size;
+      height: @avatar-size;
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 8px;
+      margin-right: 0;
+    }
+    .comment-body {
+      display: inline-block;
+      width: calc(~'100% - @{avatar-size} - 4px');
+      .comment-heading {
+        font-family: 'Lato';
+        font-weight: bold;
+        font-size: 16px;
+        color: @blue;
+        margin: 10px 0 0;
+
+        .text-descriptive {
+          word-break: break-all;
+        }
+
+        .comment-time {
+          color: @gray-3;
+          font-size: 13px;
+          display: inline-block;
+
+          &:before {
+            content: '\2022';
+            margin: 0 6px;
+          }
+        }
+      }
+
+      .comment-actions .btn-group {
+        .btn {
+          height: 20px;
+          border: none;
+          color: @gray-3;
+          padding: 0 8px;
+          font-size: 13px;
+
+          &:not(:first-child) {
+            border-left: 2px solid fade(@gray-5, 30%);
+          }
+
+          &:nth-child(3):before,
+          &:nth-child(4):before { //TODO change, find a better solution
+            content: '\2022';
+            margin: 0 6px;
+          }
+
+          .fa.fa-angle-up,
+          .fa.fa-angle-down {
+            line-height: 18px;
+            font-size: 24px;
+          }
+
+          .fa.fa-angle-right {
+            font-size: 15px;
+            margin-left: 4px;
+          }
+        }
+      }
+    }
+    > .comment {
+      margin-left: @avatar-size;
+    }
+
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .fa.comment-avatar,
+  .comment-avatar .fa {
+    font-size: @avatar-size;
+
+    @media (min-width: @screen-sm-min) {
+      font-size: @default-avatar-size;
+    }
+  }
+
+  .comment-load-more-btn,
+  .no-more-comments-alert {
+    margin-top: 40px;
+  }
+}
+
+.comments.comments-wide {
+  > .comment {
+    background-color: white;
+    padding: 20px 40px 10px 40px;
+    margin-bottom: 40px;
+  }
+}
+
+@media (min-width: @screen-sm-min) {
+  .comments {
+    .comment {
+      .comment-avatar {
+        width: @default-avatar-size;
+        height: @default-avatar-size;
+        margin-right: @default-avatar-separation;
+      }
+      .comment-body {
+        width: calc(~'100% - @{default-avatar-size} - 20px');
+      }
+
+       > .comment {
+         margin-left: @default-avatar-size + @default-avatar-separation;
+      }
+    }
+  }
+}
+
+#commentDropzone {
+  padding: 10px;
+  min-height: 40px;
+
+  .dz-default.dz-message {
+    margin: 0px;
+  }
+}

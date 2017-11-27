@@ -1,0 +1,25 @@
+extends base.jade
+
+- load staticfiles
+
+block content
+  .container
+    .row.mar-top.mar-bottom
+      .col-sm-10.col-sm-offset-1
+        .row
+          .col-sm-4
+            img.img-responsive.center-block(
+              src="{% static 'img/error-window.svg' %}"
+            )
+          .col-sm-8
+            h1.text-left.text-jumbo
+              | Página no disponible #[br]
+              small.text-gray-2 Error 500
+            p
+              | El servidor ha encontrado un error y no puede completar tu
+              | requerimiento. Intenta recargar tu página. Si tu problema
+              | persiste, #[a(href="#") contáctate con el administrador].
+            .btn-toolbar.mar-top
+              .btn-group
+                a.btn.btn-inverse.btn-primary(href="/")
+                  | Volver al inicio

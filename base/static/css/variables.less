@@ -1,0 +1,115 @@
+@import "../bower_components/bootstrap/less/variables.less";
+@import "../bower_components/bootstrap/less/mixins.less";
+
+/**
+* COLORS
+**/
+
+// grayscale
+@black: #000000;
+@white: #FFFFFF;
+@gray-1: #161614;
+@gray-2: #464646;
+@gray-3: #989898;
+@gray-4: #A0A0A0;
+@gray-5: #C8C8C8;
+@gray-6: #F0F0F0;
+@gray-7: #F5F5F5;
+@gray-8: #FEFEFE;
+
+// blue-purple
+@dark-blue: #053D6A;
+@dark-blue-2: #0062AB;
+// @blue: #1467AB;
+@blue: #FB3A51; //Magenta Principal
+
+@new-blue: #08A7F1; //Azul Primary Color
+@new-blue-2: #089FE6;  //Azul Border Primary Color
+@new-blue-dark: #078AC7; //Azul Hover Primary Color
+
+@bright-blue: #2F9BC5;
+@white-purple: #DCDCDF;
+@light-blue: #E7EFF6;
+@white-blue: #F0F0F3;
+
+// red-orange
+@black-brown: #1E130F;
+@bright-red: #E14C3F;
+@red: #E14C3F;
+@pink: #F8D9DD;
+@fuchsia: #FF2D55;
+
+@magenta: #FB3A51; //Magenta Principal
+@dark-magenta: #DB3347;
+
+
+// yellow-green
+@black-green-1: #040502;
+@black-green-2: #161815;
+
+@yellow: #FFAA00;
+
+@lime: #96DB50;
+
+@green: #11BF32;
+@green-2: #0E9628;
+@green-3: #0B731F;
+@green-old: #4CBD51;
+
+/**
+* DEFINITONS
+**/
+@common-border-radius: 5px;
+@table-border-width: 2px;
+@grid-padding: @grid-gutter-width / 2;
+@footer-height: 216px;
+@border-color-base: @black;
+@common-margin: 20px;
+@common-padding: 20px;
+
+/**
+* BOOTSTRAP OVERRIDE
+**/
+
+// Navbar
+@navbar-height: 100px;
+@navbar-inverse-bg: @blue;
+@navbar-inverse-link-color: fade(@white, 40%);
+
+// Nav tabs
+@nav-tabs-active-link-hover-color: @gray-2;
+@nav-tabs-border-color: transparent;
+@nav-link-hover-bg: transparent;
+@nav-tabs-justified-link-border-color: @gray-5;
+@nav-tabs-justified-active-link-border-color: @gray-2;
+@nav-tabs-link-hover-border-color: transparent;
+
+// Table
+@table-outlined-radius: @common-border-radius;
+@table-padding: 14px;
+
+// Avatar
+@default-avatar-size: 65px;
+@default-avatar-separation: 16px;
+
+// Stage bar component
+@stage-bar-stages:              7;
+@stage-bar-separator-size:      12px;
+@stage-bar-ball-size:           8px;
+@stage-bar-padding:             10px;
+@stage-bar-background-color:    fade(@blue, 29%);
+@stage-bar-current-color:       @bright-blue;
+@stage-bar-past-color:          @blue;
+
+// Box event component
+@box-event-font-size: 13.8px;
+
+// Scroll Bar
+@scroll-thumb-color: #CECECE;
+@scroll-track-color: #EAEAEA;
+
+// graph region-list
+@graph-purple: #B86EEF;
+@graph-blue: #59B9EA;
+@graph-red: #FE644F;
+@graph-green: #8EE660;

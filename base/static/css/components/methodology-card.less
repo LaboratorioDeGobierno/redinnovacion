@@ -1,0 +1,96 @@
+.methodology-card {
+
+  background-color: @blue;
+
+  &:nth-child(4n+1) {
+    opacity: 1.0;
+  }
+
+  &:nth-child(4n+2) {
+    opacity: 0.9;
+  }
+
+  &:nth-child(4n+3) {
+    opacity: 0.8;
+  }
+
+  &:nth-child(4n) {
+    opacity: 0.7;
+  }
+
+  min-height: 180px;
+  margin-bottom: 30px;
+
+  .img {
+    float: left;
+    width: 120px;
+    height: 95px;
+    margin: 45px 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &.tc-1 .img {
+    background-image: url('../img/tooltype-1.png');
+  }
+
+  &.tc-2 .img {
+    background-image: url('../img/tooltype-2.png');
+  }
+
+  &.tc-3 .img {
+    background-image: url('../img/tooltype-3.png');
+  }
+
+  &.tc-4 .img {
+    background-image: url('../img/tooltype-4.png');
+  }
+
+  img {
+    width: 120px;
+    margin: 45px 25px;
+    float: left;
+  }
+
+  & > *:not(.img):not(img) {
+    padding-right: 35px;
+    padding-left: 170px;
+  }
+
+  a.title {
+    color: @white;
+    line-height: 30px;
+    padding-top: 20px;
+  }
+
+  .text {
+    font-family: Lato;
+    font-size: 16px;
+    line-height: 19px;
+    padding-top: 10px;
+    padding-bottom: 35px;
+    color: @white;
+
+    * {
+      color: inherit;
+    }
+  }
+
+  @media (max-width: @screen-xs-max) {
+    .img {
+      width: 60px;
+      height:60px;
+      background-size: 100%;
+      margin: 10px;
+    }
+
+    .title {
+      padding-top: 10px;
+      padding-left: 100px;
+    }
+
+    .text {
+      padding-left: 0;
+    }
+  }
+}

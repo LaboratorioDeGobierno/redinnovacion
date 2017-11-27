@@ -1,0 +1,55 @@
+form.underline-radio-group {
+
+  @media(max-width: @screen-xs-max) {
+    > span:first-child {
+      display: block;
+      margin-left: 10px 35px;
+    }
+  }
+
+  &::before {
+    content: '';
+    display:block;
+    position: absolute;
+    height:3px;
+    width:100%;
+    background-color: @gray-6;
+
+    bottom: 0px;
+  }
+
+  margin-top: 40px;
+  margin-bottom: 30px;
+  text-align: right;
+  position: relative;
+
+  label {
+    margin-bottom: 0;
+  }
+
+  > span {
+    font-family: Lato;
+    font-size: 16px;
+    color: @gray-2;
+    line-height: 24px;
+  }
+
+  input[type="radio"] {
+    visibility: hidden;
+
+    & + span {
+      display: inline-block;
+      min-width: 70px;
+      text-align: center;
+      font-family: Brown;
+      font-size: 16px;
+      color: @blue;
+      padding-bottom: 10px;
+    }
+
+    &:checked + span {
+      border-bottom: 3px solid @blue;
+      position: relative;
+    }
+  }
+}

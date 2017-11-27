@@ -1,0 +1,86 @@
+extends base.jade
+
+- load staticfiles
+- load messaging
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; Notificaciones
+      - include 'includes/search_title.jade' with page_title='Mensajería' subtitle='Aquí puedes enviarles mensajes directos a los miembros que pertenecen a la Red, lo cual te permitirá generar nuevas redes y conexiones.'
+  - include 'includes/messages_tabs.jade' with active_tab='messages' search_form=False
+  .container-fluid(style="background: #f0f0f3")
+    .container
+      .email_messages
+        .row
+          .col-sm-4.pad-no
+            form
+              .input-group
+                select.form-control.user-search.filtered(
+                )
+                  option Buscar miembro de la red...
+                .input-group-addon
+                  i.fa.fa-search
+            ul.contacts      
+              for sender in senders
+                li(class="{% if current_user.id == sender.id %}active{% endif %}")
+                  a.sender(
+                    class="{% if sender.has_unread_messages %}unread{% endif %}")(
+                    href="{{ sender.get_message_url }}"
+                  )
+                    if sender.avatar
+                      .user-avatar.img-circle.pull-left(
+                        style="background-image: url('{{ sender.avatar.url }}');"
+                      )
+                    else
+                      i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+                  
+                    span.sender-name
+                      {{sender.get_full_name|truncatechars:30}}
+                    {% with message_date=sender|get_datetime_last_message:user %}
+                    {% if message_date|is_today %}  
+                    span.date {{message_date|date:"H\:i"}}
+                    {% else %}
+                    span.date {{message_date|date:"d \d\e M"}}
+                    {% endif %}
+                    {% endwith %}
+
+          .col-sm-8.bg-color-white.pad-no
+            h3 Mensajes entre {{current_user.get_full_name}} y tú
+              i.fa.fa-spinner.fa-spin.page-loading-icon
+            .panel.panel-default.mar-no
+              .panel-body.messages-exchange
+                {% if no_messages %}
+                .no-messages-message.text-centre No hay mensajes entre {{current_user.get_full_name}} y tú ¡Envíale un saludo! 
+                {% else %}
+                {% include "email_messages/includes/messages_list.jade" %}
+                {% endif %}
+                    
+              if current_user
+                form.write-message(
+                  action="{% url 'send_message' current_user.pk %}",
+                  method="post"
+                )
+                  {% csrf_token %}
+                  input(
+                    type="hidden",
+                    value="{% url 'email_message_list' current_user.slug %}"
+                    name="next",
+                  )
+                  input(
+                    type="hidden",
+                    name="to_user",
+                    value="#{current_user.id}"
+                    )
+                  textarea.form-control(
+                    name="message",
+                    placeholder="Escribe un mensaje...", 
+                    required=True
+                  )
+                  button.btn.btn-primary.btn-block.send-message-btn(type="button")
+                    | Enviar

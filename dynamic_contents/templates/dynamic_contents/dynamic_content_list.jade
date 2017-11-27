@@ -1,0 +1,36 @@
+extends base.jade
+
+- load i18n
+
+block content
+
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Id
+        th {% trans 'name'|capfirst %}
+        if perms.dynamic_contents.change_dynamiccontent
+          th
+        if perms.dynamic_contents.delete_dynamiccontent
+          th
+    tbody
+      for dynamic_content in object_list
+        tr
+          td
+            a(href="{{ dynamic_content.get_absolute_url }}")
+              | {{dynamic_content.id}}
+          td
+            a(href="{{ dynamic_content.get_absolute_url }}")
+              | {{dynamic_content}}
+          if perms.dynamic_contents.change_dynamiccontent
+            td
+              a.btn.btn-primary(href="{% url 'dynamic_content_update' dynamic_content.id %}")
+                {% trans 'Update dynamic content' %}
+                i.fa.fa-edit
+          if perms.dynamic_contents.delete_dynamiccontent
+            td
+              a.btn.btn-danger(href="{% url 'dynamic_content_delete' dynamic_content.id %}")
+                {% trans 'Delete dynamic content' %}
+                i.fa.fa-times
+
+  {% include 'includes/pagination.jade' %}

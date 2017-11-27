@@ -1,0 +1,28 @@
+extends base.jade
+
+- load i18n static
+- load staticfiles
+
+block title
+  {% trans 'people'|capfirst %}
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}")
+            {% trans 'home' %}
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'institution_list' %}")
+            {% trans 'integrants' %}
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; Personas
+      - include 'includes/search_title.jade' with page_title='Sección de aprobación o rechazo'
+  - include 'includes/tabs.jade' with active_tab='people' search_form=True
+  .container.section.mar-top
+    block tabs
+    p &nbsp;
+    block table

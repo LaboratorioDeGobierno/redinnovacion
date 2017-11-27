@@ -1,0 +1,77 @@
+form(method="POST", action="")
+  {% csrf_token %}
+
+  h6 Información que se mostrará en tu perfil
+  br
+  .row
+    .col-xs-9.col-md-10
+      p
+        b Notificaciones
+    .col-xs-3.col-md-2
+      p
+        b Activar
+  hr
+  .row
+    - with field=form.send_notifications_by_email
+      .col-xs-9.col-md-10
+        p {{ field.label }}
+        for error in field.errors
+          p.help-block(class="{{ form.error_css_class }}") {{ error }}
+      .col-xs-3.col-md-2
+        {{ field }}
+  br
+  .row
+    .col-xs-9.col-md-10
+      p
+        b Información personal
+    .col-xs-3.col-md-2
+      p
+        b Mostrar
+  hr
+  .row
+    - with field=form.show_charge
+      .col-xs-9.col-md-10
+        p {{ field.label }}
+        for error in field.errors
+          p.help-block(class="{{ form.error_css_class }}") {{ error }}
+      .col-xs-3.col-md-2
+        {{ field }}
+  br
+  .row
+    .col-xs-9.col-md-10
+      p
+        b Información de contacto
+    .col-xs-3.col-md-2
+  hr
+  .row
+    - with field=form.show_email
+      .col-xs-9.col-md-10
+        p {{ field.label }}
+        for error in field.errors
+          p.help-block(class="{{ form.error_css_class }}") {{ error }}
+      .col-xs-3.col-md-2
+        {{ field }}
+  hr
+  .row
+    - with field=form.show_phone
+      .col-xs-9.col-md-10
+        p {{ field.label }}
+        for error in field.errors
+          p.help-block(class="{{ form.error_css_class }}") {{ error }}
+      .col-xs-3.col-md-2
+        {{ field }}
+  hr
+  .row
+    - with field=form.show_interests
+      .col-xs-9.col-md-10
+        p {{ field.label }}
+        for error in field.errors
+          p.help-block(class="{{ form.error_css_class }}") {{ error }}
+      .col-xs-3.col-md-2
+        {{ field }}
+  hr.hr-action
+  .text-right.action-btn
+    a.btn.btn-link(href="{{ participant.get_absolute_url }}")
+      | Cancelar Cambios
+    button.btn.btn-primary(type="submit")
+      | Guardar cambios

@@ -1,0 +1,66 @@
+extends base_print.jade
+
+- load staticfiles
+- load i18n
+- load tz
+
+block stylesheets
+  style.
+    @font-face {
+      font-family: Brown;
+      src: url("{% static 'fonts/Brown/Brown-Light.otf' %}") format("opentype");
+    }
+
+    @font-face {
+      font-family: Brown;
+      src: url("{% static 'fonts/Brown/Brown-Bold.otf' %}") format("opentype");
+      font-weight: bold;
+      font-style: normal;
+    }
+
+block content
+  .margin-dotted
+    .container
+      .text-center
+        img.logo(src="{% static 'img/logo-red.svg' %}")
+      .content
+        p.fillable
+          span.title.user Para:
+          span.text {{ user.get_full_name }}
+        p.fillable
+          span.title.charge Funcionario de:
+          span.text {{ user.institution|default:'&nbsp;' }}
+        p.certification-text.text-justify
+          small
+            | {{ object.event.certification_text }}
+
+        .row.bottom
+          .col-xs-4
+            p.date
+              if object.event.start_date
+                | Fecha: {{ object.event.start_date|localtime|date:'DATE_FORMAT' }}
+            p.date
+              | Horario:
+              if object.event.start_date
+                | {{ object.event.start_date|localtime|date:"H:i" }}
+              if object.event.start_date and object.event.end_date
+                |  -&nbsp;
+              if object.event.end_date
+                | {{ object.event.end_date|localtime|date:"H:i" }}
+
+            .footer
+              p.logo-footer-text
+                small un programa de:
+              img.pull-left(
+                alt="Gobierno de Chile",
+                src="{% static 'img/logos-1.svg' %}",
+                style="margin: 0;padding-top:10px;"
+              )
+
+          .col-xs-4.endorser
+            img.signature(src="{% static 'img/firma-juan-felipe.png' %}")
+            p.signature-name
+              strong Juan Felipe López
+            p
+              | Director Ejecutivo del Laboratorio <br/>
+              | de Gobierno

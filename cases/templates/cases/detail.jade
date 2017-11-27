@@ -1,0 +1,110 @@
+extends base_resource.jade
+
+- load i18n static
+- load thumbnail
+
+block jumbotron_header
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg(
+    
+  )
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'case_list' %}") CASOS
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp;&nbsp;&nbsp;{{object.title}}
+      - include 'includes/search_title.jade' with page_title='Casos' subtitle='Aquí encontrarás casos y experiencias de innovación realizados por equipos de servidores públicos del país. También, puedes subir tus propios casos y compartirlos con todos los miembros de la Red.'
+  - include 'cases/includes/cases_tabs.jade' with search_form=True
+
+
+
+block summary_footer
+  if user.is_accepted
+    .footer-button-group
+      a.btn(data-toggle="modal" data-target=".share-modal")
+        i.fa.fa-paper-plane
+        | &nbsp;Enviar por Email  
+
+    - include 'documentation/includes/share-modal.jade'
+
+
+block description
+  if object.tools.count > 0
+    ol.tools-list.highlight
+      h5 Herramientas
+      for tool in object.tools.all
+        li
+          if tool.image
+            img(src="{% thumbnail tool.image 350x250 %}")
+          else
+            .img
+          .content
+            a.title(href="{% url 'tool_detail' tool.id %}") #{tool.title}
+            .text #{tool.about}
+
+  if user.is_accepted
+    - include 'documentation/includes/dynamic_content.jade' with content=object.dynamiccontent_set.all
+    
+    if user.is_staff or case.author_id == user.id
+      div
+        if user.is_staff 
+          a.btn.btn-success(href="{% url 'case_dynamic_content_create' object.pk %}")
+            | Agregar Contenido
+        a.btn.btn-success(href="{% url 'case_update' object.pk %}") Editar caso
+        if user.is_staff 
+          a.btn.btn-danger(href="{% url 'case_delete' object.pk %}") Eliminar caso
+ 
+block aside_top_content
+  h6 Información relevante
+  .highlight
+    p 
+      b Publicado por:
+    p #{object.author|capfirst}
+
+    if object.year
+      p 
+        b Año
+      p #{object.year|capfirst}
+
+    p 
+      b Equipo:
+    ul.no-bullets(style="margin-bottom:5px;")
+      for partner in object.get_team
+        li #{partner|capfirst|truncatechars:100}
+
+    p 
+      b Colaboradores:
+    ul.no-bullets(style="margin-bottom:5px;")
+      for partner in object.get_partners
+        li #{partner|capfirst|truncatechars:100}
+    p <b>Región:</b>
+    p #{object.region.name|capfirst}
+    p <b>Duración del proyecto:</b>
+    p #{object.duration|capfirst}
+  .separator
+  h6 Anexos
+    if user.is_accepted
+      for attachment in object.attachments.all
+        a.title(
+          href="{{attachment.archive.url}}",
+          download
+        )
+          i.fa.fa-download
+          |&nbsp; #{attachment.get_filename|capfirst}
+    else
+      for attachment in object.attachments.all
+        a.title.login-to-download(
+          href="#"
+        )
+          i.fa.fa-download
+          |&nbsp; #{attachment.get_filename|capfirst}
+
+block users_list
+  //- overriding default block to remove it's contents
+
+if not user.is_accepted
+  block active_users

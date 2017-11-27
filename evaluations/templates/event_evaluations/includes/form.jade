@@ -1,0 +1,47 @@
+.container
+  ul.page-breadcrumb.mar-top.hidden-xs
+    li
+      a(href="{% url 'home' %}") INICIO
+      i.fa.fa-angle-right.li-breadcrumb
+    li
+      a(href="{% url 'event_list' %}") Actividades
+      i.fa.fa-angle-right.li-breadcrumb
+    li
+      a(href="{{ activity.get_absolute_url }}")= activity.name
+      i.fa.fa-angle-right.li-breadcrumb
+    li.breadcrumb-not-selected
+      span  &nbsp; Evaluación
+
+  .back-history
+    a
+      i.fa.fa-angle-left.li-breadcrumb
+      | Volver a Ficha de actividad
+  h1.text-left.big-mar-bottom Evaluación #{ activity.name }
+
+  p.text-descriptive Te pedimos que evalúes cada ítem de uno a cinco. Siendo 1 muy mala, y 5 muy buena.
+
+  .row
+    .col-sm-10
+      form(method="post").poll-form
+        {% csrf_token %}
+        {% include 'event_evaluations/includes/star_field.jade' with field=form.satisfaction %}
+        {% include 'event_evaluations/includes/star_field.jade' with field=form.usefulness %}
+        {% include 'event_evaluations/includes/star_field.jade' with field=form.clear_topics %}
+
+        .form-group
+          label
+            | 4. ¿Qué experiencias o herramientas crees que podrás replicar o
+            | aplicar en tu trabajo?
+          {{form.comments}}
+
+        .form-group
+          label 5. ¿Qué consideras que fue lo mejor del evento?
+          {{form.the_best}}
+
+        .form-group
+          label 6. ¿Qué elementos podrían ser mejorados?
+          {{form.what_can_be_improved}}
+
+        .form-group.text-right
+          button.btn.btn-primary(type="submit")
+            | Terminar Evaluación

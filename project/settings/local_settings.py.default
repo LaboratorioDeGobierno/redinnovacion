@@ -1,0 +1,34 @@
+LOCAL_DEBUG = True
+
+LOCAL_DATABASES = {
+    'default': {
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        # Or path to database file if using sqlite3.
+        'NAME': 'database-name', 
+
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',    
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
+    }
+}
+
+LOCAL_EMAIL_SETTINGS = {
+    'EMAIL_SENDER_NAME': "Sender name",
+    'SENDER_EMAIL': 'sender email',
+
+    'EMAIL_HOST': '',
+    'EMAIL_HOST_USER': '',
+    'EMAIL_HOST_PASSWORD': '',
+    'EMAIL_PORT': '',
+    'ENABLE_EMAILS': False,
+}
+
+LOCALLY_INSTALLED_APPS = (
+    'debug_toolbar',
+)

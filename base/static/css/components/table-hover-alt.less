@@ -1,0 +1,66 @@
+.table-hover-alt {
+  thead {
+    background-color: @gray-6;
+    font-size: 12px;
+    color: @gray-3;
+  }
+
+  tbody > tr > td,
+  tbody > tr > th {
+    vertical-align: middle;
+
+    .user-icon {
+      margin-top: -6px;
+    }
+
+    i.user-icon {
+      font-size: 62px;
+      transform: translate(20%, 5%);
+      -moz-transform: translate(20%, 5%);
+      // TODO: support older browsers
+    }
+
+
+    div.user-icon {
+      width: 62px;
+      height: 62px;
+      background-color: @white-blue;
+      background-size: cover;
+      display: inline-block;
+      transform: translate(20%, 5%);
+      -moz-transform: translate(20%, 5%);
+      // TODO: unhardcode
+    }
+  }
+
+  thead > tr > th {
+    text-transform: uppercase;
+  }
+
+  tbody > tr:hover {
+    background-color: @light-blue;
+  }
+
+  tbody > tr:hover > td {
+    border-color: @blue;
+    cursor: pointer;
+  }
+
+  tbody:first-child > tr:first-child:hover > td {
+    border-top-color: @blue;
+  }
+
+  tbody > tr:hover + tr > td {
+    border-top-color: @blue;
+    cursor: pointer;
+  }
+
+  tbody:last-child > tr:hover > td {
+    border-bottom-color: @blue;
+    cursor: pointer;
+  }
+
+  .content-primary {
+    margin-top: 0.6em;
+  }
+}

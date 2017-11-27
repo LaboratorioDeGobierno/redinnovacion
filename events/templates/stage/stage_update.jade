@@ -1,0 +1,27 @@
+extends base.jade
+
+block title
+  | Etapa de un evento
+
+block content
+  .container
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'event_list' %}") EVENTOS
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'event_detail' pk=stage.event.pk %}")
+          = stage.event.name
+        i.fa.fa-angle-right.li-breadcrumb
+      li.breadcrumb-not-selected
+        span &nbsp; {{ stage.name }}
+    h2.title-people Información general
+    include institutions/include/institution_form.jade
+    .row
+      .col-xs-12.col-sm-12.col-md-10.col-lg-10
+        .text-right.action-btn.btn-delete
+          a.text-danger(href="{% url 'delete_stage' stage.pk %}")
+           | Eliminar etapa

@@ -1,0 +1,260 @@
+@import "../../../../base/static/css/variables";
+@import "./calendar_variables";
+//TODO: make btn component on base and import
+
+.make-event-type-class(@events; @event-colors; @index) when (@index > 0) {
+  .make-event-type-class(@events; @event-colors; (@index - 1));
+  @event: extract(@events, @index);
+  @color: extract(@event-colors, @index);
+
+  .event-type-@{event} {
+    &.fc-past {
+      background-color: @white;
+      border-color: fade(@color, 60%);
+      color: @color;
+    }
+
+    &.fc-today {
+      background-color: @color;
+      border-color: @color;
+      color: @white;
+    }
+
+    &.fc-future {
+      background-color: fade(@color, 60%);
+      border-color: fade(@color, 60%);
+      color: @white;
+    }
+  }
+
+  #event-view.event-type-@{event} {
+    .panel {
+      .panel-heading {
+        background-color: @color;
+      }
+    }
+  }
+
+  .btn.btn-event-@{event} {
+    background-color: @color;
+    border-color: @color;
+    color: @white;
+    box-shadow: none;
+  }
+}
+
+.make-event-type-class(@events; @event-colors; length(@events));
+
+.back_holiday,
+.back_holiday div,
+.back_holiday span{
+  background: #FF8C8C !important;
+}
+
+.filters {
+
+  label:not(.checkbox) {
+    font-size: 14px;
+    display: inline;
+    &:after {
+      content: '\a';
+      white-space: pre;
+    }
+  }
+
+  .btn {
+    font-family: 'Lato-Regular';
+    font-size: 14px;
+    &.btn-default {
+      border: 2px solid @gray-5;
+      color: @gray-2;
+    }
+
+    &.btn-success {
+      background-color: @calendar-green;
+      border: 2px solid @calendar-green;
+    }
+
+    &.checkbox {
+      margin: 1px 1px 0;
+      display: inline-block;
+      input[type="checkbox"] {
+        position: inherit;
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+.fc-toolbar {
+
+  .fc-right {
+    .fc-button-group {
+      .fc-button {
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+
+        &:first-child {
+          border-left: 2px solid @blue;
+          border-radius: 6px 0 0 6px;
+        }
+
+        &:last-child {
+          border-right: 2px solid @blue;
+          border-radius: 0 6px 6px 0;
+        }
+      }
+    }
+  }
+
+  .fc-prev-button {
+    margin-right: 4px;
+  }
+
+  .fc-button {
+    background: @white;
+    color: @blue;
+    border: 2px solid @blue;
+
+    padding: 8px 12px;
+    font-size: ceil((@font-size-base * 1.05));
+    line-height: 0.1;
+    border-radius: 6px;
+    font-family: 'Lato';
+    font-weight: bold;
+
+    &:hover {
+      color: @white;
+      text-decoration: none;
+      background-color: @blue;
+      outline: none;
+      box-shadow: none;
+      text-shadow: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active,
+    &.fc-state-active {
+      outline: none;
+      color: @white;
+      background-color: @blue;
+      box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+      text-shadow: none;
+    }
+
+    &.fc-today-button:disabled {
+      outline: none;
+      color: @white;
+      background-color: @blue;
+      text-shadow: none;
+      box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    }
+  }
+}
+
+.fc-view {
+  .fc-event-container {
+    .fc-day-grid-event {
+      margin: 1px 4px 0;
+      padding: 1px 2px 0;
+      font-family: 'Brown';
+      font-size: .80em;
+      line-height: 1.6;
+
+      &.fc-not-end {
+        margin-right: 0;
+      }
+      &.fc-not-start {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .fc-day {
+    &.fc-today {
+      background: repeating-linear-gradient(
+        -135deg,
+        @white,
+        @white 6px,
+        @gray-5 6px,
+        @gray-5 7px
+      );
+    }
+
+    &.fc-sat,
+    &.fc-sun{
+    }
+
+    &.fc-other-month {
+      background-color: @gray-6;
+    }
+
+  }
+
+}
+
+.dropdown-menu-region{
+  min-width: 400px;
+  li {
+    margin-left: 10px;
+  }
+}
+
+#calendar {
+  position: relative;
+
+  @keyframes show {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  #event-view {
+    opacity: 1;
+    position: absolute;
+    display: none;
+    width: 332px;
+    z-index: 10;
+    transition: top 250ms, left 250ms;
+
+    &.show-event {
+      display: block;
+      animation: show 250ms ease-in-out both;
+    }
+
+    .panel {
+      margin-bottom: 0;
+      .panel-heading {
+        padding: 0;
+        height: 12px;
+      }
+      .panel-body {
+        .panel-close {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          width: 26px;
+          height: 26px;
+          border-radius: 26px;
+          border: 1px solid @gray-5;
+          text-align: center;
+          font-size: 16px;
+          background-color: @white;
+          -webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,.20);
+          box-shadow: 0 0 2px 0 rgba(0,0,0,.20);
+        }
+        h3 {
+          margin-bottom: 10px;
+          color: @blue;
+        }
+
+        .btn.btn-success {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

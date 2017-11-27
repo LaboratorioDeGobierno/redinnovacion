@@ -1,0 +1,101 @@
+@import "variables.less";
+
+
+@coordinates: top, bottom, left, right;
+
+.make-coordinate-class(@coordinates; @value; @prefix; @property; @index) when (@index > 0) {
+  .make-coordinate-class(@coordinates; @value; @prefix; @property; (@index - 1));
+  @coordinate: extract(@coordinates, @index);
+
+  .@{prefix}-@{coordinate} {
+    @{property}-@{coordinate}: @value;
+  }
+}
+
+.pad-all {
+  padding: @common-padding !important;
+}
+
+.pad-sm-all {
+  padding: @common-padding / 2 !important;
+}
+
+.mar-all {
+  margin: @common-margin !important;
+}
+
+.bor-all {
+  border: 1px solid;
+}
+
+.pad-no {
+  padding: 0;
+}
+
+.mar-no {
+  margin: 0 !important;
+}
+
+.bor-no {
+  border: none;
+}
+
+.lh-base {
+  line-height: 1.428571;
+}
+
+.bd-radius-base {
+  border-radius: @border-radius-base;
+}
+
+.no-bullets {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+.make-coordinate-class(@coordinates; @common-padding / 2; pad-sm; padding; length(@coordinates));
+.make-coordinate-class(@coordinates; @common-padding; pad; padding; length(@coordinates));
+.make-coordinate-class(@coordinates; @common-padding * 3; big-pad; padding; length(@coordinates));
+
+.make-coordinate-class(@coordinates; @common-margin / 2; mar-sm; margin; length(@coordinates));
+.make-coordinate-class(@coordinates; @common-margin; mar; margin; length(@coordinates));
+.make-coordinate-class(@coordinates; @common-margin * 3; big-mar; margin; length(@coordinates));
+
+.make-coordinate-class(@coordinates; 1px solid; bor; border; length(@coordinates));
+.make-coordinate-class(@coordinates; 2px solid; bor-2; border; length(@coordinates));
+
+@colors:
+  'black', 'white', 'gray-1', 'gray-2', 'gray-3', 'gray-4', 'gray-5', 'gray-6', 'gray-7', 'gray-8',
+  'dark-blue', 'blue', 'bright-blue', 'white-purple', 'light-blue', 'white-blue',
+  'black-brown', 'bright-red', 'red', 'pink', 'fuchsia',
+  'black-green-1', 'black-green-2', 'yellow', 'lime', 'green';
+
+.make-generic-variable-class(@elements; @prefix; @property; @index) when (@index > 0) {
+  .make-generic-variable-class(@elements; @prefix; @property; (@index - 1));
+  @element: extract(@elements, @index);
+  @name: ~"@{element}";
+
+  .@{prefix}-@{name} {
+    //noinspection LessUnresolvedVariable
+      @{property}: @@element;
+  }
+}
+
+.make-generic-variable-class(@colors; bg-color; background-color; length(@colors));
+.make-generic-variable-class(@colors; bor; border-color; length(@colors));
+.make-generic-variable-class(@colors; text; color; length(@colors));
+
+@positions: relative, absolute, fixed, inherit, static;
+
+.make-generic-class(@elements; @prefix; @property; @index) when (@index > 0) {
+  .make-generic-class(@elements; @prefix; @property; (@index - 1));
+  @element: extract(@elements, @index);
+
+  .@{prefix}-@{element} {
+    @{property}: @element;
+  }
+}
+
+.make-generic-class(@positions; pos; position; length(@positions));

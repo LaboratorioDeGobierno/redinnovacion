@@ -1,0 +1,21 @@
+extends base.jade
+
+block title 
+  | Crear evento
+  
+block content
+  .container
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="/events") EVENTOS
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{{ event.get_absolute_url }}") {{ event.name }}
+        i.fa.fa-angle-right.li-breadcrumb
+      li.breadcrumb-not-selected
+        span &nbsp; Crear actividad
+    h2.title-people Crear actividad
+    include institutions/include/institution_form.jade

@@ -1,0 +1,99 @@
+@import "../variables.less";
+
+.aside-table {
+  background-color: @white;
+  border-radius: 10px;
+  width: 100%;
+  h3 {
+    background-color: @blue;
+    border-radius: 5px 5px 0 0;
+    color: @white;
+    height: 93px;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+
+    .number {
+      font-family: Brown;
+      font-weight: bold;
+      font-size: 48px;
+      line-height: 42px;
+    }
+
+    .description {
+      display: block;
+      font-family: Brown;
+      font-weight: bold;
+      font-size: 19px;
+      line-height: 22px;
+    }
+
+    &.to-right {
+      padding: 30px 18px;
+    }
+
+    &.to-right .number {
+      display: inline;
+      font-size: 43px;
+      line-height: 30px;
+      text-align: left;
+      max-width: 67px;
+    }
+
+    &.to-right .description {
+      display: inline;
+      float: right;
+      font-family: Brown;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 18px;
+      position: relative;
+      top: -5px;
+      text-align: left;
+    }
+  }
+
+  table {
+    margin: 10px;
+    width: calc(~'100% - 20px');
+
+    td {
+      border-bottom: 1px solid @gray-2;
+      color: @gray-2;
+      font-family: Brown;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 24px;
+      padding: 10px;
+      text-align: right;
+
+      &:first-child {
+        color: @dark-blue-2;
+        font-family: Lato;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: left;
+      }
+
+      &:last-child {
+        color: @gray-5;
+        line-height: 18px;
+        max-width: 55px;
+      }
+    }
+
+    tr.active td{
+      background-color: @blue;
+      color: white;
+
+      a {
+        color: white;
+      }
+    }
+
+    tr:last-child td{
+      border-bottom: 0;
+    }
+  }
+}

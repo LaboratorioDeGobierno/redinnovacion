@@ -1,0 +1,31 @@
+@import "../variables.less";
+
+.logo-left,
+.logo-right {
+  line-height: 56px;
+
+  @media (min-width: @screen-sm-min) {
+    line-height: 96px;
+  }
+
+  @media (min-width: @screen-lg-min) {
+    line-height: 63px;
+  }
+}
+
+.logo-left {
+  float: left;
+}
+
+.logo-right {
+  float: right;
+}
+
+.logo-sm {
+  width: 100px;
+}
+
+.logo-lg {
+  width: 160px;
+  margin-bottom: 20px;
+}

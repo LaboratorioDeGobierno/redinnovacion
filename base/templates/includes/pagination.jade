@@ -1,0 +1,15 @@
+strong.text-muted
+  | {{ objects.start_index }}-{{ objects.end_index }}
+  | de {{ paginator.count }}
+  | &nbsp;
+if objects.has_previous
+  a.btn.btn-inverse.btn-primary(
+    href="?p={{ objects.previous_page_number }}&{{ clean_query_string }}&o_={{ request.GET.o_ }}"
+  )
+    i.fa.fa-chevron-left
+  | &nbsp;
+if objects.has_next
+  a.btn.btn-inverse.btn-primary(
+    href="?p={{ objects.next_page_number }}&{{ clean_query_string }}&o_={{ request.GET.o_ }}"
+  )
+    i.fa.fa-chevron-right

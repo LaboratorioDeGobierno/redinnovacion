@@ -1,0 +1,24 @@
+extends base.jade
+
+- load i18n static
+- load thumbnail
+- load staticfiles
+
+block stylesheets
+
+block javascripts
+
+block title
+  | {% trans 'tool list' %}
+
+block content
+  .container
+    h1 {% trans 'tool list' %}
+    ul
+    - for tool in object_list
+      li
+        a(href="{% url 'tool_detail' tool.pk %}")
+          | {{tool.title}}
+    
+if not user.is_accepted
+  block active_users

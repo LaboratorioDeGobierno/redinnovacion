@@ -1,0 +1,10 @@
+//h1 #{name}
+//for institution in #{institution_list}
+for institution in institutions
+  .col-xs-12.col-sm-4.col-md-4.col-lg-4
+    .labeled-box
+      p
+        a(href="#{institution['url_detail']}") #{institution['name'].substring(0,50)}
+      p
+        span 
+          b #{institution['users_count']} INTEGRANTES

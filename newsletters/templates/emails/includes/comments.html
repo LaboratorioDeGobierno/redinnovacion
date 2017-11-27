@@ -1,0 +1,54 @@
+<div style="width: 100%; background-color: #F0F0F0; border-bottom: 1px solid #1467AB;">
+  <div style="width: 620px; margin: 0 auto; padding: 0 15px 15px;">
+    <h1 style="font-size:20px; font-family: Brown, sans-serif; font-weight: bold; padding: 30px 25px 20px; margin:0;">Comentarios destacados de esta semana</h1>
+    {% for comment in comments %}
+      <div style="margin: 0 15px 20px; border-radius: 5px; background-color: #fff;">
+        <table width="100%">
+          <tr width="100%">
+            <td width="77px">
+              {% if comment.user.avatar %}
+              <div style="width:62px; height:62px; margin-left:15px; border-radius:50%; background-image:url('{{protocol}}://{{domain}}/{{comment.user.avatar.tiny.url}}'); background-size: 62px;">
+              {% else %}
+              <div style="width:62px; height:62px; margin-left:15px; border-radius:50%; background-image:url('{{protocol}}://{{domain}}/static/img/default-avatar-1.png')">
+              {% endif %}
+              </div>
+            </td>
+            <td>
+              <h3 style="margin: 15px 0 0 15px; font-family: Lato, sans-serif; font-weight: bold; font-size: 16px; color: #1467AB; line-height: 27px;">
+                <a href="{{protocol}}://{{domain}}{% url 'home' comment.id %}">
+                  {{comment.user.get_full_name}}
+                </a>
+              </h3>
+              <p style="margin:0 25px 0 15px; font-family: Lato, sans-serif; font-size: 14px; color: #464646; line-height: 25px;">
+                {{comment.text}}
+              </p>
+
+              {% if comment.images.exists %}
+              <div style="margin: 10px 0;">
+              {% for image in comment.images.all %}
+                <img src="{{protocol}}://{{domain}}/uploads/{{image.image.tiny}}">
+              {% endfor %}
+              </div>
+              {% endif %}
+
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <div style="width:470px; margin-left:15px; height:2px; background:linear-gradient(to right, #1467AB 100px, #F0F0F0 100px)"></div>
+              <div style="margin: 10px 20px; font-family: Lato, sans-serif; font-weight: bold; font-size: 13px;">
+                <span style="color:#E14C3F;">
+                  <span style="font-size: 24px;">&hearts;
+                  </span>
+                {{comment.commentlike_set.count}}</span>
+                <span style="color:#1467AB; margin-left:5px;">&nbsp;<img src="{{protocol}}://{{domain}}/static/img/shape-comment.png"> {{comment.public_children.count}}</span>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <!-- <p>  </p> -->
+      </div>
+    {% endfor %}
+  </div>
+</div>

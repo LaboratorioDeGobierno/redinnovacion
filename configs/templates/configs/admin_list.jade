@@ -1,0 +1,6 @@
+extends base.jade
+
+block content
+  each iter_user in user_list
+    a(href="{% url 'admin_delete_redirect_view' iter_user.pk %}")
+      | Eliminar a #{iter_user} de administrador

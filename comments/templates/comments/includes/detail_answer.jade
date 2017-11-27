@@ -1,0 +1,44 @@
+- load thumbnail
+- load staticfiles
+- load i18n static
+- load humanize
+- load base
+
+.comment
+  if child_comment.user.avatar
+    .comment-avatar.img-circle(
+      style="background-image: url('{{ child_comment.user.avatar.url }}')"
+    )
+  else
+    i.fa.fa-user-circle.comment-avatar.text-primary
+  .comment-body
+    .comment-content
+      .comment-heading
+        a(href="{{child_comment.user.get_absolute_url}}")
+          | {{child_comment.user.get_full_name}}
+        small.text-gray-3
+          |  &middot; {{child_comment.created_at|naturaltime}}
+      p.text-descriptive {{child_comment.text|urlize|url_target_blank|linebreaks}}
+    .comments-actions.bor-no
+      .btn-group
+        if child_comment.id in user.get_liked_comment_ids
+          .btn.btn-link.liked
+            i.fa.fa-heart
+            span.quantity {{child_comment.commentlike_set.count}}
+        else
+          .btn.btn-link.active.comment-like-btn(
+            data-comment-id="{{child_comment.id}}"
+          )
+            i.fa.fa-heart
+            span.quantity {{child_comment.commentlike_set.count}}
+        .btn.btn-link(href="#") &middot;
+        a.btn.btn-link.comment-answer-btn(
+          href="javascript:void(0)",
+          data-user="{{child_comment.user.slug}}"
+          data-user-id="{{child_comment.user.id}}"
+        )
+          | Responder
+        if child_comment.user == user
+          .btn.btn-link(href="#") &middot;
+          a.btn.btn-link(href="{% url 'comment_hide' child_comment.pk %}")
+            | Eliminar

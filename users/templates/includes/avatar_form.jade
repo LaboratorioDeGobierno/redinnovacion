@@ -1,0 +1,21 @@
+- load bootstrap
+
+form(method="POST", action="")
+  {% csrf_token %}
+  .hidden {{ form.avatar|bootstrap }}
+  .row
+    .col-md-6.col-md-offset-3
+        img#cropper-img(
+          style="width: 100%;"
+          src="{% if participant.avatar %}{{ participant.avatar.url }}{% endif%}"
+        )
+        p
+        p.text-center
+          label.btn.btn-inverse.btn-primary(
+            for="{{ form.avatar.auto_id }}"
+          )
+            | Nueva imagen
+          span.btn.btn-primary.cropper-save(
+            data-url="{% url 'user_edit_image' participant.pk %}"
+          )
+            | Guardar imagen

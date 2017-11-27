@@ -1,0 +1,65 @@
+extends base.jade
+- load bootstrap
+- load staticfiles
+- load i18n
+- load static
+
+block stylesheets
+  link(
+    href="{% static 'bower_components/dropzone/dist/dropzone.css' %}",
+    rel="stylesheet"
+  )
+
+block javascripts
+  script(type='text/javascript', src="{% static 'bower_components/dropzone/dist/dropzone.js' %}")
+  script(src="{% static 'js/cases.js' %}")
+
+block content
+  div.container.clear_down
+    h1.page-header
+        | Editar #{object.title|capfirst}
+    div
+      form#case-form.model-form.form-horizontal(
+        method="post"
+        enctype="multipart/form-data"
+        role="form"
+      )
+        .container
+          {% csrf_token %}
+          .row.row-flex.flex-start
+            each field in form
+              .col-md-12
+                | {{ field|bootstrap }}
+            each field in tags_form
+              .col-md-12
+                | {{ field|bootstrap }}
+          if form_actions|default_if_none:True
+            .row
+              .col-xs-12.text-right
+                a.btn.btn-link.text-primary(
+                  href="{{object.get_absolute_url}}"
+                )
+                  | Cancelar cambios
+                button.btn.btn-primary(type="submit")
+                  | Guardar
+
+  if user.is_staff
+    .container.section
+      h2 Documentos
+      form.dropzone#filesDropzone(
+        method="POST",
+        action="{% url 'case_file_create' %}",
+        enctype="multipart/form-data",
+        role="form",
+      )
+        {% csrf_token %}
+        input(type="hidden", name="case", value="{{case.id}}")
+      ul.mar-top
+        for file in case.attachments.all
+          li.uploaded-item
+            a.text-primary(href="{{ file.archive.url }}", target="_blank")
+              | {{ file.get_filename }}
+            a.btn.btn-sm.btn-link.btn-danger.delete-btn(
+              data-url="{% url 'file_delete' file.id %}"
+            )
+              i.fa.fa-left.fa-trash

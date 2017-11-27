@@ -1,0 +1,92 @@
+extends base.jade
+
+- load i18n static
+- load thumbnail
+- load staticfiles
+
+block stylesheets
+  link(type="text/less", rel="stylesheet", href="{% static 'css/components/documentation-commons.less' %}")
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'methodology_list' %}") RECURSOS
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; PUBLICACIONES
+      - include 'includes/search_title.jade' with page_title=title subtitle=subtitle
+  - include 'documentation/includes/documentation_tabs.jade' with active_tab=active_tab search_form=True
+  
+  .bg-color-white
+    .container.documentation-publications
+      
+      .row
+        .col-sm-6
+        .col-sm-6.text-right
+          span.dropdown
+            button.btn.btn-inverse.btn-primary.dropdown-toggle(
+              type='button', data-toggle='dropdown'
+            )
+              | Ordenar por:
+              if o_ == 'publication_date'
+                | Fecha publicación &darr;
+              elif o_ == '-publication_date'
+                | Fecha publicación &uarr;
+              elif o_ == '-title'
+                | Orden alfabético &darr;
+              elif o_ == 'title'
+                | Orden alfabético &uarr;
+              |  #[span.caret]
+            ul.dropdown-menu
+              li
+                a(href='?o_=publication_date', onclick="app.utils.showLoading();") 
+                  | Fecha publicación &darr;
+              li
+                a(href='?o_=-publication_date', onclick="app.utils.showLoading();")
+                  | Fecha publicación &uarr;
+              li
+                a(href='?o_=title', onclick="app.utils.showLoading();")
+                  | Orden alfabético &darr;
+              li
+                a(href='?o_=title', onclick="app.utils.showLoading();")
+                  | Orden alfabético &uarr;
+        
+      ul.publications-list.no-bullets
+        for publication in object_list
+          li.publication-card
+            if publication.documentation_file.image
+              img(src="{% thumbnail publication.documentation_file.image 150x200 crop %}")
+            else
+              .img
+            a.title(href="{% url 'publication_detail' publication.id %}") #{publication.title}
+            .text #{publication.about|truncatechars:200|linebreaks}
+  
+      .row
+        .col-sm-6
+        .col-sm-6.text-right
+          span.dropdown
+            button.btn.btn-inverse.btn-primary.dropdown-toggle(
+              type='button', data-toggle='dropdown'
+            )
+              | Mostrar {{by}} #[span.caret]
+            ul.dropdown-menu
+              li
+                a(href='?by=6') 6
+              li
+                a(href='?by=12') 12
+              li
+                a(href='?by=24') 24
+  
+          if is_paginated
+            {% include 'includes/pagination.jade' with objects=page_obj paginator=paginator %}
+            
+      if user.is_staff
+        a.btn.btn-success(href="{% url 'publication_create' %}") Crear una publicación
+
+if not user.is_accepted
+  block active_users

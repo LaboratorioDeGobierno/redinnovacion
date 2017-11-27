@@ -1,0 +1,91 @@
+extends base.jade
+
+- load i18n
+- load staticfiles
+
+block stylesheets
+  link(type="text/less", rel="stylesheet", href="{% static 'css/newsletters.less' %}")
+
+block content
+  .newsletter
+
+    .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+      .container
+        ul.page-breadcrumb.mar-top.hidden-xs
+          li
+            a(href="{% url 'home' %}") INICIO
+            i.fa.fa-angle-right.li-breadcrumb
+          li
+            a(href="{% url 'newsletter_list' %}") NEWSLETTERS
+            i.fa.fa-angle-right.li-breadcrumb
+
+        - include 'includes/search_title.jade' with page_title='Newsletters de Red' subtitle=newsletter.sent_at
+    .container
+      h1 Hola {{user.get_full_name}}, este es el resumen semanal de actividades en la Red
+
+    if unread_notifications.count or unread_messages.count
+      .container.container-section
+        if unread_notifications.count and unread_messages.count
+          table.table-notifications
+            tr
+              td
+                h2 {{unread_notifications.count}} nuevas notificaciones
+                a.btn.btn-primary.btn-block(
+                  href="{% url 'notification_list' %}"
+                )
+                  | Ver notifiaciones
+              td.white 
+              td
+                h2 {{unread_messages.count}} mensajes sin leer
+                a.btn.btn-primary.btn-block(
+                  href="{% url 'email_message_list' %}"
+                )
+                  | Ver Mensajes
+        else
+          .row.table-notifications
+            .col-sm-6.col-sm-offset-3
+              if unread_notifications.count 
+                  h2 {{unread_notifications.count}} nuevas notificaciones
+                  a.btn.btn-primary.btn-block(
+                    href="{% url 'notification_list' %}"
+                  )
+                    | Ver notifiaciones
+
+              if unread_messages.count
+                  h2 {{unread_messages.count}} mensajes sin leer
+                  a.btn.btn-primary.btn-block(
+                    href="{% url 'email_message_list' %}"
+                  )
+                    | Ver Mensajes
+
+    .container-fluid.next-events.container-section
+      .container
+        h1 Próximos Eventos y Actividades
+
+        .row
+          each event in incomming_events
+            .col-sm-6
+              .box-event
+                .box-event-header.fc-today(
+                  class="event-type-{{event.activity_type|lower}}"
+                )
+                  span.text-uppercase
+                    | {{ event.get_activity_type_display|default:'&nbsp;' }}
+                .box-event-content
+                  p.title
+                    a(href="{% url 'event_detail' event.pk %}")
+                      | {{ event.get_base_activity }}
+                  p {{ event.start_date.date|date:'DATE_FORMAT'|default:'Fecha por definir' }}
+                  p.participants
+                    | {{ event.get_base_activity.useractivity_set.count }} integrantes
+        .row
+          .col-sm-offset-4.col-sm-4
+            a.btn.btn-primary.btn-block(href="{% url 'calendar' %}")
+              | Ver calendario de actividades
+
+    .container-fluid.highlighted-comments.container-section
+      .container
+        h1 Comentarios destacados de esta semana
+
+        .comments.comments-wide.comment-list
+          {% include 'comments/includes/list.jade' with readonly=True%}

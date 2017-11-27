@@ -1,0 +1,99 @@
+@import "../variables.less";
+
+body {
+  &.login,
+  &.register {
+    margin-top: 20px;
+    background-color: @gray-7;
+  }
+}
+
+.panel-form {
+  .panel-heading,
+  .panel-body {
+    padding-left: @grid-padding;
+    padding-right: @grid-padding;
+  }
+
+  .panel-heading {
+    padding-top: 19px;
+    padding-bottom: 13px;
+  }
+
+  .form-control {
+    border-width: 2px;
+  }
+
+  &.panel-lg {
+    .panel-heading,
+    .panel-body {
+      @media (min-width: @screen-sm-min) {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      @media (min-width: @screen-md-min) {
+        padding-left: 100px;
+        padding-right: 100px;
+      }
+    }
+  }
+
+  &.panel-default {
+    .panel-body,
+    .panel-footer {
+      box-shadow: 0 0 6px 0 rgba(0,0,0,0.20);
+    }
+  }
+
+  @media (min-width: @screen-sm-min) {
+    h3 {
+      margin-top: 45px;
+    }
+  }
+}
+
+.step {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  color: @gray-5;
+  font-family: Brown;
+  font-weight: 700;
+  font-size: 19px;
+  float: none;
+
+  @media (min-width: @screen-sm-min) {
+    float: right;
+  }
+}
+
+.sub-label {
+  float: none;
+  margin-left: 0.5ex;
+  color: @gray-4;
+  font-family: "Lato-Regular";
+  font-weight: normal;
+  font-size: 16px;
+
+  @media (min-width: @screen-sm-min) {
+    margin-left: 0;
+    float: right
+  }
+}
+
+.login .select2-container--default,
+.register .select2-container--default {
+  .select2-selection--single {
+    border-width: 2px;
+  }
+}
+
+@media (min-height: 801px) {
+  body {
+    background-size: cover;
+  }
+
+  .form-signin {
+    margin-top: 8vh;
+  }
+}

@@ -1,0 +1,41 @@
+- load thumbnail
+
+.dynamic-content-el(class="{% if user.is_staff and not readonly %}editable{% endif %}")
+  if user.is_staff and not readonly
+    a.btn.btn-primary.pull-right(href="{% url 'dynamic_content_update' dynamic_content.id %}")
+      i.fa.fa-pencil-square-o(aria-hidden="true")
+      | Editar
+    a.btn.btn-primary.pull-right(href="{% url 'dynamic_content_delete' dynamic_content.id%}")
+      i.fa.fa-pencil-square-o(aria-hidden="true")
+      | Borrar
+
+  {% if dynamic_content.kind == 'video' %}
+  .content
+    .video-wrapper
+      iframe.video(src='{{dynamic_content.url}}')
+    div.content-content
+      {% autoescape off %}{{ dynamic_content.content }}{% endautoescape %}
+  {% elif dynamic_content.kind == 'gallery' %} 
+  .content
+    {% if dynamic_content.photos %}
+    .row.row-flex.flex-start.comment-gallery
+      for photo in dynamic_content.photos.all
+        .comment-image.col-sm-4(data-src="{{photo.photo.url}}")
+          img.img-thumbnail(
+            src="{{photo.photo|thumbnail_url:'small'}}",
+            style="width: 100%;"
+          )
+    {% endif %}
+  {% elif dynamic_content.kind == 'html' %}
+  .content-content {% autoescape off %}{{ dynamic_content.content }}{% endautoescape %}
+  {% elif dynamic_content.kind == 'image' %}
+  .content
+    {% if dynamic_content.photos %}
+    .wide-image
+      img(src="{{dynamic_content.get_image.photo.url}}")
+      .overlay-caption
+        {% autoescape off %}{{ dynamic_content.content }}{% endautoescape %}
+    {% else %}
+    {% autoescape off %}{{ dynamic_content.content }}{% endautoescape %}
+    {% endif %}
+  {% endif %}

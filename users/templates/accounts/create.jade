@@ -1,0 +1,14 @@
+extends form.jade
+
+- load compress bootstrap
+- load staticfiles
+- load i18n static
+
+block title
+  | Crear nuevo integrante
+
+block javascripts
+  script(src="{% static 'js/jquery.maskedinput.min.js' %}")
+  script(src="{% static 'js/format_phone.js' %}")
+  script(src="{% static 'js/institution_selection.js' %}")
+  script(src="{% static 'js/interests_selection.js' %}")

@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-28 18:12-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: forms.py:20
+msgid "institution's name"
+msgstr "nombre de la institución"
+
+#: forms.py:21
+msgid "website"
+msgstr "sitio web"
+
+#: forms.py:22
+msgid "What is the role of this institution?"
+msgstr "¿Cuál es el rol de esta institución?"
+
+#: models.py:15 models.py:26
+msgid "name"
+msgstr "nombre"
+
+#: models.py:30
+msgid "url"
+msgstr "url"
+
+#: models.py:35
+msgid "address"
+msgstr "dirección"
+
+#: models.py:41
+msgid "phone"
+msgstr "teléfono"
+
+#: models.py:46
+msgid "role description"
+msgstr "descripción del rol"
+
+#: models.py:52
+msgid "logo"
+msgstr "logo"
+
+#: models.py:58
+msgid "is active"
+msgstr "está activo"
+
+#: models.py:63
+msgid "slug"
+msgstr "slug"
+
+#: models.py:72
+msgid "institution kind"
+msgstr "nombre de la institución"
+
+#: templates/institutions/institution_update.jade:58
+msgid "no participants"
+msgstr "sin integrantes"
+
+#~ msgid "region"
+#~ msgstr "región"

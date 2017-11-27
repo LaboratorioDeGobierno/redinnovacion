@@ -1,0 +1,147 @@
+extends participants/admin_people_list.jade
+
+- load i18n static
+
+block title
+  |  Espera
+
+block tabs
+  ul#nav-tabs.nav.nav-tabs.nav-default.nav-justified.hidden-xs
+    li.active
+      a(href="{% url 'pending_participant_list' %}")
+        | Espera
+    li
+      a(href="{% url 'participant_list' %}")
+        | Aceptados
+    li
+      a(href="{% url 'extern_participant_list' %}")
+        | Externos
+    li
+      a(href="{% url 'rejected_participant_list' %}")
+        | Rechazados
+  .hidden-sm.hidden-md.hidden-lg
+    .dropdown
+      button.btn.btn-block.btn-default.dropdown-toggle(
+        type='button', data-toggle='dropdown'
+      )
+        | Espera #[span.caret]
+      ul.dropdown-menu
+        li
+          a(href="{% url 'pending_participant_list' %}") Espera
+        li
+          a(href="{% url 'participant_list' %}") Aceptados
+        li
+          a(href="{% url 'extern_participant_list' %}") Externos
+        li
+          a(href="{% url 'rejected_participant_list' %}") Rechazados
+
+block table
+  table.table.table-outlined.table-hover-alt.hidden-xs
+    thead
+      tr
+        th Nombre
+        th Institución
+        th Email
+        th.text-center(colspan="2") Aprobar
+        th Rechazar
+    tbody
+      each iter_user in user_list
+        tr
+          td
+            a(href="{{ iter_user.get_absolute_url }}")
+              | {{ iter_user.get_full_name }}
+          td 
+            if iter_user.institution
+              {{ iter_user.institution }}
+            elif iter_user.other_institution_name
+              | Otra ({{ iter_user.other_institution_name }})
+          td {{ iter_user.email }}
+          td.text-center.td-border-left
+            a.a-blue(href="{% url 'accept_user_redirect_view' iter_user.pk %}")
+              | Funcionario
+          td.text-center.td-border-right
+            a.a-blue(href="{% url 'accept_extern_user_redirect_view' iter_user.pk %}")
+              | Externo
+          td.text-center
+            a.a-red(href="{% url 'reject_user_redirect_view' iter_user.pk %}")
+              | Rechazar
+        - empty
+          tr.text-center
+            td(colspan="7") Lista vacía
+  .hidden-lg.hidden-md.hidden-sm
+    each iter_user in user_list
+      h4
+        a(href="{{ iter_user.get_absolute_url }}")
+          | {{ iter_user.get_full_name }}
+      p
+        if iter_user.charge
+          strong {{ iter_user.charge }}
+        else
+          {% trans 'no charge'|capfirst %}
+      p
+        if iter_user.institution
+          strong {% trans 'institution'|capfirst %}:&nbsp;
+          a(href="{{ iter_user.institution.get_absolute_url }}")
+             {{ iter_user.institution }}
+        else
+          {% trans 'no institution'|capfirst %}
+      p
+        strong {% trans 'region'|capfirst %}:
+        | #{user.region|default:"Sin región"}
+      .text-center
+        a.btn.btn-link.a-blue(
+          href="{% url 'accept_user_redirect_view' iter_user.pk %}"
+        )
+          | Funcionario
+        a.btn.btn-link.a-blue(
+          href="{% url 'accept_extern_user_redirect_view' iter_user.pk %}"
+        )
+          | Externo
+        a.btn.btn-link.a-red(
+          href="{% url 'reject_user_redirect_view' iter_user.pk %}"
+        )
+          | Rechazar
+      hr
+  .row
+    .col-sm-6
+      a.btn.btn-success(href="{% url 'user_create' %}")
+        i.fa.fa-plus.fa-left
+        | Agregar persona
+    .col-sm-6.text-right
+      a.btn.btn-success(
+        href="{% url 'export_users' %}?status={{user.STATUS_PENDING}}&is_active=1"
+      )
+        | Exportar datos
+        i.fa.fa-table.fa-right
+      | &nbsp;
+      span.dropdown
+        button.btn.btn-inverse.btn-primary.dropdown-toggle(
+          type='button', data-toggle='dropdown'
+        )
+          | Mostrar {{by}} #[span.caret]
+        ul.dropdown-menu
+          li
+            a(href='?by=10{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 10
+          li
+            a(href='?by=20{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 20
+          li
+            a(href='?by=25{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 25
+          li
+            a(href='?by=50{% if is_paginated %}&p={{page_obj.number}}{% endif %}') 50
+      if is_paginated
+        strong.text-muted
+          | &nbsp;
+          | {{ page_obj.start_index }}-{{ page_obj.end_index }}
+          | de {{ paginator.count }}
+          | &nbsp;
+        if page_obj.has_previous
+          a.btn.btn-inverse.btn-primary(
+            href="{% url 'pending_participant_list' %}?p={{page_obj.previous_page_number}}&by={{by}}"
+          )
+            i.fa.fa-chevron-left
+          | &nbsp;
+        if page_obj.has_next
+          a.btn.btn-inverse.btn-primary(
+            href="{% url 'pending_participant_list' %}?p={{page_obj.next_page_number}}&by={{by}}"
+          )
+            i.fa.fa-chevron-right

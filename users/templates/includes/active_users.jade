@@ -1,0 +1,27 @@
+- load i18n
+
+#online-users.box-event
+  - with user_count=active_users.count
+    .online-users
+      span
+        | {% trans "personas en línea"|capfirst %} ({{user_count}})
+      span.pull-right
+        i.fa.fa-chevron-up
+    .box-event-content.online.hidden
+      ul.list-unstyled.div-online-users(
+          class="{% if user_count < 6 %}no-overflow{% endif %}"
+        )
+        - for active_user in active_users
+          li.title.online-user
+            a.inset(href='{{ active_user.get_absolute_url }}')
+              if active_user.avatar
+                img(src="{{ active_user.avatar.url }}")
+              else
+                i.fa.fa-user-circle.text-primary.media-object
+              span {{ active_user.get_full_name|truncatechars:20 }}
+          - empty
+            li.title.online-user
+              span.no-user No hay usuarios en línea
+            
+        
+        

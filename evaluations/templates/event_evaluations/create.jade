@@ -1,0 +1,9 @@
+extends base.jade
+
+- load static
+
+block javascripts
+  script(src="{% static 'js/events/rating.js' %}")
+
+block content
+  {% include 'event_evaluations/includes/form.jade' %}

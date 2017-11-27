@@ -1,0 +1,49 @@
+a#notifications-dropdown.dropdown-toggle(
+  type="button"
+  data-toggle="dropdown"
+  aria-haspopup="true"
+  aria-expanded="true"
+)
+  if user.avatar
+    .user-avatar.img-circle.pull-left(
+      style="background-image: url('{{ user.avatar.url }}');"
+    )
+  else
+    .user-avatar.img-circle.pull-left
+      i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+  
+  if total_notifications > 0
+    div.badge#new-notifications-badge {{total_notifications}}
+    
+.dropdown-menu.notifications(aria-labelledby="notifications-dropdown") 
+  {% if total_notifications == 0 %}
+  .no-unread-notifications-message No tienes nuevas notificaciones
+  {% endif %}
+  ul
+    if user.is_authenticated
+      for notification in dropdown_notifications_list
+        li
+          div(class="{% if notification.is_user_based_notification %}avatar{% else %}event-image{% endif%}")
+            if notification.from_user.avatar
+              img(src="{{notification.from_user.avatar.url}}")
+              else
+                if notification.is_user_based_notification
+                  i.fa.fa-user-circle.user-icon.text-primary(aria-hidden="true")
+                else
+                  .day {{notification.event.start_date.day}}
+                  .month {{notification.event.start_date|date:"b"}} 
+          {% include 'notifications/includes/text.jade' %}
+          span.when Hace #{notification.updated_at|timesince}
+  
+  a.btn.btn-primary(href="{% url 'notification_list' %}")
+    | Ver notificaciones
+    {% if unread_notifications > 0 %}
+    | &nbsp;&nbsp;
+    span.badge {{unread_notifications}}
+    {% endif %}
+  a.btn.btn-primary(href="{% url 'email_message_list' %}") 
+    | Ver mensajes
+    {% if unread_messages > 0 %}
+    | &nbsp;&nbsp;
+    span.badge {{unread_messages}}
+    {% endif %}

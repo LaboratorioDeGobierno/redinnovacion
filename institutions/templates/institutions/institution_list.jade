@@ -1,0 +1,47 @@
+extends base.jade
+
+- load staticfiles
+
+block title
+  | Instituciones
+
+block content
+  .jumbotron.jumbotron-sm.jumbotron-inverse.mar-no.green-bg
+    .container
+      ul.page-breadcrumb.mar-top.hidden-xs
+        li
+          a(href="{% url 'home' %}") INICIO
+          i.fa.fa-angle-right.li-breadcrumb
+        li
+          a(href="{% url 'people_list' %}") INTEGRANTES
+          i.fa.fa-angle-right.li-breadcrumb
+        li.breadcrumb-not-selected
+          span &nbsp; Instituciones
+      - include 'includes/search_title.jade' with page_title='Instituciones que componen la Red' subtitle='Aquí puedes conocer todas las instituciones que están en la Red, y saber quienes participan de cada una de ellas.'
+  - include 'includes/tabs.jade' with active_tab='institutions' search_form=True
+  .container.mar-top
+    .row.row-flex.institutions.hidden-xs
+      for institution in institution_list
+        .col-xs-12.col-sm-4.col-md-4.col-lg-4
+          .labeled-box
+            h6
+              a(href="{{ institution.get_absolute_url }}")
+                | {{ institution.name }}
+            p
+              strong #{institution.users_count} INTEGRANTES
+    .row.institutions-mobile.hidden-lg.hidden-md.hidden-sm
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        hr
+        for institution in institution_list
+          .labeled-box
+            h3
+              a(href="{{ institution.get_absolute_url }}")
+                | {{ institution.name }}
+            p
+              strong #{institution.users_count} INTEGRANTES
+            hr
+    .row
+      .col-sm-8
+      .col-sm-4.text-right
+        if is_paginated
+          {% include 'includes/pagination.jade' with objects=page_obj paginator=paginator %}

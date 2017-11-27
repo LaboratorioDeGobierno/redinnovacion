@@ -1,0 +1,31 @@
+extends base.jade
+
+- load staticfiles
+
+block title 
+  | {{user.get_full_name}}
+
+block content
+  if form.errors
+    .alert.alert-danger Por favor corrige los errores que faltan
+  .container.header-section.update-user.section
+    .hidden-xs.col-sm-3
+      if participant.avatar
+        .img-circle.user-avatar-lg(
+          style="background-image: url('{{ participant.avatar.url }}');"
+        )
+      else
+        .text-center
+          i.fa.fa-user-circle.text-primary.user-icon(aria-hidden="true")
+    .col-xs-12.col-md-9
+      - include 'includes/user_form_nav.jade'
+      - include form_template
+
+block stylesheets
+  link(rel="stylesheet", href="{% static 'bower_components/cropperjs/dist/cropper.min.css' %}")
+
+block javascripts
+  script(src="{% static 'bower_components/cropperjs/dist/cropper.min.js' %}")
+  script(src="{% static 'js/jquery.maskedinput.min.js' %}")
+  script(src="{% static 'js/format_phone.js' %}")
+  script(src="{% static 'js/accounts/edit.js' %}")

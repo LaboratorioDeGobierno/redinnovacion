@@ -1,0 +1,44 @@
+extends base.jade
+
+block title 
+  | Etapa de un evento 
+  
+block content
+  .container
+    ul.page-breadcrumb.mar-top.hidden-xs
+      li
+        a(href="{% url 'home' %}") INICIO
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'event_list' %}") EVENTOS
+        i.fa.fa-angle-right.li-breadcrumb
+      li
+        a(href="{% url 'event_detail' stage.event.pk %}")
+          = stage.event.name
+        i.fa.fa-angle-right.li-breadcrumb
+      li.breadcrumb-not-selected
+        span &nbsp; #{stage.name}
+    h2.title-people #{stage.name}
+    .row
+      .col-md-6
+        p
+          | #[label Nombre de la etapa:]
+          | #{stage.name}
+      .col-md-6
+        p
+          | #[label Tipo:]
+          | #{stage.get_stage_type_display}
+    .row
+      .col-md-6
+        p
+          | #[label Fecha de inicio:]
+          | #{stage.start_date}
+      .col-md-6
+        p
+          | #[label Fecha de fin:]
+          | #{stage.end_date}
+    .row
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+        p
+          | #[label Descripcion:]
+          | #{stage.description}

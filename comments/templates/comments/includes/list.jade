@@ -1,0 +1,20 @@
+- load thumbnail
+- load static
+
+for comment in comments
+  {% include 'comments/includes/detail.jade' %}
+
+  if not readonly and forloop.last and not user.is_pending and not no_list
+    .load-more-space
+      button.btn.btn-primary.btn-block.comment-load-more-btn(
+        type="button", 
+        data-updated-at="{{comment.updated_at|date:'c'}}",
+        data-event-id="{% if event %}{{event.id}}{% else %}{{event_id}}{% endif %}"
+        data-author-id="{% if author %}{{author.id}}{% else %}{{author_id}}{% endif %}"
+      )
+        | Cargar más comentarios  
+        i.fa.fa-spinner.fa-spin.page-loading-icon
+
+if not comments
+  .alert.alert-info.no-more-comments-alert
+    | No hay Comentarios

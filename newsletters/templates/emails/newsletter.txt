@@ -1,0 +1,22 @@
+{% load i18n %}{% autoescape off %}
+¡Hola!
+
+Esto es un ejemplo de newsletter
+
+Comentarios:
+{% for comment in comments %}
+- {{ comment.text }}
+{% endfor %}
+
+Próximas actividades:
+{% for event in next_event %}
+- {{ event.name }}
+{% endfor %}
+
+Notificaciones no leídas: {{ unread_notifications }}
+Mensajes no leídos: {{ unread_messages }}
+
+¡Nos vemos!
+Saludos.
+
+{% endautoescape %}
