@@ -405,13 +405,13 @@ MAILCHIMP_API_BASE_URL = (
 )
 
 MAILCHIMP_CONTACT_DICT = {
-    'company': 'Nombre Compañía',
-    'address1': 'Dirección 1',
-    'address2': 'Dirección 2',
+    'company': 'Nombre Compania',
+    'address1': 'Direccion 1',
+    'address2': 'Direccion 2',
     'city': 'Ciudad',
     'state': 'Estado',
     'zip': '0000001',
-    'country': 'País',
+    'country': 'Pais',
     'phone': 'phone',
 }
 
