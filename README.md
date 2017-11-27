@@ -154,10 +154,19 @@ formats:
 * `fab config.set:examplehost`: Manually specify host.
 * `fab config.set:examplehost,user`: Manually specify host and user.
 
+To Login to the admin for first time use the following user:
+
+User: admin@admin.com
+Pass: admin
+
+To login to the Django Admin use the following url:
+
+localhost:8000/admin
 
 # Acknowledgments
 
 Thanks to all the members who participated in this project.
+
 ##Laboratorio de Gobierno:
   * Germán Mondragón - Lead Project - gmondragon@lab.gob.cl
   * Valentina Arros - Public Innovation
@@ -170,7 +179,7 @@ Thanks to all the members who participated in this project.
   * Tomás Dintrans - Art Direction
 
 
-### Magnet S.P.A.
+## Magnet S.P.A.
     * Ignacio Munizaga - Lead Development - imunizaga@magnet.cl
     * Claudio Berroeta
     * Vasily Nosikov

@@ -175,7 +175,7 @@ STATICFILES_FINDERS = (
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'rn#pxk_y8e7(w*hu)n7r!=)c609=gxl860g&@_d2i^#-^_-6kn'
+SECRET_KEY = ''
 
 TEMPLATES = [
     {
